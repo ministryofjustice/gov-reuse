@@ -1,0 +1,27 @@
+{
+  "ignorePaths": ["dist/", "**/node_modules/**", "**/*.drawio", "**/*.svg", "**/package*.json"],
+  "language": "en",
+  "noConfigSearch": true,
+  "allowCompoundWords": true,
+  "words": [
+    "CREDS",
+    "hmpps",
+    "mojdt",
+    "govuk",
+    "jgoz",
+    "nomis",
+    "clientid",
+    "azuread",
+    "xlink",
+    "noopener",
+    "noreferrer"
+  ],
+  "dictionaries": ["en-gb", "companies", "softwareTerms", "misc", "lorem-ipsum", "typescript", "node", "bash", "npm"],
+  "languageSettings": [
+    {
+      "languageId": "commit-msg",
+      "ignoreRegExpList": ["/^#.*/gm"]
+    }
+  ],
+  "version": "0.2"
+}

@@ -1,0 +1,85 @@
+# Automated Release Workflow
+#
+# Purpose:
+#   Automates the release process using Google's release-please action,
+#   creating versioned releases based on conventional commits.
+#
+# Triggers:
+#   - push: When code is pushed to the main branch
+#
+# Permissions:
+#   - contents: write - Required for creating releases and tags
+#   - issues: write - Required for closing/updating release-related issues
+#   - pull-requests: write - Required for managing release PRs
+#
+# Jobs:
+#   setup:
+#     - Prepares the infrastructure and environment configuration
+#     - Outputs: environment name and timezone for downstream jobs
+#
+#   release:
+#     - Checks out the repository code
+#     - Executes release-please action to automate version bumps and changelog generation
+#     - Creates releases following Node.js versioning conventions
+#
+# Configuration:
+#   - Environment: base (configurable via env vars)
+#   - Timezone: Configurable via repository variables (TIMEZONE)
+#   - Release type: node (follows Node.js versioning conventions)
+#
+# Required Secrets:
+#   - GITHUB_TOKEN: Automatically provided token for repository operations
+#
+# Required Variables:
+#   - TIMEZONE: Repository variable defining the timezone for operations
+
+name: Automated release 🚀
+run-name: Automated release 🚀
+
+permissions: {}
+
+on:
+  push:
+    branches: ["main"]
+
+env:
+  environment: base
+  timezone: ${{ vars.TIMEZONE }}
+
+jobs:
+  # 1. Setup test infrastructure
+  setup:
+    name: Infrastructure 🔧
+    runs-on: ["ubuntu-latest"]
+    outputs:
+      environment: ${{ env.environment }}
+      timezone: ${{ env.timezone }}
+    steps:
+      - name: Environment 🧪
+        run: echo "Environment set to ${{ env.environment }}"
+
+      - name: Timezone 🌐
+        run: echo "Timezone set to ${{ env.timezone }}"
+
+  # 2. Update files
+  release:
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    name: Release ✨
+    needs: setup
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ["ubuntu-latest"]
+
+    steps:
+      - name: Repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create
+        uses: googleapis/release-please-action@16a9c90856f42705d54a6fda1823352bdc62cf38 # v4.4.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node

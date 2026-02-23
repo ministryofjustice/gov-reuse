@@ -5,19 +5,19 @@
 
 Template github repo used for new Typescript based projects.
 
-# Instructions
+## Instructions
 
 If this is a HMPPS project then the creation of new services is automated and cloning/forking this repository is not required.
 
-Documentation to create new services is located [here](https://tech-docs.hmpps.service.justice.gov.uk/creating-new-services/).
+Documentation to create new services is located [at tech decs](https://tech-docs.hmpps.service.justice.gov.uk/creating-new-services/).
 
 This project is community managed by the mojdt `#typescript` slack channel.
 Please raise any questions or queries there. Contributions welcome!
 
-Our security policy is located [here](https://github.com/ministryofjustice/hmpps-template-typescript/security/policy).
+Our security policy is located [at GitHub](https://github.com/ministryofjustice/hmpps-template-typescript/security/policy).
 
 More information about the template project including features can be
-found [here](https://dsdmoj.atlassian.net/wiki/spaces/NDSS/pages/3488677932/Typescript+template+project).
+found [on WiKi](https://dsdmoj.atlassian.net/wiki/spaces/NDSS/pages/3488677932/Typescript+template+project).
 
 ## Creating a Cloud Platform namespace
 
@@ -145,7 +145,7 @@ Then run the server in test mode by:
 
 `npm run start-feature` (or `npm run start-feature:dev` to run with auto-restart on changes)
 
-After first install ensure playwright is initialised: 
+After first install ensure playwright is initialised:
 
 `npm run int-test-init:ci`
 
@@ -159,7 +159,9 @@ Or run tests with the UI:
 
 ## Keeping your app up-to-date
 
-While there are multiple ways to keep your project up-to-date this [method](https://mojdt.slack.com/archives/C69NWE339/p1694009011413449) doesn't require you to keep cherry picking the changes, however if that works for you there is no reason to stop.
+While there are multiple ways to keep your project up-to-date
+this [method](https://mojdt.slack.com/archives/C69NWE339/p1694009011413449)
+doesn't require you to keep cherry picking the changes,however if that works for you there is no reason to stop.
 
 In your service, add the template as a remote:
 
@@ -181,4 +183,4 @@ You'll need to manually handle the merge of the changes, but if you do it early,
 
 ## Change log
 
-A changelog for the service is available [here](./CHANGELOG.md)
+A [changelog](./CHANGELOG.md) for the service is available
