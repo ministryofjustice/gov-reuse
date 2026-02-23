@@ -103,6 +103,5 @@ jobs:
         with:
           token: "${{ secrets.GITHUB_TOKEN }}" # Mandatory
           dependency-review-config-file: "./.github/dependency-review-config.yml" # Optional
-          docker-images-file: "${{ github.workspace }}/sources.json" # Optional
           dependency-check-suppression-file: "dependency-check-suppression.xml" # Optional
 
