@@ -1,6 +1,6 @@
 {
   "name": "hmpps-template-typescript",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "HMPPS Typescript Template",
   "repository": "git@github.com:ministryofjustice/hmpps-template-typescript.git",
   "license": "MIT",
