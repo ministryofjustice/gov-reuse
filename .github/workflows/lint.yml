@@ -98,7 +98,7 @@ jobs:
       - name: TS
         shell: bash
         run: |
-          npm run lint:ts
+          npm run lint
           npm run validate:ts
 
       - name: Spellcheck
