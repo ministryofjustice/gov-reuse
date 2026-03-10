@@ -1,7 +1,5 @@
 import { expect, test } from '@playwright/test'
 import exampleApi from '../mockApis/exampleApi'
-import hmppsAuth from '../mockApis/hmppsAuth'
-import tokenVerification from '../mockApis/tokenVerification'
 
 import { resetStubs } from '../testUtils'
 
@@ -12,7 +10,7 @@ test.describe('Health', () => {
 
   test.describe('All healthy', () => {
     test.beforeEach(async () => {
-      await Promise.all([hmppsAuth.stubPing(), exampleApi.stubPing(), tokenVerification.stubPing()])
+      await Promise.all([exampleApi.stubPing()])
     })
 
     test('Health check is accessible and status is UP', async ({ page }) => {
@@ -31,12 +29,6 @@ test.describe('Health', () => {
       const response = await page.request.get('/info')
       const payload = await response.json()
       expect(payload.build.name).toBe('gov-reuse-library')
-    })
-  })
-
-  test.describe('Some unhealthy', () => {
-    test.beforeEach(async () => {
-      await Promise.all([hmppsAuth.stubPing(), exampleApi.stubPing(), tokenVerification.stubPing(500)])
     })
   })
 })

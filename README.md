@@ -1,4 +1,4 @@
-# hmpps-template-typescript
+# Gov Reuse Library
 
 [![Security trivy dependency check](https://github.com/ministryofjustice/gov-reuse/actions/workflows/security_trivy.yml/badge.svg)](https://github.com/ministryofjustice/gov-reuse/actions/workflows/security_trivy.yml)
 [![Docker Repository on ghcr](https://img.shields.io/badge/ghcr.io-repository-2496ED.svg?logo=docker)](https://ghcr.io/ministryofjustice/gov-reuse)

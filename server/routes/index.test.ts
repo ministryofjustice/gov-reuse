@@ -3,7 +3,6 @@ import request from 'supertest'
 import { appWithAllRoutes, user } from './testutils/appSetup'
 import ExampleService from '../services/exampleService'
 
-jest.mock('../services/auditService')
 jest.mock('../services/exampleService')
 
 const exampleService = new ExampleService(null) as jest.Mocked<ExampleService>
