@@ -10,7 +10,7 @@ Please raise any questions or queries there. Contributions welcome!
 
 Our security policy is located [at GitHub](https://github.com/ministryofjustice/gov-reuse/security/policy).
 
-### Dependencies
+## Dependencies
 
 ### REDIS
 
@@ -44,7 +44,6 @@ and the GitHub pipeline build config.
 And then, to build the assets and start the app with esbuild:
 
 `npm run start:dev`
-
 
 ### Run linter
 
