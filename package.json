@@ -1,8 +1,8 @@
 {
-  "name": "hmpps-template-typescript",
-  "version": "0.0.1",
-  "description": "HMPPS Typescript Template",
-  "repository": "git@github.com:ministryofjustice/hmpps-template-typescript.git",
+  "name": "gov-reuse-library",
+  "version": "0.1.0",
+  "description": "GOV Reuse Library",
+  "repository": "git@github.com:ministryofjustice/gov-reuse.git",
   "license": "MIT",
   "scripts": {
     "prepare": "hmpps-precommit-hooks-prepare",
