@@ -24,6 +24,7 @@ export default function createApp(services: Services): express.Application {
   app.set('port', process.env.PORT || 3000)
 
   // TODO: decide if we want to use app insights, otherwise remove.
+  //  see ticket: https://dsdmoj.atlassian.net/browse/GOV-19
   // app.use(appInsightsMiddleware())
   app.use(setUpHealthChecks(services.applicationInfo))
   app.use(setUpWebSecurity())
