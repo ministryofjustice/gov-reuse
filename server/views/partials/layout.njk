@@ -1,3 +1,4 @@
+{# For source of govuk/template.njk see: https://github.com/alphagov/govuk-frontend/blob/main/packages/govuk-frontend/src/govuk/template.njk #}
 {% extends "govuk/template.njk" %}
 
 {% block head %}
@@ -6,11 +7,16 @@
 
 {% block pageTitle %}{{pageTitle | default(applicationName)}}{% endblock %}
 
+{% block bodyStart %}
+  {% include "./cookieBanner.njk" %}
+{% endblock %}
+
 {% block header %}
   {% include "./header.njk" %}
 {% endblock %}
 
-{% block bodyStart %}
+{% block govukFooter %}
+  {% include "./footer.njk" %}
 {% endblock %}
 
 {% block bodyEnd %}

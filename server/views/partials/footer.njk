@@ -1,0 +1,29 @@
+{% from "govuk/components/footer/macro.njk" import govukFooter %}
+
+{{ govukFooter({
+  meta: {
+    items: [
+      {
+        href: "/accessibility-statement",
+        text: "Accessibility statement"
+      },
+      {
+        href: "/sitemap",
+        text: "Sitemap"
+      },
+      {
+        href: "/cookies",
+        text: "Cookies"
+      },
+      {
+        href: "/privacy",
+        text: "Privacy"
+      },
+      {
+        href: "mailto:reuse-library@justice.gov.uk",
+        text: "Contact the team"
+      }
+    ],
+    html: 'Learn more <a href="/about" class="govuk-footer__link">About the GOV Reuse Library</a>'
+  }
+}) }}
