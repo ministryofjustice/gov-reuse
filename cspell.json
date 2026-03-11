@@ -14,7 +14,11 @@
     "azuread",
     "xlink",
     "noopener",
-    "noreferrer"
+    "noreferrer",
+    "dompurify",
+    "jsdom",
+    "sanitise",
+    "sanitised"
   ],
   "dictionaries": ["en-gb", "companies", "softwareTerms", "misc", "lorem-ipsum", "typescript", "node", "bash", "npm"],
   "languageSettings": [
