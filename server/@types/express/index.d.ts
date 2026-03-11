@@ -7,6 +7,14 @@ export declare module 'express-session' {
   }
 }
 
+declare module 'express-serve-static-core' {
+  interface IRouter {
+    redirect(from: string, destination: string, statusCode?: number): this
+    render(path: string, view: string, options?: object): this
+    markdown(routePath: string, markdownFile: string): this
+  }
+}
+
 export declare global {
   namespace Express {
     interface User {
