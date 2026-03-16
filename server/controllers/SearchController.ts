@@ -35,8 +35,13 @@ export default class SearchController extends BaseController {
   }
 
   search = async (req: Request, res: Response) => {
-    const query = req.query.searchQuery as string
     let formError = ''
+    // ensure search query is a string before validating length, to avoid type confusion.
+    if (typeof req.query.searchQuery !== "string") {
+      formError = "Invalid data type for search query"
+      return res.status(422).render('pages/search/index', { props: { formError, searchQuery: "" } })
+    }
+    const query = req.query.searchQuery
     if (query.length < 10) {
       formError = 'Input must be at least 10 characters long'
     }
