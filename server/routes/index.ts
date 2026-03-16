@@ -2,15 +2,20 @@ import { Router } from 'express'
 
 import type { Services } from '../services'
 import expressRouterHelpers from '../utils/expressRouterHelpers'
+import HomeController from '../controllers/HomeController'
+import SearchController from '../controllers/SearchController'
+import { asyncHandler } from '../utils/utils'
 
-export default function routes({ exampleService }: Services): Router {
+export default function routes({ searchService, infoService }: Services): Router {
   const router = Router()
   expressRouterHelpers(router)
 
-  router.get('/', async (req, res, next) => {
-    const currentTime = await exampleService.getCurrentTime()
-    return res.render('pages/index', { currentTime })
-  })
+  const homeController = new HomeController(infoService)
+  const searchController = new SearchController(searchService, infoService)
+
+  router.get('/', asyncHandler(homeController.index))
+  router.get('/search', asyncHandler(searchController.index))
+  router.get('/search-results', asyncHandler(searchController.search))
 
   router.markdown('/about', 'about')
   router.markdown('/accessibility-statement', 'accessibility-statement')

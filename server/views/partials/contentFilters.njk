@@ -1,0 +1,118 @@
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{%- from "moj/components/filter/macro.njk" import mojFilter -%}
+
+<section class="govuk-!-padding-top-4 govuk-!-padding-bottom-4" id="section-filters">
+  <div class="govuk-width-container">
+  {%- set filterOptionsHtml %}
+  {% call govukFieldset({
+    legend: {
+      text: "Filters",
+      classes: "govuk-fieldset__legend--l"
+    },
+    classes: "app-filters-fieldset"
+  }) %}
+  {{ govukSelect({
+      id: "department",
+      name: "department",
+      label: {
+        text: "Department"
+      },
+      value: props.filters.department,
+      items: props.departmentFilters
+    }) }}
+  {{ govukSelect({
+    id: "content-type",
+    name: "contentType",
+    label: {
+      text: "Content Type"
+    },
+    value: props.filters.contentType,
+    items: props.contentTypeFilters
+  }) }}
+  {{ govukSelect({
+      id: "profession",
+      name: "profession",
+      label: {
+        text: "Profession"
+      },
+      value: props.filters.profession,
+      items: props.professionFilters
+    }) }}
+  {% endcall %}
+  {% endset -%}
+
+  {{ mojFilter({
+    heading: {
+      text: "Filter"
+    },
+
+    submit: {
+      attributes: {
+        "data-test-id": "submit-button"
+      }
+    },
+
+    selectedFilters: {
+      heading: {
+        text: "Selected filters"
+      },
+      clearLink: {
+        text: "Clear filters",
+        href: props.removeFilters or "/"
+      },
+      categories: [
+        {
+          heading: {
+            text: "Department"
+          },
+          items: [{
+            href: props.removeDepartmentLink,
+            text: props.filters.department
+          }]
+        } if props.filters.department,
+        {
+          heading: {
+            text: "Content Type"
+          },
+            items: [{
+            href: props.removeContentTypeLink,
+            text: props.filters.contentType
+          }]
+        } if props.filters.contentType,
+        {
+          heading: {
+            text: "Profession"
+          },
+          items: [{
+            href: props.removeProfessionLink,
+            text: props.filters.profession
+          }]
+        } if props.filters.profession
+      ]
+    } if props.filters.department or props.filters.contentType or props.filters.profession else null,
+    optionsHtml: filterOptionsHtml
+  }) }}
+  </div>
+</section>
+
+{% block script %}
+  <script nonce="{{ cspNonce }}">
+    function filtersInit(){
+      const filterForm = document.querySelector('#section-filters form');
+      if (!filterForm) return;
+      const filterSelects = filterForm.querySelectorAll('select');
+      const defaults = ["", "All departments", "All professions", "All types"];
+      filterSelects.forEach(select => {
+        select.addEventListener('change', () => {
+          defaults.indexOf(select.value) === -1 ? select.classList.add('active') : select.classList.remove('active');
+        });
+        // Set initial state of select elements
+        defaults.indexOf(select.value) === -1 ? select.classList.add('active') : select.classList.remove('active');
+      });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      filtersInit();
+    });
+  </script>
+{% endblock %}

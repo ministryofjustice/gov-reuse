@@ -1,18 +1,58 @@
-{# For source of govuk/template.njk see: https://github.com/alphagov/govuk-frontend/blob/main/packages/govuk-frontend/src/govuk/template.njk #}
+{#
+For the source of govuk/template.njk,
+see node_modules/govuk-frontend/dist/govuk/template.njk
+or on GitHub: https://github.com/alphagov/govuk-frontend/blob/main/packages/govuk-frontend/src/govuk/template.njk
+#}
 {% extends "govuk/template.njk" %}
+
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
 
 {% block head %}
   <link href="{{ '/assets/css/index.css' | assetMap }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block pageTitle %}{{pageTitle | default(applicationName)}}{% endblock %}
+{%  set themeColor = "#ca357c" %}
 
 {% block bodyStart %}
   {% include "./cookieBanner.njk" %}
 {% endblock %}
 
-{% block header %}
-  {% include "./header.njk" %}
+{% block headerStart %}
+  {% include "./serviceBanner.njk" %}
+{% endblock %}
+
+{% block govukHeader %}
+  {{ govukHeader({
+    homepageUrl: "/"
+  }) }}
+{% endblock %}
+
+{% block govukServiceNavigation %}
+  {{ govukServiceNavigation({
+    serviceName: applicationName,
+    serviceUrl: "/",
+    navigation: [
+    {
+      text: "Home",
+      href: "/"
+    },
+    {
+      text: "Search",
+      href: "/search"
+    },
+    {
+      text: "About",
+      href: "/about"
+    }
+    ]
+  }) }}
+{% endblock %}
+
+{% block headerEnd %}
+{# use this block for content that needs to show above main #}
 {% endblock %}
 
 {% block govukFooter %}

@@ -1,0 +1,38 @@
+.hero {
+  background-color: govuk-colour("magenta", $variant: "primary");
+  padding: 70px 15px;
+  &__heading {
+    color: #fff;
+    & span {
+      color: #fff;
+    }
+  }
+  &__description {
+    color: #fff;
+  }
+  &__link {
+    color: #fff;
+    &:hover,
+    &:active,
+    &:visited {
+      color: #fff;
+    }
+  }
+  &__logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 0;
+    margin-right: 0;
+    & img {
+      margin-right: 15px;
+    }
+    & figcaption {
+      color: #fff;
+      font-family: "GDS Transport", arial, sans-serif;
+      font-weight: 400;
+      font-size: 1.1875rem;
+      line-height: 1.3157894737;
+    }
+  }
+}
