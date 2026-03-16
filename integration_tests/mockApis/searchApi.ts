@@ -12,11 +12,11 @@ export default {
         status: httpStatus,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
         jsonBody: {
-          "status": "success",
-          "results": {
-          "knowledge_base_status": true,
-            "embedding_api_status": true
-          }
+          status: 'success',
+          results: {
+            knowledge_base_status: true,
+            embedding_api_status: true,
+          },
         },
       },
     }),
@@ -76,4 +76,3 @@ export default {
       },
     }),
 }
-

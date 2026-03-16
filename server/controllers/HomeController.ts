@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import BaseController from './BaseController'
 import InfoService from '../services/infoService'
-import {ContentFilter} from '../@types/filters'
+import { ContentFilter } from '../@types/filters'
 
 export default class HomeController extends BaseController {
   private infoService: InfoService
@@ -13,9 +13,9 @@ export default class HomeController extends BaseController {
 
   index = async (req: Request, res: Response) => {
     const filters: ContentFilter = {
-      department: req.query.department as string || '',
-      contentType: req.query.contentType as string || '',
-      profession: req.query.profession as string || '',
+      department: (req.query.department as string) || '',
+      contentType: (req.query.contentType as string) || '',
+      profession: (req.query.profession as string) || '',
     }
     const props = {
       // content
@@ -32,11 +32,11 @@ export default class HomeController extends BaseController {
       // active filters
       filters,
       // reset filter links
-      removeContentTypeLink: '/?' + new URLSearchParams({ ...filters, contentType: '' }).toString(),
-      removeDepartmentLink: '/?' + new URLSearchParams({...filters, department: '' }).toString(),
-      removeProfessionLink: '/?' + new URLSearchParams({...filters, profession: '' }).toString(),
+      removeContentTypeLink: `/?${new URLSearchParams({ ...filters, contentType: '' }).toString()}`,
+      removeDepartmentLink: `/?${new URLSearchParams({ ...filters, department: '' }).toString()}`,
+      removeProfessionLink: `/?${new URLSearchParams({ ...filters, profession: '' }).toString()}`,
     }
 
-    return res.render('pages/index', {props})
+    return res.render('pages/index', { props })
   }
 }

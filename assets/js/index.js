@@ -5,6 +5,6 @@ import CookieConsent from './cookieConsent'
 govukFrontend.initAll()
 mojFrontend.initAll()
 
-document.addEventListener('DOMContentLoaded', function() {
-  new CookieConsent()
+document.addEventListener('DOMContentLoaded', function initialiseCookieConsent() {
+  window.cookieConsent = new CookieConsent()
 })

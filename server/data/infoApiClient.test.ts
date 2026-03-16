@@ -1,6 +1,6 @@
 import nock from 'nock'
 import InfoApiClient from './infoApiClient'
-import {ContentFilter} from '../@types/filters'
+import { ContentFilter } from '../@types/filters'
 
 describe('DataApiClient', () => {
   let dataApiClient: InfoApiClient
@@ -20,7 +20,7 @@ describe('DataApiClient', () => {
   })
 
   it('should return an array of designSystemsInfo when calling getDesignSystems', () => {
-    const filter: ContentFilter = {department: '', contentType: '', profession: ''}
+    const filter: ContentFilter = { department: '', contentType: '', profession: '' }
     const designSystemsInfo = dataApiClient.getDesignSystems(filter)
 
     expect(designSystemsInfo).toBeDefined()
@@ -35,7 +35,7 @@ describe('DataApiClient', () => {
   })
 
   it('should filter designSystemsInfo based on department filter', () => {
-    const filter: ContentFilter = {department: 'Ministry of Justice', contentType: '', profession: ''}
+    const filter: ContentFilter = { department: 'Ministry of Justice', contentType: '', profession: '' }
     const designSystemsInfo = dataApiClient.getDesignSystems(filter)
 
     expect(Array.isArray(designSystemsInfo)).toBe(true)
@@ -44,8 +44,12 @@ describe('DataApiClient', () => {
   })
 
   it('should combine filters', () => {
-    //department=Ministry+of+Justice&contentType=Design+systems&profession=All+professions
-    const filter: ContentFilter = {department: 'Ministry of Justice', contentType: 'Products', profession: 'Developer'}
+    // department=Ministry+of+Justice&contentType=Design+systems&profession=All+professions
+    const filter: ContentFilter = {
+      department: 'Ministry of Justice',
+      contentType: 'Products',
+      profession: 'Developer',
+    }
     const designSystemsInfo = dataApiClient.getProducts(filter)
 
     expect(designSystemsInfo[0].department).toBe('Ministry of Justice')

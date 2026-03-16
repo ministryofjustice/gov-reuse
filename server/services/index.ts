@@ -8,7 +8,7 @@ export const services = () => {
   return {
     applicationInfo,
     searchService: new SearchService(searchApiClient),
-    infoService: new InfoService(dataApiClient)
+    infoService: new InfoService(dataApiClient),
   }
 }
 

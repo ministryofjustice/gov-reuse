@@ -1,17 +1,39 @@
-import { DesignSystemInfo, DesignManualInfo, ProductInfo, ServicePatternInfo, StandardInfo, StyleGuideInfo } from '../@types/records'
+import {
+  DesignSystemInfo,
+  DesignManualInfo,
+  ProductInfo,
+  ServicePatternInfo,
+  StandardInfo,
+  StyleGuideInfo,
+} from '../@types/records'
 import contentData from './contentData'
 import { ContentFilter } from '../@types/filters'
 
-export default class InfoApiClient {
+type InfoItem = {
+  title: string
+  description: string
+  url: string
+  department: string
+  contentType: string
+  profession: string
+}
+type InfoTypes = DesignSystemInfo | DesignManualInfo | ProductInfo | ServicePatternInfo | StandardInfo | StyleGuideInfo
 
-  applyFilters = function(items: Array<any>, filters: ContentFilter): Array<any> {
+export default class InfoApiClient {
+  applyFilters = (items: Array<InfoItem>, filters: ContentFilter): Array<InfoTypes> => {
     return items.filter(item => {
       // It's not clean code, but it does the job for our prototype and there's test coverage.
       // We can always refactor later if we decide to add more filters.
       return (
-        (item['contentType'] === filters['contentType'] || "All types" === filters['contentType'] || filters['contentType'] === "")
-        && (item['department'] === filters['department'] || filters['department'] === "All departments" || filters['department'] === "")
-        && (item['profession'].includes(filters['profession']) || filters['profession'] === "All professions" || filters['profession'] === "")
+        (item.contentType === filters.contentType ||
+          filters.contentType === 'All types' ||
+          filters.contentType === '') &&
+        (item.department === filters.department ||
+          filters.department === 'All departments' ||
+          filters.department === '') &&
+        (item.profession.includes(filters.profession) ||
+          filters.profession === 'All professions' ||
+          filters.profession === '')
       )
     })
   }
@@ -48,7 +70,7 @@ export default class InfoApiClient {
     return contentData.filterOptions.contentTypes
   }
 
-  getProfessionsFilters= (): Array<string> => {
+  getProfessionsFilters = (): Array<string> => {
     return contentData.filterOptions.professions
   }
 }

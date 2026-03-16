@@ -5,55 +5,55 @@ import {
   ProductInfo,
   ServicePatternInfo,
   StandardInfo,
-  StyleGuideInfo
+  StyleGuideInfo,
 } from '../@types/records'
 import { ContentFilter } from '../@types/filters'
 
 export default class InfoService {
   constructor(private readonly dataApiClient: InfoApiClient) {}
 
-  getDesignSystems = async (filters:ContentFilter): Promise<Array<DesignSystemInfo>> => {
+  getDesignSystems = async (filters: ContentFilter): Promise<Array<DesignSystemInfo>> => {
     return this.dataApiClient.getDesignSystems(filters)
   }
 
-  getManuals = async (filters:ContentFilter): Promise<Array<DesignManualInfo>> => {
+  getManuals = async (filters: ContentFilter): Promise<Array<DesignManualInfo>> => {
     return this.dataApiClient.getManuals(filters)
   }
 
-  getProducts = async (filters:ContentFilter): Promise<Array<ProductInfo>> => {
+  getProducts = async (filters: ContentFilter): Promise<Array<ProductInfo>> => {
     return this.dataApiClient.getProducts(filters)
   }
 
-  getServicePatterns = async (filters:ContentFilter): Promise<Array<ServicePatternInfo>> => {
+  getServicePatterns = async (filters: ContentFilter): Promise<Array<ServicePatternInfo>> => {
     return this.dataApiClient.getServicePatterns(filters)
   }
 
-  getStandards = async (filters:ContentFilter): Promise<Array<StandardInfo>> => {
+  getStandards = async (filters: ContentFilter): Promise<Array<StandardInfo>> => {
     return this.dataApiClient.getStandards(filters)
   }
 
-  getStyleGuides = async (filters:ContentFilter): Promise<Array<StyleGuideInfo>> => {
+  getStyleGuides = async (filters: ContentFilter): Promise<Array<StyleGuideInfo>> => {
     return this.dataApiClient.getStyleGuides(filters)
   }
 
-  getDepartmentFilters = async (): Promise<Array<{text:string, value:string}>> => {
+  getDepartmentFilters = async (): Promise<Array<{ text: string; value: string }>> => {
     return this.dataApiClient.getDepartmentFilters().map(department => ({
       text: department,
-      value: department
+      value: department,
     }))
   }
 
-  getContentTypesFilters = async (): Promise<Array<{text:string, value:string}>> => {
+  getContentTypesFilters = async (): Promise<Array<{ text: string; value: string }>> => {
     return this.dataApiClient.getContentTypesFilters().map(department => ({
       text: department,
-      value: department
+      value: department,
     }))
   }
 
-  getProfessionsFilters= async (): Promise<Array<{text:string, value:string}>> => {
+  getProfessionsFilters = async (): Promise<Array<{ text: string; value: string }>> => {
     return this.dataApiClient.getProfessionsFilters().map(job => ({
       text: job,
-      value: job
+      value: job,
     }))
   }
 }

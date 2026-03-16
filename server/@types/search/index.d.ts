@@ -1,5 +1,5 @@
 export type SearchRequest = {
-  message: String
+  message: string
 }
 
 export type SearchResponse = {

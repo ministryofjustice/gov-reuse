@@ -10,8 +10,7 @@ let app: Express
 
 beforeEach(() => {
   app = appWithAllRoutes({
-    services: {
-    },
+    services: {},
     userSupplier: () => user,
   })
 })
