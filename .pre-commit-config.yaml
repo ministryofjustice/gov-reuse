@@ -1,9 +1,11 @@
 repos:
   - repo: https://github.com/ministryofjustice/devsecops-hooks
-    rev: v1.5.0
+    rev: 25557b9b5509fb3026eb212b34f0f98ae1f47584
     hooks:
       - id: baseline
-        name: Ministry of Justice - Security scan
+        pass_filenames: false
+      - id: commit
+        pass_filenames: true
 
   - repo: local
     hooks:
@@ -13,8 +15,6 @@ repos:
         language: system
         pass_filenames: false
 
-  - repo: local
-    hooks:
       - id: spellcheck
         name: Spell check
         entry: npm run spellcheck
