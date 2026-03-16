@@ -7,16 +7,16 @@
           <span>{% if params.title %}{{ params.title }}{% else %}{{ "Page Title" }}{% endif %}</span>
         </h1>
         {% if params.description | length %}
-        <p class="govuk-body-l hero__description">{{ params.description }}</p>
+        <p class="govuk-body-m hero__description">{{ params.description }}</p>
         {% endif %}
         {% if params.action.href | length %}
-        <p class="govuk-body-l hero__description">
+        <p class="govuk-body-m hero__description">
           <a class="govuk-link hero__link" href="{{ params.action.href }}">{{ params.action.text }}</a>
         </p>
         {% endif %}
         {% if params.showLogo %}
         <figure class="hero__logo">
-          <img src="./assets/images/crest.svg" class="govuk-!-display-inline-block" alt="Ministry of Justice Crest" width="80px" height="67">
+          <img src="/assets/images/crest.svg" class="govuk-!-display-inline-block" alt="Ministry of Justice Crest" width="80px" height="67">
           <figcaption class="govuk-!-display-inline-block">
             <span>Curated by<br> Ministry of Justice</span>
           </figcaption>

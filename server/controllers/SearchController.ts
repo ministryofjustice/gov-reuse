@@ -37,9 +37,9 @@ export default class SearchController extends BaseController {
   search = async (req: Request, res: Response) => {
     let formError = ''
     // ensure search query is a string before validating length, to avoid type confusion.
-    if (typeof req.query.searchQuery !== "string") {
-      formError = "Invalid data type for search query"
-      return res.status(422).render('pages/search/index', { props: { formError, searchQuery: "" } })
+    if (typeof req.query.searchQuery !== 'string') {
+      formError = 'Invalid data type for search query'
+      return res.status(422).render('pages/search/index', { props: { formError, searchQuery: '' } })
     }
     const query = req.query.searchQuery
     if (query.length < 10) {
@@ -63,7 +63,6 @@ export default class SearchController extends BaseController {
     const props = {
       formError,
       searchQuery: query,
-      message: searchResults.message,
       // Search results
       components: searchResults.components,
       // Data to be replaced with search results from the search service

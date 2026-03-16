@@ -2,10 +2,6 @@ import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes, user } from './testutils/appSetup'
 
-jest.mock('../services/exampleService')
-
-// const exampleService = new ExampleService(null) as jest.Mocked<ExampleService>
-
 let app: Express
 
 beforeEach(() => {

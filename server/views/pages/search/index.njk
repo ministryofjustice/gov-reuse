@@ -8,12 +8,13 @@
 {% block headerEnd %}
   {{
     hero({
-      title: "Search all design systems for reusable assets",
-      description: "Describe what you need in your own words. The AI will do the rest."
+      title: "Search all design systems for reusable assets"
     })
   }}
   <form method="get" action="/search-results/?">
+
   {% include "../../partials/enhancedSearch.njk" %}
+
   {% if props.message | length %}
     <section class="govuk-!-padding-top-7 govuk-!-padding-bottom-8">
       <div class="govuk-width-container">
@@ -31,7 +32,9 @@
     </section>
   {% endif %}
 
-  {% include "../../partials/contentFilters.njk" %}
+{# Filtering will be added again in the future. #}
+{#  {% include "../../partials/contentFilters.njk" %}#}
+
   </form>
 {% endblock %}
 
@@ -68,7 +71,7 @@
 
   {% if props.servicePatterns | length %}
     <section>
-      <h2 class="govuk-heading-l">Popular service patterns</h2>
+      <h2 class="govuk-heading-l">Most viewed patterns</h2>
       <div class="govuk-width-container">
         <ul class="govuk-grid-row card-group">
           {% for item in props.servicePatterns %}
@@ -91,7 +94,7 @@
 
   {% if props.styleGuides | length %}
     <section>
-      <h2 class="govuk-heading-l">Popular style guides</h2>
+      <h2 class="govuk-heading-l">Most viewed style guides</h2>
       <div class="govuk-width-container">
         <ul class="govuk-grid-row card-group">
           {% for item in props.styleGuides %}

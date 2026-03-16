@@ -116,7 +116,7 @@ const contentData = {
           url: 'https://dev.reuselibrary.service.justice.gov.uk/assets/ai-context.md',
           department: 'Ministry of Justice',
           contentType: 'Manuals',
-          profession: 'Interaction design',
+          profession: 'Interaction designer',
           tags: ['New'],
         },
 
@@ -170,7 +170,7 @@ const contentData = {
           url: 'https://design.education.gov.uk/',
           department: 'Department for Education',
           contentType: 'Manuals',
-          profession: 'Interaction design, Content design, Service design',
+          profession: 'Interaction designer, Content design, Service designer',
         },
         {
           title: 'DfE user research manual',
@@ -208,7 +208,7 @@ const contentData = {
         {
           title: 'Home Office Design Manual',
           description: 'Use the UCD Manual to create consistent services that put users first',
-          url: ' https://design.homeoffice.gov.uk/',
+          url: 'https://design.homeoffice.gov.uk/',
           department: 'Home Office',
           contentType: 'Manuals',
           profession: 'All professions',
@@ -458,7 +458,7 @@ const contentData = {
             'A long-term vision and six-point plan for digital public services across UK government, published January 2025',
           url: 'https://www.gov.uk/government/publications/a-blueprint-for-modern-digital-government',
           department: 'GOV.UK',
-          contentType: 'Standard',
+          contentType: 'Standards',
           profession: 'All professions',
         },
         {
@@ -526,8 +526,8 @@ const contentData = {
           description: 'You must meet these standards when creating URLs to be used on GOV.UK',
           url: 'https://www.gov.uk/guidance/content-design/url-standards-for-gov-uk',
           department: 'GOV.UK',
-          contentType: 'Standard',
-          profession: 'Content Designer',
+          contentType: 'Standards',
+          profession: 'Content designer',
         },
       ],
     },

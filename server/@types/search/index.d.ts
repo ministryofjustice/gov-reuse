@@ -12,7 +12,7 @@ export type Component = {
   url: string
   description: string
   parent: string
-  accessability: string
+  accessibility: string
   created_at: string
   updated_at: string
   has_research: boolean

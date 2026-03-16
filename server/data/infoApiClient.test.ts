@@ -3,10 +3,10 @@ import InfoApiClient from './infoApiClient'
 import { ContentFilter } from '../@types/filters'
 
 describe('DataApiClient', () => {
-  let dataApiClient: InfoApiClient
+  let infoApiClient: InfoApiClient
 
   beforeEach(() => {
-    dataApiClient = new InfoApiClient()
+    infoApiClient = new InfoApiClient()
   })
 
   afterEach(() => {
@@ -15,13 +15,13 @@ describe('DataApiClient', () => {
   })
 
   it('should initialise DataApiClient instance correctly', () => {
-    expect(dataApiClient).toBeDefined()
-    expect(dataApiClient).toBeInstanceOf(InfoApiClient)
+    expect(infoApiClient).toBeDefined()
+    expect(infoApiClient).toBeInstanceOf(InfoApiClient)
   })
 
   it('should return an array of designSystemsInfo when calling getDesignSystems', () => {
     const filter: ContentFilter = { department: '', contentType: '', profession: '' }
-    const designSystemsInfo = dataApiClient.getDesignSystems(filter)
+    const designSystemsInfo = infoApiClient.getDesignSystems(filter)
 
     expect(designSystemsInfo).toBeDefined()
     expect(Array.isArray(designSystemsInfo)).toBe(true)
@@ -36,7 +36,7 @@ describe('DataApiClient', () => {
 
   it('should filter designSystemsInfo based on department filter', () => {
     const filter: ContentFilter = { department: 'Ministry of Justice', contentType: '', profession: '' }
-    const designSystemsInfo = dataApiClient.getDesignSystems(filter)
+    const designSystemsInfo = infoApiClient.getDesignSystems(filter)
 
     expect(Array.isArray(designSystemsInfo)).toBe(true)
     expect(designSystemsInfo.length).toBe(1)
@@ -50,7 +50,7 @@ describe('DataApiClient', () => {
       contentType: 'Products',
       profession: 'Developer',
     }
-    const designSystemsInfo = dataApiClient.getProducts(filter)
+    const designSystemsInfo = infoApiClient.getProducts(filter)
 
     expect(designSystemsInfo[0].department).toBe('Ministry of Justice')
     expect(designSystemsInfo[0].contentType).toBe('Products')

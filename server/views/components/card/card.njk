@@ -9,18 +9,23 @@
     {% if params.views %}
       <p>Views <span>{{ params.views }}</span></p>
     {% endif %}
+
     {% if params.lastUpdated | length %}
       <p>Updated <time>{{ params.lastUpdated }}</time></p>
     {% endif %}
 
-    {% if params.showStatus %}
+    {% if params.showStatus and params.department === "MOJ Design System" %}
       {% if params.status == "Official" %}
-        <p>{{ govukTag({text: "Official", classes: "govuk-tag--teal"}) }}</p>
-      {% elseif params.status == "To be reviewed"  %}
+        <p>{{ govukTag({text: "MOJ-Official", classes: "govuk-tag--teal"}) }}</p>
+      {% elseif params.status == "MOJ-To be reviewed"  %}
         <p>{{ govukTag({text: "To be reviewed", classes: "govuk-tag--orange"}) }}</p>
       {% else %}
-        <p>{{ govukTag({text: "Accessible", classes: "govuk-tag--error"}) }}</p>
+        <p>{{ govukTag({text: "MOJ-Experimental", classes: "govuk-tag--error"}) }}</p>
       {% endif %}
+    {% endif %}
+
+    {% if params.accessibility | length %}
+      <p>{{ govukTag({text: "Accessable", classes: "govuk-tag--teal"}) }}</p>
     {% endif %}
 
     {% if params.showResearch %}
@@ -30,6 +35,7 @@
         <p>{{ govukTag({text: "Needs research", classes: "govuk-tag--yellow"}) }}</p>
       {% endif %}
     {% endif %}
+
     {% if params.showDepartment %}
       {% if params.department | length %}
         <p>Source: <span>{{ params.department }}</span></p>
