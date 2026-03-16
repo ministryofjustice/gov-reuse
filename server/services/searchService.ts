@@ -2,7 +2,7 @@ import SearchApiClient from '../data/searchApiClient'
 import { SearchResponse } from '../@types/search'
 
 export default class SearchService {
-  private readonly searchApiClient
+  private readonly searchApiClient: SearchApiClient
 
   constructor(searchApiClient: SearchApiClient) {
     this.searchApiClient = searchApiClient

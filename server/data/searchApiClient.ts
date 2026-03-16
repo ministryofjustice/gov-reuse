@@ -3,7 +3,7 @@ import { SearchResponse } from '../@types/search'
 import config from '../config'
 import logger from '../../logger'
 
-export default class searchApiClient extends RestClient {
+export default class SearchApiClient extends RestClient {
   constructor() {
     super('search-api', config.apis.searchApi, logger)
   }

@@ -65,6 +65,7 @@ export default class SearchController extends BaseController {
       searchQuery: query,
       // Search results
       components: searchResults.components,
+      message: searchResults.message,
       // Data to be replaced with search results from the search service
       servicePatterns: servicePatterns.slice(0, 3),
       styleGuides: styleGuides.slice(0, 3),

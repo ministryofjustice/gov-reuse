@@ -2,7 +2,7 @@ import nock from 'nock'
 import InfoApiClient from './infoApiClient'
 import { ContentFilter } from '../@types/filters'
 
-describe('DataApiClient', () => {
+describe('InfoApiClient', () => {
   let infoApiClient: InfoApiClient
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('DataApiClient', () => {
     jest.resetAllMocks()
   })
 
-  it('should initialise DataApiClient instance correctly', () => {
+  it('should initialise InfoApiClient instance correctly', () => {
     expect(infoApiClient).toBeDefined()
     expect(infoApiClient).toBeInstanceOf(InfoApiClient)
   })
