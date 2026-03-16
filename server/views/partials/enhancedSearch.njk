@@ -1,0 +1,29 @@
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+<section class="govuk-!-padding-top-8 govuk-!-padding-bottom-5" id="enhanced-search">
+  <div class="govuk-width-container">
+      {{ govukTextarea({
+        name: "searchQuery",
+        id: "search-query",
+        rows: "4",
+        value: props.searchQuery,
+        spellcheck: "true",
+        label: {
+          text: "Describe what your looking for",
+          classes: "govuk-label--l",
+          isPageHeading: false
+        },
+        hint: {
+          text: "Example: I want to help users find something in the service"
+        },
+        errorMessage: {
+          text: props.formError
+        } if props.formError
+      }) }}
+      {{ govukButton({
+        text: "Search design systems",
+        preventDoubleClick: true
+      }) }}
+  </div>
+</section>
