@@ -5,37 +5,37 @@
   "repository": "git@github.com:ministryofjustice/gov-reuse.git",
   "license": "MIT",
   "scripts": {
-    "prepare": "hmpps-precommit-hooks-prepare",
-    "watch-ts": "tsc -w",
     "build": "node esbuild/esbuild",
+    "clean": "rm -rf dist test_results",
+    "housekeeping": "npm audit && npm run validate:all && npx sort-package-json",
+    "int-test": "npx playwright test",
+    "int-test-init:ci": "npx playwright install",
+    "int-test-ui": "npx playwright test --ui",
+    "lint": "eslint . --cache --max-warnings 0",
+    "lint-fix": "eslint . --cache --max-warnings 0 --fix",
+    "precommit:lint": "lint-staged",
+    "precommit:secrets": "gitleaks git --pre-commit --redact --staged --verbose --config .gitleaks/config.toml --gitleaks-ignore-path .gitleaks/.gitleaksignore",
+    "precommit:verify": "npm run typecheck && npm test",
+    "prepare": "hmpps-precommit-hooks-prepare",
+    "rebuild": "npm run clean && npm run setup && npm run build",
+    "security_audit": "npx audit-ci --config audit-ci.json",
+    "setup": "npm ci && hmpps-npm-script-run-allowlist",
+    "spellcheck": "cspell lint --gitignore --no-must-find-files --unique --no-progress --show-suggestions --color **/*",
     "start": "node $NODE_OPTIONS dist/server.js | bunyan -o short",
     "start:dev": "node esbuild/esbuild --watch",
     "start-feature": " node $NODE_DEBUG_OPTION --env-file=feature.env dist/server.js | bunyan -o short",
     "start-feature:dev": "node esbuild/esbuild --watch --env feature.env",
-    "lint": "eslint . --cache --max-warnings 0",
-    "lint-fix": "eslint . --cache --max-warnings 0 --fix",
-    "typecheck": "tsc && tsc -p integration_tests",
     "test": "jest",
     "test:ci": "jest --runInBand",
-    "security_audit": "npx audit-ci --config audit-ci.json",
-    "int-test": "npx playwright test",
-    "int-test-ui": "npx playwright test --ui",
-    "int-test-init:ci": "npx playwright install",
-    "clean": "rm -rf dist test_results",
-    "rebuild": "npm run clean && npm run setup && npm run build",
-    "precommit:secrets": "gitleaks git --pre-commit --redact --staged --verbose --config .gitleaks/config.toml --gitleaks-ignore-path .gitleaks/.gitleaksignore",
-    "precommit:lint": "lint-staged",
-    "precommit:verify": "npm run typecheck && npm test",
-    "setup": "npm ci && hmpps-npm-script-run-allowlist",
-    "validate:ts": "npx tsc --noEmit --project ./tsconfig.json",
+    "typecheck": "tsc && tsc -p integration_tests",
     "validate:all": "npm run validate:ts && npm run lint && npm run validate:yml && npm run validate:md",
-    "validate:yml": "npx yaml-lint **/*.yml --ignore=**/node_modules",
     "validate:md": "npx markdownlint-cli --config .markdownlint.json \"**/*.md\"",
-    "spellcheck": "cspell lint --gitignore --no-must-find-files --unique --no-progress --show-suggestions --color **/*"
+    "validate:ts": "npx tsc --noEmit --project ./tsconfig.json",
+    "validate:yml": "npx yaml-lint **/*.yml --ignore=**/node_modules",
+    "watch-ts": "tsc -w"
   },
-  "engines": {
-    "node": "^24",
-    "npm": "^11"
+  "overrides": {
+    "tar": "^7.5.8"
   },
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.978.0",
@@ -110,7 +110,8 @@
     "typescript": "^5.9.3",
     "yaml-lint": "^1.7.0"
   },
-  "overrides": {
-    "tar": "^7.5.8"
+  "engines": {
+    "node": "^24",
+    "npm": "^11"
   }
 }
