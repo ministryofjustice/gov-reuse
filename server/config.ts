@@ -56,8 +56,17 @@ export default {
         deadline: Number(get('EXAMPLE_API_TIMEOUT_DEADLINE', 5000)),
       },
       agent: new AgentConfig(Number(get('EXAMPLE_API_TIMEOUT_RESPONSE', 5000))),
-      // TODO: set this to true when we implement this API
       enabled: false,
+    },
+    searchApi: {
+      url: get('SEARCH_API_URL', 'http://localhost:8080', requiredInProduction),
+      healthPath: '/health',
+      timeout: {
+        response: Number(get('SEARCH_API_TIMEOUT_RESPONSE', 5000)),
+        deadline: Number(get('SEARCH_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('SEARCH_API_TIMEOUT_RESPONSE', 5000))),
+      enabled: true,
     },
   },
   sqs: {

@@ -1,0 +1,84 @@
+// Original component from the MOJ Design System: https://design-patterns.service.justice.gov.uk/components/card/#code-tab
+// Ported to SCSS
+.card {
+  margin-bottom: 40px;
+  background: #F7F7F7;
+  border: 1px solid #d9dadb;
+  position: relative;
+  width: 100%;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  &__heading {
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+  &__description {
+    margin-bottom: 0;
+    flex-grow: 1;
+  }
+  &--clickable {
+    border-bottom-width: 5px;
+  }
+  &--clickable:hover,
+  &--clickable:active {
+    cursor: pointer;
+  }
+  &--clickable:hover .card__heading a,
+  &--clickable:hover .card__link,
+  &--clickable:active .card__heading a,
+  &--clickable:active .card__link {
+    color: #003078;
+    text-decoration: none;
+  }
+  &--clickable:hover .card__heading a:focus,
+  &--clickable:hover .card__link:focus,
+  &--clickable:active .card__heading a:focus,
+  &--clickable:active .card__link:focus {
+    outline: 3px solid transparent;
+    color: #0b0c0c;
+    background-color: #fd0;
+    box-shadow: 0 -2px #fd0,0 4px #0b0c0c;
+    text-decoration: none;
+  }
+  &--clickable:hover {
+    border-color: #b1b4b6;
+  }
+  &--clickable:active {
+    border-color: #b1b4b6;
+    bottom: -1px;
+  }
+  &__footer {
+    margin-top: 40px;
+  }
+}
+
+.card-group {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 60px;
+  padding: 0;
+  @media(max-width: 48.0525em) {
+    margin-bottom:30px;
+  }
+
+  &__item {
+    display: flex;
+    list-style-type: none;
+    margin-bottom: 0;
+    @media(max-width: 48.0525em) {
+      flex: 0 0 100%
+    }
+    & .card {
+      margin-bottom: 25px;
+    }
+    @media(max-width: 48.0525em) {
+      .card {
+        margin-bottom:15px;
+      }
+      &:last-child .card {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

@@ -18,7 +18,10 @@
     "dompurify",
     "jsdom",
     "sanitise",
-    "sanitised"
+    "sanitised",
+    "HMRC",
+    "rgovspeak",
+    "govspeak"
   ],
   "dictionaries": ["en-gb", "companies", "softwareTerms", "misc", "lorem-ipsum", "typescript", "node", "bash", "npm"],
   "languageSettings": [

@@ -1,12 +1,153 @@
 {% extends "../partials/layout.njk" %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{%- from "../components/card/macro.njk" import card -%}
+{%- from "../components/hero/macro.njk" import hero -%}
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "govuk-body" %}
 
+{% block headerEnd %}
+  {{
+    hero({
+      title: "Gov Reuse Library",
+      description: "Find reusable government components, patterns and content styles to design consistent services and reduce rework.",
+      showLogo: true
+    })
+  }}
+<form method="get" action="/?">
+  {% include "../partials/contentFilters.njk" %}
+</form>
+{% endblock %}
+
 {% block content %}
 
-  <h1>This site is under construction...</h1>
-  <p>Please check back later when there is content to view.</p>
-  <p data-qa="timestamp">The time is currently {{ currentTime }}</p>
+{% if props.designSystems | length %}
+<section>
+ <h2 class="govuk-heading-l">Design systems</h2>
+  <div class="govuk-width-container">
+    <ul class="govuk-grid-row card-group">
+      {% for item in props.designSystems %}
+        <li class="govuk-grid-column-one-third card-group__item">
+          {{ card({
+            title: item.title,
+            description: item.description,
+            url: item.url,
+            department: item.department
+          }) }}
+        </li>
+      {% else %}
+        <p>No data.</p>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}
+{% if props.manuals | length %}
+<section>
+  <h2 class="govuk-heading-l">Manuals</h2>
+  <div class="govuk-width-container">
+    <ul class="govuk-grid-row card-group">
+      {% for item in props.manuals %}
+        <li class="govuk-grid-column-one-third card-group__item">
+          {{ card({
+            title: item.title,
+            description: item.description,
+            url: item.url,
+            department: item.department
+          }) }}
+        </li>
+      {% else %}
+        <p>No data.</p>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}
+{% if props.products | length %}
+<section>
+  <h2 class="govuk-heading-l">Products</h2>
+  <div class="govuk-width-container">
+    <ul class="govuk-grid-row card-group">
+      {% for item in props.products %}
+        <li class="govuk-grid-column-one-third card-group__item">
+          {{ card({
+            title: item.title,
+            description: item.description,
+            url: item.url,
+            department: item.department
+          }) }}
+        </li>
+      {% else %}
+        <p>No data.</p>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}
+{% if props.servicePatterns | length %}
+<section>
+  <h2 class="govuk-heading-l">Service patterns</h2>
+  <div class="govuk-width-container">
+    <ul class="govuk-grid-row card-group">
+      {% for item in props.servicePatterns %}
+        <li class="govuk-grid-column-one-third card-group__item">
+          {{ card({
+            title: item.title,
+            description: item.description,
+            url: item.url,
+            department: item.department
+          }) }}
+        </li>
+      {% else %}
+        <p>No data.</p>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}
+{% if props.standards | length %}
+<section>
+  <h2 class="govuk-heading-l">Standards</h2>
+  <div class="govuk-width-container">
+    <ul class="govuk-grid-row card-group">
+      {% for item in props.standards %}
+        <li class="govuk-grid-column-one-third card-group__item">
+          {{ card({
+            title: item.title,
+            description: item.description,
+            url: item.url,
+            showDepartment: true,
+            department: item.department
+          }) }}
+        </li>
+      {% else %}
+        <p>No data.</p>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}
+{% if props.styleGuides | length %}
+<section>
+  <h2 class="govuk-heading-l">Style guides</h2>
+  <div class="govuk-width-container">
+    <ul class="govuk-grid-row card-group">
+      {% for item in props.styleGuides %}
+        <li class="govuk-grid-column-one-third card-group__item">
+          {{ card({
+            title: item.title,
+            description: item.description,
+            url: item.url,
+            showDepartment: true,
+            department: item.department
+          }) }}
+        </li>
+      {% else %}
+        <p>No data.</p>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}
 
 {% endblock %}

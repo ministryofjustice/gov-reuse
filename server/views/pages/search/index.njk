@@ -1,0 +1,118 @@
+{% extends "../../partials/layout.njk" %}
+{%- from "../../components/card/macro.njk" import card -%}
+{%- from "../../components/hero/macro.njk" import hero -%}
+
+{% set pageTitle = applicationName + " - Search" %}
+{% set mainClasses = "govuk-body" %}
+
+{% block headerEnd %}
+  {{
+    hero({
+      title: "Search all design systems for reusable assets"
+    })
+  }}
+  <form method="get" action="/search-results/?">
+
+  {% include "../../partials/enhancedSearch.njk" %}
+
+  {% if props.message | length %}
+    {#<section class="govuk-!-padding-top-7 govuk-!-padding-bottom-8">
+      <div class="govuk-width-container">
+        <h2 class="govuk-heading-l">
+          <span>Showing results for</span>
+          <span class="govuk-!-font-weight-regular">‘{{ props.searchQuery | truncate(50) }}’</span>
+        </h2>
+        <div class="govuk-width-container">
+          <div id="ai-summary-box" class="govuk-!-padding-6">
+            <h3 class="govuk-heading-m">AI Summary</h3>
+            <p>{{ props.message }}</p>
+          </div>
+        </div>
+      </div>
+    </section>#}
+  {% endif %}
+
+{# Filtering will be added again in the future. #}
+{#  {% include "../../partials/contentFilters.njk" %}#}
+
+  </form>
+{% endblock %}
+
+{% block content %}
+
+  {% if props.components | length %}
+    <section>
+      <h2 class="govuk-heading-l">Components</h2>
+      <div class="govuk-width-container">
+        <ul class="govuk-grid-row card-group">
+          {% for item in props.components %}
+            <li class="govuk-grid-column-one-third card-group__item">
+              {{ card({
+                title: item.title,
+                description: item.description,
+                url: item.url,
+                department: item.parent,
+                accessibility: item.accessibility,
+                showStatus: true,
+                status: "Official",
+                lastUpdated: item.updated_at,
+                showResearch: true,
+                hasResearch: item.has_research,
+                views: item.views
+              }) }}
+            </li>
+          {% else %}
+            <p>No data.</p>
+          {% endfor %}
+        </ul>
+      </div>
+    </section>
+  {% endif %}
+
+  {% if props.servicePatterns | length %}
+    <section>
+      <h2 class="govuk-heading-l">Most viewed patterns</h2>
+      <div class="govuk-width-container">
+        <ul class="govuk-grid-row card-group">
+          {% for item in props.servicePatterns %}
+            <li class="govuk-grid-column-one-third card-group__item">
+              {{ card({
+                title: item.title,
+                description: item.description,
+                url: item.url,
+                showDepartment: true,
+                department: item.department
+              }) }}
+            </li>
+          {% else %}
+            <p>No data.</p>
+          {% endfor %}
+        </ul>
+      </div>
+    </section>
+  {% endif %}
+
+  {% if props.styleGuides | length %}
+    <section>
+      <h2 class="govuk-heading-l">Most viewed style guides</h2>
+      <div class="govuk-width-container">
+        <ul class="govuk-grid-row card-group">
+          {% for item in props.styleGuides %}
+            <li class="govuk-grid-column-one-third card-group__item">
+              {{ card({
+                title: item.title,
+                description: item.description,
+                url: item.url,
+                showDepartment: true,
+                department: item.department
+              }) }}
+            </li>
+          {% else %}
+            <p>No data.</p>
+          {% endfor %}
+        </ul>
+      </div>
+    </section>
+  {% endif %}
+
+{% endblock %}
