@@ -1,38 +1,31 @@
-# Lint Check Workflow
-#
-# Purpose:
-#   Performs automated code quality and formatting checks to ensure consistency
-#   and adherence to project standards.
-#
-# Triggers:
-#   - pull_request: When PRs target the any branch
-#
-# Permissions:
-#   - contents: read - Required for accessing repository contents
+# Workflow: Lint check ✏️
+# Purpose: Automated linting and validation workflow that runs on all branches
+# Triggers: Push events to any branch
 #
 # Jobs:
-#   setup:
-#     - Prepares the infrastructure and environment configuration
-#     - Outputs: environment name and timezone for downstream jobs
+#   1. setup
+#      - Initializes workflow infrastructure
+#      - Sets up environment variables (environment: base, timezone from vars)
+#      - Outputs environment and timezone for downstream jobs
+#      - Minimal permissions (default: none)
 #
-#   lint:
-#     - Checks out the repository code
-#     - Configures Node.js environment
-#     - Installs project dependencies
-#     - Executes validation checks:
-#       * Markdown formatting (validate:md)
-#       * YAML formatting (validate:yml)
-#       * TypeScript linting and type checking (lint:ts, validate:ts)
-#       * Renovate configuration validation (validate:renovate)
-#       * Spell checking (spellcheck)
+#   2. lint
+#      - Depends on: setup job
+#      - Permissions: read-only access to contents
+#      - Runs on: ubuntu-latest
+#      - Environment: Uses output from setup job
+#      - Steps:
+#        - Validates commits using custom devsecops-actions (v1.3.0)
+#        - Checks out repository code (actions/checkout v6.0.2)
+#        - Sets up Node.js runtime (v${{ vars.NODE_VERSION }})
+#        - Installs dependencies via npm ci
+#        - Validates markdown files (validate:md)
+#        - Validates YAML files (validate:yml)
+#        - Lints and validates TypeScript (lint:ts, validate:ts)
+#        - Validates Renovate configuration (validate:renovate)
+#        - Runs spell checker (spellcheck)
 #
-# Configuration:
-#   - Environment: base (configurable via env vars)
-#   - Timezone: Configurable via repository variables (TIMEZONE)
-#
-# Required Variables:
-#   - TIMEZONE: Repository variable defining the timezone for operations
-#   - NODE_VERSION: Node.js version for the runtime environment
+# Status: Part of PR #126 - feat(125-commit-validation): added commintlint validation
 
 name: Lint check ✏️
 run-name: Lint check ✏️
@@ -44,47 +37,28 @@ on:
 
 permissions: {}
 
-env:
-  environment: base
-  timezone: ${{ vars.TIMEZONE }}
-
 jobs:
-  # 1. Setup test infrastructure
-  setup:
-    name: Infrastructure 🔧
-    runs-on: ["ubuntu-latest"]
-    outputs:
-      environment: ${{ env.environment }}
-      timezone: ${{ env.timezone }}
-    steps:
-      - name: Environment 🧪
-        run: echo "Environment set to ${{ env.environment }}"
-
-      - name: Timezone 🌐
-        run: echo "Timezone set to ${{ env.timezone }}"
-
-  # 2. Various lint checks
   lint:
     permissions:
       contents: read
 
     name: Lint ✏️
-    needs: setup
-    environment:
-      name: ${{ needs.setup.outputs.environment }}
     runs-on: ["ubuntu-latest"]
 
     steps:
-      - name: Commit
-        uses: ministryofjustice/devsecops-actions/github/commit@f965eb1771ec66cfc41d7d57dc607fa6dfbc10ed # v1.4.0
-
-      - name: Repository
+      - name: 📦 Repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Node
-        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.1.0
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: ${{ vars.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: ${{ github.workspace }}/package-lock.json
+
+      # SLSA included
+      - name: Commit
+        uses: ministryofjustice/devsecops-actions/github/commit@f7b371c0b765b7b8c2f19c6adc822b6ccc451b32 # v1.5.0
 
       - name: Install
         shell: bash
@@ -101,8 +75,12 @@ jobs:
       - name: TS
         shell: bash
         run: |
-          npm run lint
+          npm run lint:ts
           npm run validate:ts
+
+      - name: Renovate
+        shell: bash
+        run: npm run validate:renovate
 
       - name: Spellcheck
         shell: bash
