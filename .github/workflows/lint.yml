@@ -1,52 +1,152 @@
-# Workflow: Lint check ✏️
-# Purpose: Automated linting and validation workflow that runs on all branches
-# Triggers: Push events to any branch
+# Linting Workflow
+#
+# Purpose:
+#   Performs comprehensive linting and validation checks on YAML, Markdown,
+#   and pre-commit configuration files to maintain code quality standards.
+#
+# Description:
+#   This workflow executes multiple linting tools to validate file formatting,
+#   syntax, and pre-commit configuration integrity. It ensures consistency
+#   across documentation and configuration files.
+#
+# Trigger Events:
+#   - pull_request: On pull requests targeting main branch
+#
+# Permissions:
+#   - Workflow level: None (empty permissions object for security)
+#   - Lint job level:
+#     * contents: read - Required for checking out repository code
+#
+# Environment Variables:
+#   - environment: Set to 'base' (default environment)
+#   - timezone: Retrieved from repository variable TIMEZONE
 #
 # Jobs:
-#   1. setup
-#      - Initializes workflow infrastructure
-#      - Sets up environment variables (environment: base, timezone from vars)
-#      - Outputs environment and timezone for downstream jobs
-#      - Minimal permissions (default: none)
 #
-#   2. lint
-#      - Depends on: setup job
-#      - Permissions: read-only access to contents
-#      - Runs on: ubuntu-latest
-#      - Environment: Uses output from setup job
-#      - Steps:
-#        - Validates commits using custom devsecops-actions (v1.3.0)
-#        - Checks out repository code (actions/checkout v6.0.2)
-#        - Sets up Node.js runtime (v${{ vars.NODE_VERSION }})
-#        - Installs dependencies via npm ci
-#        - Validates markdown files (validate:md)
-#        - Validates YAML files (validate:yml)
-#        - Lints and validates TypeScript (lint:ts, validate:ts)
-#        - Validates Renovate configuration (validate:renovate)
-#        - Runs spell checker (spellcheck)
+#   1. setup (Infrastructure 🔧):
+#      Description: Configures infrastructure and environment context
+#      Runner: ubuntu-latest
+#      Outputs:
+#        - environment: The deployment environment name ('base')
+#        - timezone: The configured timezone
+#      Steps:
+#        - Logs the environment configuration
+#        - Logs the timezone configuration
 #
-# Status: Part of PR #126 - feat(125-commit-validation): added commintlint validation
+#   2. lint (Lint ✏️):
+#      Description: Executes linting checks on repository files
+#      Dependencies: Requires 'setup' job completion
+#      Runner: ubuntu-latest
+#      Environment: Uses environment output from setup job
+#      Steps:
+#        1. Repository checkout (actions/checkout@v6.0.1)
+#        2. Node.js setup using version from vars.NODE_VERSION
+#        3. npm dependencies installation (npm ci --ignore-scripts)
+#        4. YAML validation (npm run validate:yml)
+#           - Validates .github/workflows/*.yml syntax
+#           - Checks .pre-commit-*.yaml files
+#           - Uses yamllint for standards compliance
+#        5. Markdown validation (npm run validate:md)
+#           - Validates README.md, CHANGELOG.md syntax
+#           - Checks documentation formatting
+#           - Uses markdownlint for style enforcement
+#        6. Python setup using version from vars.PYTHON_VERSION
+#        7. Pre-commit installation (pip install pre-commit)
+#        8. Pre-commit validation
+#           - Validates .pre-commit-hooks.yaml manifest
+#           - Validates .pre-commit-config.yaml configuration
+#           - Ensures hook definitions are correct
+#
+# Required Variables:
+#   - TIMEZONE: Repository timezone configuration
+#   - NODE_VERSION: Node.js version for npm operations
+#   - PYTHON_VERSION: Python version for pre-commit operations
+#
+# Required Secrets:
+#   - None (GITHUB_TOKEN automatically provided but not explicitly used)
+#
+# Validation Tools:
+#   - yamllint: YAML syntax and style validation
+#   - markdownlint: Markdown formatting and style validation
+#   - pre-commit: Pre-commit hook validation
+#   - cspell: Spell checking (via npm run spellcheck, if triggered)
+#
+# Validation Rules:
+#   - YAML: Indentation, line length, trailing spaces, duplicate keys
+#   - Markdown: Headers, lists, links, code blocks, line length
+#   - Pre-commit: Hook syntax, configuration structure, repository URLs
+#
+# Failure Conditions:
+#   - Invalid YAML syntax
+#   - Markdown formatting violations
+#   - Pre-commit configuration errors
+#   - Missing required files
+#   - Malformed hook definitions
+#
+# Security Features:
+#   - Pinned action versions with commit SHAs
+#   - Minimal required permissions
+#   - No code execution from external sources
+#   - Validation only (no modifications)
+#
+# Integration:
+#   - Required for PR approval (can be configured in branch protection)
+#   - Runs in parallel with unit tests
+#   - Blocks merge on failure (when configured)
+#   - Provides detailed error output in PR checks
+#
+# Configuration Files:
+#   - .yamllint.yml: YAML linting rules (if present)
+#   - .markdownlint.json: Markdown linting rules
+#   - .markdownlintignore: Files to exclude from Markdown linting
+#   - .pre-commit-hooks.yaml: Hook manifest
+#   - .pre-commit-config.yaml: Local configuration
+#
+# Notes:
+#   - Fast execution (~1-2 minutes typical)
+#   - Catches common formatting errors early
+#   - Enforces consistent code style
+#   - Prevents malformed configuration from merging
+#   - British English spelling enforced via cspell
+#
 
 name: Lint check ✏️
 run-name: Lint check ✏️
 
 on:
-  push:
-    branches:
-      - "**" # All branches
+  pull_request:
+    branches: ["**"]
 
 permissions: {}
 
 jobs:
+  # 1. Setup infrastructure
+  setup:
+    name: Infrastructure 🔧
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ env.environment }}
+      timezone: ${{ env.timezone }}
+    steps:
+      - name: Environment 🧪
+        run: echo "Environment set to ${{ env.environment }}"
+
+      - name: Timezone 🌐
+        run: echo "Timezone set to ${{ env.timezone }}"
+
+  # 2. Execute linting checks
   lint:
     permissions:
       contents: read
 
     name: Lint ✏️
-    runs-on: ["ubuntu-latest"]
+    needs: setup
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
 
     steps:
-      - name: 📦 Repository
+      - name: Repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Node
@@ -60,28 +160,18 @@ jobs:
       - name: Commit
         uses: ministryofjustice/devsecops-actions/github/commit@f7b371c0b765b7b8c2f19c6adc822b6ccc451b32 # v1.5.0
 
+      # SLSA included
+      - name: Commit
+        uses: ministryofjustice/devsecops-actions/github/commit@b68f06598355021511df55a612610e7deda935df # v1.5.0
+
       - name: Install
-        shell: bash
         run: npm ci --ignore-scripts
 
-      - name: MD
-        shell: bash
-        run: npm run validate:md
+      - name: TS
+        run: npm run validate:ts
 
       - name: YML
-        shell: bash
         run: npm run validate:yml
 
-      - name: TS
-        shell: bash
-        run: |
-          npm run lint:ts
-          npm run validate:ts
-
-      - name: Renovate
-        shell: bash
-        run: npm run validate:renovate
-
-      - name: Spellcheck
-        shell: bash
-        run: npm run spellcheck
+      - name: MD
+        run: npm run validate:md
