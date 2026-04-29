@@ -13,7 +13,7 @@ permissions: {}
 env:
   environment: dev
   timezone: ${{ vars.TIMEZONE }}
-  NAMESPACE: ${NAMESPACE}
+  NAMESPACE: ${{ secets.KUBE_NAMESPACE }}
 
 concurrency:
   group: deploy-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
