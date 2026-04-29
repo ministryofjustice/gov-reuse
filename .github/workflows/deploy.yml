@@ -1,0 +1,90 @@
+name: Deployment 🚀
+run-name: Deployment 🚀
+
+on:
+  pull_request:
+    branches:
+      - "**" # Change to main branch
+
+  workflow_dispatch:
+
+permissions: {}
+
+env:
+  environment: dev
+  timezone: ${{ vars.TIMEZONE }}
+  NAMESPACE: ${NAMESPACE}
+
+concurrency:
+  group: deploy-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  setup:
+    name: Setup 🔧
+    runs-on: ["ubuntu-latest"]
+    outputs:
+      environment: ${{ env.environment }}
+      timezone: ${{ env.timezone }}
+    steps:
+      - name: Environment 🧪
+        run: echo "Environment set to ${{ env.environment }}"
+
+      - name: Timezone 🌐
+        run: echo "Timezone set to ${{ env.timezone }}"
+  sca:
+    permissions:
+      contents: read
+
+    name: Execute ⚙️
+    runs-on: ["ubuntu-latest"]
+    needs: setup
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+
+    steps:
+      - name: 📦 Repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: 🔑 Credentials
+        uses: aws-actions/configure-aws-credentials@ec61189d14ec14c8efccab744f656cffd0e33f37 # v6.1.0
+        with:
+          role-to-assume: ${{ vars.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.ECR_REGION }}
+
+      - name: 🔐 Login
+        id: login
+        uses: aws-actions/amazon-ecr-login@19d944daaa35f0fa1d3f7f8af1d3f2e5de25c5b7 # v2.1.4
+
+      - name: ⚒️ Build
+        shell: bash
+        env:
+          REGISTRY: ${{ steps.login.outputs.register }}
+          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+          SHA: ${{ github.sha }}
+        run: docker build -t $REGISTRY/$REPOSITORY:$SHA .
+
+      - name: ⬆️ Push
+        shell: bash
+        env:
+          REGISTRY: ${{ steps.login.outputs.register }}
+          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+          SHA: ${{ github.sha }}
+        run: |
+          docker push $REGISTRY/$REPOSITORY:$SHA
+          cat kubernetes-deploy.tpl | envsubst > kubernetes-deploy.yaml
+
+      - name: ⚙️ Configure
+        shell: bash
+        run: |
+          echo "${{ secrets.KUBE_CERT }}" > ca.crt
+          kubectl config set-cluster ${{ secrets.KUBE_CLUSTER }} --certificate-authority=./ca.crt --server=https://${{ secrets.KIBE_CLUSTER }}
+          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
+          kubectl config set-context ${{ secrets.KUBE_CLUSTER }} --cluster=${{ secrets.KUBE_CLUSTER }} --user=deploy-user --namespace=${NAMESPACE}
+          kubectl config use-context ${{ secrets.KUBE_CLUSTER }}
+
+      - name: ⚡️ Deploy
+        shell: bash
+        run: |
+          kubectl -n ${NAMESPACE} apply -f kubernetes-deploy.yaml
+          kubectl -n ${NAMESPACE} rollout status deploy/gov-reuse --timeout=120s
