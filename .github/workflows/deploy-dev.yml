@@ -123,7 +123,15 @@ jobs:
           REGISTRY: ${{ steps.login.outputs.registry }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ env.IMAGE_TAG }}
-        run: docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          BUILD_NUMBER: ${{ github.run_number }}
+          GIT_REF: ${{ github.sha }}
+          GIT_BRANCH: ${{ github.ref_name }}
+        run: |
+          docker build \
+            --build-arg BUILD_NUMBER=${BUILD_NUMBER} \
+            --build-arg GIT_REF=${GIT_REF} \
+            --build-arg GIT_BRANCH=${GIT_BRANCH} \
+            -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
 
       - name: ⬆️ Push
         shell: bash
