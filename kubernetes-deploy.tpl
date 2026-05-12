@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gov-reuse
-  namespace: ${NAMSPACE}
+  namespace: ${NAMESPACE}
 spec:
   replicas: 1
   selector:
@@ -62,7 +62,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: gov-reuse
-  namespace: ${NAMSPACE}
+  namespace: ${NAMESPACE}
 spec:
   type: ClusterIP
   selector:
@@ -76,20 +76,20 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: gov-reuse
-  namespace: ${NAMSPACE}
+  namespace: ${NAMESPACE}
   annotations:
     external-dns.alpha.kubernetes.io/aws-weight: "100"
-    external-dns.alpha.kubernetes.io/set-identifier: "gov-reuse-${NAMSPACE}-green"
+    external-dns.alpha.kubernetes.io/set-identifier: "gov-reuse-${NAMESPACE}-green"
     cert-manager.io/cluster-issuer: letsencrypt-production
 spec:
   ingressClassName: default
   tls:
     - hosts:
-        - ${NAMSPACE}.apps.cloud-platform.service.justice.gov.uk
+        - ${NAMESPACE}.apps.cloud-platform.service.justice.gov.uk
         - dev.reuselibrary.service.justice.gov.uk
       secretName: reuse-library-tls
   rules:
-    - host: ${NAMSPACE}.apps.cloud-platform.service.justice.gov.uk
+    - host: ${NAMESPACE}.apps.cloud-platform.service.justice.gov.uk
       http:
         paths:
           - path: /
