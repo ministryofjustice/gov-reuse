@@ -4,6 +4,9 @@
 generic-service:
   replicaCount: 2
 
+  podDisruptionBudget:
+    enabled: false
+
   ingress:
     host: dev.reuselibrary.service.justice.gov.uk
 
