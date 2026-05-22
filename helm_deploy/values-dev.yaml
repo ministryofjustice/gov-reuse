@@ -9,6 +9,8 @@ generic-service:
 
   ingress:
     host: dev.reuselibrary.service.justice.gov.uk
+    hosts:
+      - host: reuse-library-dev.apps.live.cloud-platform.service.justice.gov.uk
 
   env:
     INGRESS_URL: "https://dev.reuselibrary.service.justice.gov.uk"
