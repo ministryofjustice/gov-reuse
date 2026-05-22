@@ -15,7 +15,7 @@ generic-service:
   ingress:
     enabled: true
     host: app-hostname.local # override per environment
-    tlsSecretName: reuse-library-secret
+    tlsSecretName: reuse-library-cert-r6k9n
 
   livenessProbe:
     httpGet:
