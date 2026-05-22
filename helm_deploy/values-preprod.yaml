@@ -5,9 +5,9 @@ generic-service:
   replicaCount: 2
 
   ingress:
-    host: prep.reuselibrary.service.justice.gov.uk
     hosts:
-      - host: reuse-library-preprod.apps.live.cloud-platform.service.justice.gov.uk
+      - prep.reuselibrary.service.justice.gov.uk
+      - reuse-library-preprod.apps.live.cloud-platform.service.justice.gov.uk
 
   env:
     INGRESS_URL: "https://prep.reuselibrary.service.justice.gov.uk"
