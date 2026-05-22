@@ -1,20 +1,33 @@
+# Pre-commit hooks configuration
+# See: https://pre-commit.com for general usage
+# Install: `pre-commit install` to set up git hooks
+# Run manually: `pre-commit run --all-files`
+
 repos:
+  # Ministry of Justice DevSecOps security hooks
+  # Provides secret detection and commit message validation
+  # See: https://github.com/ministryofjustice/devsecops-hooks
   - repo: https://github.com/ministryofjustice/devsecops-hooks
     rev: v1.6.0
     hooks:
+      # Scans the entire repository for secrets and sensitive data (baseline scan)
       - id: baseline
         pass_filenames: false
+      # Scans individual committed files for secrets before they are pushed
       - id: commit
         pass_filenames: true
 
+  # Local project-specific hooks
   - repo: local
     hooks:
+      # Runs TypeScript, YAML, and Markdown linting/validation
       - id: lint
         name: Lint check
         entry: npm run validate:all
         language: system
         pass_filenames: false
 
+      # Checks spelling across the codebase using cspell
       - id: spellcheck
         name: Spell check
         entry: npm run spellcheck
