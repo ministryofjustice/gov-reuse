@@ -9,7 +9,7 @@ generic-service:
 
   ingress:
     host: reuse-library-dev.apps.live.cloud-platform.service.justice.gov.uk
-    tlsSecretName: reuse-library-cert-r6k9n
+    tlsSecretName: reuse-library-cert
     annotations:
       external-dns.alpha.kubernetes.io/set-identifier: reuse-library-dev-gov-reuse-green
       nginx.ingress.kubernetes.io/server-alias: dev.reuselibrary.service.justice.gov.uk
