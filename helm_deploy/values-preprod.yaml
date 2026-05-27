@@ -5,9 +5,11 @@ generic-service:
   replicaCount: 2
 
   ingress:
-    hosts:
-      - prep.reuselibrary.service.justice.gov.uk
-      - reuse-library-preprod.apps.live.cloud-platform.service.justice.gov.uk
+    host: reuse-library-preprod.apps.live.cloud-platform.service.justice.gov.uk
+    tlsSecretName: reuse-library-cert-r6k9n
+    annotations:
+      external-dns.alpha.kubernetes.io/set-identifier: reuse-library-preprod-gov-reuse-green
+      nginx.ingress.kubernetes.io/server-alias: prep.reuselibrary.service.justice.gov.uk
 
   env:
     INGRESS_URL: "https://prep.reuselibrary.service.justice.gov.uk"
