@@ -23,7 +23,7 @@ repos:
       # Runs TypeScript, YAML, and Markdown linting/validation against staged files
       - id: lint
         name: Lint check
-        entry: npx lint-staged
+        entry: npm run precommit:lint
         language: system
         pass_filenames: false
 
