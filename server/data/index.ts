@@ -10,15 +10,17 @@ const applicationInfo = applicationInfoSupplier()
 initialiseAppInsights()
 buildAppInsightsClient(applicationInfo)
 
-import ExampleApiClient from './exampleApiClient'
+import InfoApiClient from './infoApiClient'
+import SearchApiClient from './searchApiClient'
 
 export const dataAccess = () => {
   return {
     applicationInfo,
-    exampleApiClient: new ExampleApiClient(),
+    dataApiClient: new InfoApiClient(),
+    searchApiClient: new SearchApiClient(),
   }
 }
 
 export type DataAccess = ReturnType<typeof dataAccess>
 
-export { ExampleApiClient }
+export { InfoApiClient, SearchApiClient }
