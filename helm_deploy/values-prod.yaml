@@ -3,7 +3,15 @@
 
 generic-service:
   ingress:
-    host: reuselibrary.service.justice.gov.uk
+    hosts:
+      - reuse-library-prod.apps.live.cloud-platform.service.justice.gov.uk
+      - reuselibrary.service.justice.gov.uk
+  tlsSecretName: reuse-library-cert
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: reuse-library-prod-gov-reuse-green
+    external-dns.alpha.kubernetes.io/aws-weight: "100"
+    external-dns.alpha.kubernetes.io/exclude: "reuselibrary.service.justice.gov.uk"
+#   nginx.ingress.kubernetes.io/server-alias: prep.reuselibrary.service.justice.gov.uk
 
   env:
     INGRESS_URL: "https://reuselibrary.service.justice.gov.uk"
@@ -11,6 +19,7 @@ generic-service:
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api.prison.service.justice.gov.uk"
     EXAMPLE_API_URL: 'https://reuselibrary.service.justice.gov.uk'
     AUDIT_ENABLED: "false"
+    SEARCH_API_URL: "http://localhost:8080"
 
 generic-prometheus-alerts:
   alertSeverity: PROD_ALERTS_SEVERITY_LABEL
