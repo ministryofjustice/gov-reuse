@@ -20,10 +20,10 @@ repos:
   # Local project-specific hooks
   - repo: local
     hooks:
-      # Runs TypeScript, YAML, and Markdown linting/validation
+      # Runs TypeScript, YAML, and Markdown linting/validation against staged files
       - id: lint
         name: Lint check
-        entry: npm run validate:all
+        entry: npm run precommit:lint
         language: system
         pass_filenames: false
 
