@@ -5,13 +5,17 @@ generic-service:
   replicaCount: 2
 
   ingress:
-    host: template-typescript-preprod.hmpps.service.justice.gov.uk
+    host: reuse-library-preprod.apps.live.cloud-platform.service.justice.gov.uk
+    tlsSecretName: reuse-library-cert
+    annotations:
+      external-dns.alpha.kubernetes.io/set-identifier: reuse-library-preprod-gov-reuse-green
+      nginx.ingress.kubernetes.io/server-alias: prep.reuselibrary.service.justice.gov.uk
 
   env:
-    INGRESS_URL: "https://template-typescript-preprod.hmpps.service.justice.gov.uk"
+    INGRESS_URL: "https://prep.reuselibrary.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in-preprod.hmpps.service.justice.gov.uk/auth"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
-    EXAMPLE_API_URL: 'https://template-kotlin-preprod.hmpps.service.justice.gov.uk'
+    EXAMPLE_API_URL: 'https://prep.reuselibrary.service.justice.gov.uk'
     ENVIRONMENT_NAME: PRE-PRODUCTION
     AUDIT_ENABLED: "false"
 
