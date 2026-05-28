@@ -66,6 +66,7 @@ export default {
         deadline: Number(get('SEARCH_API_TIMEOUT_DEADLINE', 10000)),
       },
       agent: new AgentConfig(Number(get('SEARCH_API_TIMEOUT_RESPONSE', 5000))),
+      // todo: re-enable once deploy passes, as was causing health endpoint to fail, and block deployment to dev
       enabled: true,
     },
   },
