@@ -1,0 +1,45 @@
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+<article class="card card--clickable">
+  <h2 class="govuk-heading-m card__heading">
+    <a class="govuk-link card__link govuk-link--no-visited-state" href="{{ params.url }}">{{ params.title }}</a>
+  </h2>
+  <p class="govuk-body card__description">{{ params.description }}</p>
+  <footer class="card__footer">
+    <!-- additional tags and info to go here. -->
+    {% if params.views %}
+      <p>Views <span>{{ params.views }}</span></p>
+    {% endif %}
+
+    {% if params.lastUpdated | length %}
+      <p>Updated <time>{{ params.lastUpdated }}</time></p>
+    {% endif %}
+
+    {% if params.showStatus and params.department === "MOJ Design System" %}
+      {% if params.status == "Official" %}
+        <p>{{ govukTag({text: "MOJ-Official", classes: "govuk-tag--teal"}) }}</p>
+      {% elseif params.status == "MOJ-To be reviewed"  %}
+        <p>{{ govukTag({text: "To be reviewed", classes: "govuk-tag--orange"}) }}</p>
+      {% else %}
+        <p>{{ govukTag({text: "MOJ-Experimental", classes: "govuk-tag--error"}) }}</p>
+      {% endif %}
+    {% endif %}
+
+    {% if params.accessibility | length %}
+      <p>{{ govukTag({text: "Accessable", classes: "govuk-tag--teal"}) }}</p>
+    {% endif %}
+
+    {% if params.showResearch %}
+      {% if params.hasResearch %}
+        <p>{{ govukTag({text: "Research available", classes: "govuk-tag--blue"}) }}</p>
+      {% else %}
+        <p>{{ govukTag({text: "Needs research", classes: "govuk-tag--yellow"}) }}</p>
+      {% endif %}
+    {% endif %}
+
+    {% if params.showDepartment %}
+      {% if params.department | length %}
+        <p>Source: <span>{{ params.department }}</span></p>
+      {% endif %}
+    {% endif %}
+  </footer>
+</article>
