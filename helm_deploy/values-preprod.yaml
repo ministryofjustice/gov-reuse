@@ -11,6 +11,8 @@ generic-service:
     tlsSecretName: reuse-library-cert
     annotations:
       external-dns.alpha.kubernetes.io/set-identifier: reuse-library-preprod-gov-reuse-green
+      external-dns.alpha.kubernetes.io/aws-weight: "100"
+      external-dns.alpha.kubernetes.io/exclude: "prep.reuselibrary.service.justice.gov.uk"
 #      nginx.ingress.kubernetes.io/server-alias: prep.reuselibrary.service.justice.gov.uk
 
   env:
@@ -20,6 +22,7 @@ generic-service:
     EXAMPLE_API_URL: 'https://prep.reuselibrary.service.justice.gov.uk'
     ENVIRONMENT_NAME: PRE-PRODUCTION
     AUDIT_ENABLED: "false"
+    SEARCH_API_URL: "http://localhost:8080"
 
 generic-prometheus-alerts:
   alertSeverity: NON_PROD_ALERTS_SEVERITY_LABEL
