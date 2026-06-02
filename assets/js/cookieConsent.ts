@@ -9,7 +9,7 @@ const CookieConsent = function __CookieConsent() {
     return match ? decodeURIComponent(match.substring(prefix.length)) : null
   }
 
- function hideCookieBanners() {
+  function hideCookieBanners() {
     const consent = getCookie(cookieName)
     if (consent === 'accepted' || consent === 'rejected') {
       const banner = document.querySelector('.govuk-cookie-banner')
