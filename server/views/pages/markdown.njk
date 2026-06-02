@@ -1,0 +1,13 @@
+{% extends "../partials/layout.njk" %}
+
+{% set containerClasses = "govuk-width-container" %}
+{% set mainClasses = "govuk-main-wrapper govuk-body" %}
+
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ markdownContent | safe }}
+    </div>
+  </div>
+{% endblock %}
