@@ -4,6 +4,14 @@ const contentData = {
       title: 'Design systems',
       items: [
         {
+          title: 'Bristol Design System',
+          description: 'Design system and guidance for creating consistent Bristol City Council services',
+          url: 'https://design.bristol.gov.uk/',
+          department: 'Local Government',
+          contentType: 'Design systems',
+          profession: 'Interaction designer, Content designer, Service designer',
+        },
+        {
           title: 'DWP Design System',
           description: 'Standard design elements and best practice for services',
           url: 'https://design-system.dwp.gov.uk/',
@@ -15,6 +23,14 @@ const contentData = {
           title: 'GOV.UK Design System',
           description: 'Design your service using GOV.UK styles, components and patterns',
           url: 'https://design-system.service.gov.uk/',
+          department: 'GOV.UK',
+          contentType: 'Design systems',
+          profession: 'Interaction designer, Content designer, Service designer',
+        },
+        {
+          title: 'GOV.UK Publishing Design Guide',
+          description: 'Components, patterns and frontend templates for designing publishing experiences on GOV.UK',
+          url: 'https://design-guide.publishing.service.gov.uk/',
           department: 'GOV.UK',
           contentType: 'Design systems',
           profession: 'Interaction designer, Content designer, Service designer',
@@ -45,15 +61,7 @@ const contentData = {
           profession: 'Interaction designer, Content designer, Service designer',
         },
         {
-          title: 'Ministry of Defence Design System',
-          description: 'Save time by using accessible components with Defence branding',
-          url: 'https://design-system.service.mod.gov.uk/',
-          department: 'Ministry of Defence',
-          contentType: 'Design systems',
-          profession: 'Interaction designer, Content designer, Service designer',
-        },
-        {
-          title: 'MoJ Design System',
+          title: 'MOJ Design System',
           description: 'Design, build and deliver accessible and consistent services',
           url: 'https://design-patterns.service.justice.gov.uk/',
           department: 'Ministry of Justice',
@@ -94,12 +102,28 @@ const contentData = {
           contentType: 'Design systems',
           profession: 'Interaction designer, Content designer, Service designer',
         },
+        {
+          title: 'Transport for West Midlands Design System',
+          description: 'Patterns, components and guidance for regional transport digital services',
+          url: 'https://designsystem.tfwm.org.uk/',
+          department: 'Local Government',
+          contentType: 'Design systems',
+          profession: 'Interaction designer, Content designer, Service designer',
+        },
       ],
     },
 
     manuals: {
       title: 'Manuals',
       items: [
+        {
+          title: 'Accessibility in government blog',
+          description: 'Guidance, case studies and updates on accessibility across government services',
+          url: 'https://accessibility.blog.gov.uk/',
+          department: 'GOV.UK',
+          contentType: 'Manuals',
+          profession: 'Developer, Interaction designer, Content designer',
+        },
         {
           title: 'AI Playbook for the UK Government',
           description: 'Guidance on implementing AI solutions responsibly',
@@ -111,13 +135,11 @@ const contentData = {
 
         {
           title: 'AI context for the GOV.UK Prototype Kit',
-          description:
-            'A markdown file to help AI assistants generate correct, accessible, GOV.UK-compliant code for prototypes',
+          description: 'Context file for generating accessible, GOV.UK-compliant prototype code with AI tools',
           url: 'https://dev.reuselibrary.service.justice.gov.uk/assets/ai-context.md',
           department: 'Ministry of Justice',
           contentType: 'Manuals',
           profession: 'Interaction designer',
-          tags: ['New'],
         },
 
         {
@@ -128,6 +150,17 @@ const contentData = {
           department: 'Department for Environment, Food & Rural Affairs',
           contentType: 'Manuals',
           profession: 'Delivery manager, Product manager',
+        },
+
+        {
+          title: 'Defra Service manual',
+          description:
+            'Tools, guidance and support to help you design, build and operate successful services for Defra',
+          url: 'https://digital.defra.gov.uk/service-manual',
+          department: 'Department for Environment, Food & Rural Affairs',
+          contentType: 'Manuals',
+          profession: 'All professions',
+          tags: ['New'],
         },
 
         {
@@ -170,7 +203,7 @@ const contentData = {
           url: 'https://design.education.gov.uk/',
           department: 'Department for Education',
           contentType: 'Manuals',
-          profession: 'Interaction designer, Content design, Service designer',
+          profession: 'Interaction designer, Content designer, Service designer',
         },
         {
           title: 'DfE user research manual',
@@ -207,11 +240,19 @@ const contentData = {
         },
         {
           title: 'Home Office Design Manual',
-          description: 'Use the UCD Manual to create consistent services that put users first',
+          description: 'Guidance for creating consistent, user-centred Home Office services',
           url: 'https://design.homeoffice.gov.uk/',
           department: 'Home Office',
           contentType: 'Manuals',
           profession: 'All professions',
+        },
+        {
+          title: 'Local government user research library',
+          description: 'Shared repository of user research findings and insights from local government teams',
+          url: 'https://research.localgov.digital/',
+          department: 'Local Government',
+          contentType: 'Manuals',
+          profession: 'User researcher',
         },
         {
           title: 'LocalGov Drupal design guidance',
@@ -223,7 +264,7 @@ const contentData = {
           profession: 'Developer, Interaction designer, Content designer',
         },
         {
-          title: 'MoJ AI and Data Science Ethics Framework',
+          title: 'MOJ AI and Data Science Ethics Framework',
           description: 'Tools and guidance to foster responsible ecosystems for data-driven technologies',
           url: 'https://www.gov.uk/government/publications/ministry-of-justice-ai-and-data-science-ethics-framework',
           department: 'GOV.UK',
@@ -231,36 +272,44 @@ const contentData = {
           profession: 'All professions',
         },
         {
-          title: 'MoJ service design playbook',
-          description: 'Guide to service design practices at MoJ (Miro board)',
+          title: 'MOJ service design playbook',
+          description: 'Guide to service design practices at MOJ (password: playbook)',
           url: 'https://miro.com/app/board/o9J_lEirG9Q=/',
           department: 'Ministry of Justice',
           contentType: 'Manuals',
           profession: 'Service designer',
         },
         {
-          title: 'MoJ technical guidance',
-          description: 'Documentation library and repo for MoJ engineers',
+          title: 'MOJ technical guidance',
+          description: 'Documentation library and repo for MOJ engineers',
           url: 'https://technical-guidance.service.justice.gov.uk/',
           department: 'Ministry of Justice',
           contentType: 'Manuals',
           profession: 'Developer',
         },
         {
-          title: 'MoJ user research handbook',
-          description: 'Best practices and guidance for user research within MoJ',
+          title: 'MOJ user research handbook',
+          description: 'Best practices and guidance for user research within MOJ',
           url: 'https://gov-collab-library-main.apps.live.cloud-platform.service.justice.gov.uk/reuse-library',
           department: 'Ministry of Justice',
           contentType: 'Manuals',
           profession: 'User researcher',
         },
         {
-          title: 'Open Standards principles',
+          title: 'Open standards principles',
           description: 'Helps smallest suppliers compete with the largest',
           url: 'https://www.gov.uk/government/publications/open-standards-principles/open-standards-principles',
           department: 'GOV.UK',
           contentType: 'Manuals',
           profession: 'All professions',
+        },
+        {
+          title: 'The Scottish Approach to Service Design',
+          description: 'Principles and methods for designing public services around people in Scotland',
+          url: 'https://www.gov.scot/publications/the-scottish-approach-to-service-design/',
+          department: 'Scottish Government',
+          contentType: 'Manuals',
+          profession: 'Service designer',
         },
         {
           title: 'Secure by Design',
@@ -376,7 +425,7 @@ const contentData = {
         },
 
         {
-          title: 'Govspeak converter',
+          title: 'Govspeak Converter',
           description: 'A tool to convert content into Govspeak and preview how it will render on GOV.UK',
           url: 'https://govspeak-preview.publishing.service.gov.uk/',
           department: 'GOV.UK',
@@ -385,7 +434,7 @@ const contentData = {
         },
 
         {
-          title: 'MoJ Forms',
+          title: 'MOJ Forms',
           description: 'Prototype, test and publish online forms quickly and easily',
           url: 'https://moj-forms-editor.service.justice.gov.uk/',
           department: 'Ministry of Justice',
@@ -393,7 +442,7 @@ const contentData = {
           profession: 'Interaction designer, Content designer, Service designer',
         },
         {
-          title: 'MoJ Pre-commit hook',
+          title: 'MOJ Pre-commit hook',
           description: 'A series of pre-commit hooks executed before staged changes are committed',
           url: 'https://github.com/ministryofjustice/devsecops-hooks',
           department: 'Ministry of Justice',
@@ -401,7 +450,7 @@ const contentData = {
           profession: 'Developer, Architect',
         },
         {
-          title: 'MoJ GitHub Actions - SCA',
+          title: 'MOJ GitHub Actions - SCA',
           description:
             'Software composition analysis GitHub action for dependency management, secret scanning, and security vulnerability detection',
           url: 'https://github.com/ministryofjustice/devsecops-actions',
@@ -447,6 +496,14 @@ const contentData = {
           contentType: 'Service patterns',
           profession: 'Service designer',
         },
+        {
+          title: 'Developing service patterns',
+          description: 'Cross-government work on reusable service patterns for common public service journeys',
+          url: 'https://services.blog.gov.uk/2025/03/19/developing-service-patterns-reusable-designs-for-building-government-services/',
+          department: 'GOV.UK',
+          contentType: 'Service patterns',
+          profession: 'Service designer',
+        },
       ],
     },
     standards: {
@@ -472,7 +529,7 @@ const contentData = {
         {
           title: 'Cloud Optimisation and Accountability',
           description:
-            'Helps teams manage, monitor, and improve the efficiency and accountability of cloud services across the MoJ',
+            'Helps teams manage, monitor, and improve the efficiency and accountability of cloud services across the MOJ',
           url: 'https://cloud-optimisation-and-accountability.justice.gov.uk/',
           department: 'Ministry of Justice',
           contentType: 'Standards',
@@ -534,6 +591,7 @@ const contentData = {
 
     'content-style-guides': {
       title: 'Style guides',
+
       items: [
         {
           title: 'Attorney General’s Office writing style guide',
@@ -592,16 +650,16 @@ const contentData = {
           profession: 'Content designer',
         },
         {
-          title: 'MoJ Acronyms',
-          description: 'Acronyms used in the MoJ',
+          title: 'MOJ Acronyms',
+          description: 'Acronyms used in the MOJ',
           url: 'https://ministryofjustice.github.io/acronyms/',
           department: 'Ministry of Justice',
           contentType: 'Style guides',
           profession: 'Content designer',
         },
         {
-          title: 'MoJ content style guide',
-          description: 'Guidance on writing and formatting content for MoJ digital services',
+          title: 'MOJ content style guide',
+          description: 'Guidance on writing and formatting content for MOJ digital services',
           url: 'https://design-patterns.service.justice.gov.uk/content-standards/style-guide/',
           department: 'Ministry of Justice',
           contentType: 'Style guides',
@@ -652,7 +710,7 @@ const contentData = {
       'Department for Education',
       'Department for Work and Pensions',
       'GOV.UK',
-      "His Majesty's Revenue and Customs",
+      `His Majesty's Revenue and Customs`,
       'Home Office',
       'HM Land Registry',
       'Local Government',
@@ -673,6 +731,7 @@ const contentData = {
       'Standards',
       'Style guides',
     ],
+
     professions: [
       'All professions',
       'Content designer',
