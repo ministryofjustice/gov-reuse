@@ -42,8 +42,8 @@
     box-shadow: none;
     padding: 20px 30px;
 
-    // Override filter default spacing for the final options block. Fixes Mobile width issue
-    & div:last-of-type {
+    // Override MOJ filter default that zeros margin-bottom on the last div.
+    div:last-of-type {
       margin-bottom: 30px;
     }
 
