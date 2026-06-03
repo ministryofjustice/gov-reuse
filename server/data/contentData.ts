@@ -610,6 +610,14 @@ const contentData = {
           profession: 'Content designer',
         },
         {
+          title: 'Defra style guide',
+          description: 'Defra-specific terms and guidance on how to use them in content',
+          url: 'https://digital.defra.gov.uk/content/defra-style-guide',
+          department: 'Department for Environment, Food & Rural Affairs',
+          contentType: 'Style guides',
+          profession: 'Content designer',
+        },
+        {
           title: 'GOV.UK content style guide',
           description: 'A to Z guidance on writing for GOV.UK, including grammar, spelling and tone',
           url: 'https://www.gov.uk/guidance/style-guide/a-to-z',
