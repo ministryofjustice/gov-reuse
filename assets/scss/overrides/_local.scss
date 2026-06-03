@@ -15,6 +15,10 @@
   flex-direction: row;
   gap: 30px;
   flex-wrap: wrap;
+
+  & .govuk-form-group {
+    margin-bottom: 0;
+  }
 }
 
 #enhanced-search {
@@ -37,6 +41,12 @@
     flex-direction: column;
     box-shadow: none;
     padding: 20px 30px;
+
+    // Override MOJ filter default that zeros margin-bottom on the last div.
+    div:last-of-type {
+      margin-bottom: 30px;
+    }
+
     & .govuk-button {
       order: 2;
       max-width: 160px;
