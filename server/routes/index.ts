@@ -18,6 +18,7 @@ export default function routes({ searchService, infoService }: Services): Router
   router.get('/search-results', asyncHandler(searchController.search))
 
   router.markdown('/about', 'about')
+  router.markdown('/contribute', 'contribute')
   router.markdown('/accessibility-statement', 'accessibility-statement')
   router.markdown('/cookies', 'cookies')
   router.markdown('/privacy', 'privacy')
