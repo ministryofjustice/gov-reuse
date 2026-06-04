@@ -21,5 +21,8 @@ generic-service:
     AUDIT_ENABLED: "false"
     SEARCH_API_URL: "http://localhost:8080"
 
+  # turning off the allowlist to enable public access, since this is prod.
+  allowlist: null
+
 generic-prometheus-alerts:
   alertSeverity: PROD_ALERTS_SEVERITY_LABEL
