@@ -1,5 +1,6 @@
 // Original component from the MOJ Design System: https://design-patterns.service.justice.gov.uk/components/card/#code-tab
 // Ported to SCSS
+$card-bottom-width: 5px;
 .card {
   margin-bottom: 40px;
   background: #F7F7F7;
@@ -18,7 +19,7 @@
     flex-grow: 1;
   }
   &--clickable {
-    border-bottom-width: 5px;
+    border-bottom-width: $card-bottom-width;
   }
   &--clickable:hover,
   &--clickable:active {
@@ -50,6 +51,16 @@
   }
   &__footer {
     margin-top: 40px;
+  }
+  /* Expand the clickable area beyond the link itself to the entire card */
+  &__link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* account for the bottom-border which is also clickable */
+    bottom: -#{$card-bottom-width};
   }
 }
 
