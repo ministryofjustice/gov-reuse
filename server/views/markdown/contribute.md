@@ -36,6 +36,10 @@ Use the form to suggest a new resource or tell us about an update to an existing
 
 [Send a suggestion or update \(opens in a new tab\)](https://forms.office.com/e/XNDLPeu7Mv)
 
+You can also suggest changes on GitHub by opening an issue or pull request in the GOV Reuse Library repository.
+
+[Suggest a change on GitHub \(opens in a new tab\)](https://github.com/ministryofjustice/gov-reuse/blob/main/server/data/contentData.ts)
+
 ## What happens next
 
 The GOV Reuse Library working group reviews suggestions weekly.
