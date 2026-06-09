@@ -21,7 +21,7 @@ or on GitHub: https://github.com/alphagov/govuk-frontend/blob/main/packages/govu
 {% endblock %}
 
 {% block headerStart %}
-  {% include "./serviceBanner.njk" %}
+  {# show content after cookie banner but before the nav #}
 {% endblock %}
 
 {% block govukHeader %}
@@ -49,6 +49,7 @@ or on GitHub: https://github.com/alphagov/govuk-frontend/blob/main/packages/govu
 
 {% block headerEnd %}
 {# use this block for content that needs to show above main #}
+  {% include "./serviceBanner.njk" %}
 {% endblock %}
 
 {% block govukFooter %}
