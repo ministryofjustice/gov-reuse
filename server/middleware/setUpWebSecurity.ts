@@ -26,10 +26,12 @@ export default function setUpWebSecurity(): Router {
           // page by an attacker.
           scriptSrc: [
             "'self'",
-            '*.google-analytics.com',
-            '*.googletagmanager.com',
+            'https://www.googletagmanager.com',
             (_req: Request, res: Response) => `'nonce-${res.locals.cspNonce}'`,
           ],
+          connectSrc: ["'self'", '*.google-analytics.com', '*.googletagmanager.com', '*.google.com'],
+          frameSrc: ['*.googletagmanager.com'],
+          imgSrc: ["'self'", '*.googletagmanager.com'],
           styleSrc: ["'self'", (_req: Request, res: Response) => `'nonce-${res.locals.cspNonce}'`],
           fontSrc: ["'self'"],
           formAction: [`'self'`],
