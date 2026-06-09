@@ -450,15 +450,6 @@ const contentData = {
           profession: 'Developer, Architect',
         },
         {
-          title: 'MOJ GitHub Actions - SCA',
-          description:
-            'Software composition analysis GitHub action for dependency management, secret scanning, and security vulnerability detection',
-          url: 'https://github.com/ministryofjustice/devsecops-actions',
-          department: 'Ministry of Justice',
-          contentType: 'Products',
-          profession: 'Developer, Architect',
-        },
-        {
           title: 'rgovspeak',
           description: 'Adds Govspeak support to R Markdown and previews pages in a GOV.UK format',
           url: 'https://github.com/Defra-Data-Science-Centre-of-Excellence/rgovspeak',
