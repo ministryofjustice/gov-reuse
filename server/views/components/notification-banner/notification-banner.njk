@@ -1,0 +1,21 @@
+{#
+This component is based on GDS component govukNotificationBanner,
+we have created a customised version from the standard HTML so that it meets our needs.
+The GDS numchucks version limited our ability to customise the notification title and colour.
+#}
+
+{% set parts = ["govuk-notification-banner", params.type] %}
+{% set bannerClass = parts | join("--") %}
+
+
+<div class="govuk-notification-banner {{ bannerClass }}" role="region"
+     aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      {% if params.type %}{{ params.type | title }}{% else %}{{ "Important" }}{% endif %}
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    {{ params.html | safe }}
+  </div>
+</div>
