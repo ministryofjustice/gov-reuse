@@ -22,7 +22,7 @@
     "HMRC",
     "rgovspeak",
     "govspeak",
-    "gtag",
+    "gtag"
   ],
   "dictionaries": ["en-gb", "companies", "softwareTerms", "misc", "lorem-ipsum", "typescript", "node", "bash", "npm"],
   "languageSettings": [
