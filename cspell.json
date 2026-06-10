@@ -21,7 +21,8 @@
     "sanitised",
     "HMRC",
     "rgovspeak",
-    "govspeak"
+    "govspeak",
+    "gtag"
   ],
   "dictionaries": ["en-gb", "companies", "softwareTerms", "misc", "lorem-ipsum", "typescript", "node", "bash", "npm"],
   "languageSettings": [
