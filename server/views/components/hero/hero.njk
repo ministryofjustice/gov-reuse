@@ -1,5 +1,19 @@
+{% from "../notification-banner/macro.njk" import notificationBanner %}
+
+{% set bannerHtml %}
+  <p class="govuk-notification-banner__heading">
+    <a class="govuk-notification-banner__link" target="_blank" rel="noopener"
+       href="https://moj-route-moj-vector-data.apps.cluster-qx6zw.qx6zw.sandbox2120.opentlc.com/">Try our
+      AI search prototype</a> to search across government design systems using your own words.</p>
+  <p class="govuk-body">Available until 5pm Friday 12 June 2026.</p>
+{% endset %}
+
 <div class="hero">
   <div class="govuk-width-container">
+    {{ notificationBanner({
+      type: "prototype",
+      html: bannerHtml
+    }) }}
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds site-header">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-6 hero__heading">
