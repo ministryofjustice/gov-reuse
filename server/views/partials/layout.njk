@@ -21,7 +21,7 @@ or on GitHub: https://github.com/alphagov/govuk-frontend/blob/main/packages/govu
 {% endblock %}
 
 {% block headerStart %}
-  {% include "./serviceBanner.njk" %}
+  {# show content after cookie banner but before the nav #}
 {% endblock %}
 
 {% block govukHeader %}
@@ -49,6 +49,7 @@ or on GitHub: https://github.com/alphagov/govuk-frontend/blob/main/packages/govu
 
 {% block headerEnd %}
 {# use this block for content that needs to show above main #}
+  {% include "./serviceBanner.njk" %}
 {% endblock %}
 
 {% block govukFooter %}
@@ -59,8 +60,8 @@ or on GitHub: https://github.com/alphagov/govuk-frontend/blob/main/packages/govu
   <script type="module" src="{{ '/assets/js/index.js' | assetMap }}"></script>
 
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F098L9R2ZX"></script>
-  <script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F098L9R2ZX" nonce="{{ cspNonce }}"></script>
+  <script nonce="{{ cspNonce }}">
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
