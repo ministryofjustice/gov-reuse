@@ -5,7 +5,7 @@
   "repository": "git@github.com:ministryofjustice/gov-reuse.git",
   "license": "MIT",
   "scripts": {
-    "build": "node esbuild/esbuild",
+    "build": "npm run search:index:build && node esbuild/esbuild",
     "clean": "rm -rf dist test_results",
     "housekeeping": "npm audit && npm run validate:all && npx sort-package-json",
     "int-test": "npx playwright test",
@@ -19,6 +19,7 @@
     "prepare": "hmpps-precommit-hooks-prepare",
     "rebuild": "npm run clean && npm run setup && npm run build",
     "security_audit": "npx audit-ci --config audit-ci.json",
+    "search:index:build": "node scripts/build-external-search-index.js",
     "setup": "npm ci && hmpps-npm-script-run-allowlist",
     "spellcheck": "cspell lint --gitignore --no-must-find-files --unique --no-progress --show-suggestions --color **/*",
     "start": "node $NODE_OPTIONS dist/server.js | bunyan -o short",

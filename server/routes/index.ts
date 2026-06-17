@@ -6,16 +6,19 @@ import HomeController from '../controllers/HomeController'
 import SearchController from '../controllers/SearchController'
 import { asyncHandler } from '../utils/utils'
 
-export default function routes({ searchService, infoService }: Services): Router {
+export default function routes({ infoService, auditService }: Services): Router {
   const router = Router()
   expressRouterHelpers(router)
 
   const homeController = new HomeController(infoService)
-  const searchController = new SearchController(searchService, infoService)
+  const searchController = new SearchController(infoService, auditService)
 
   router.get('/', asyncHandler(homeController.index))
   router.get('/search', asyncHandler(searchController.index))
+  router.get('/search-suggest', asyncHandler(searchController.suggest))
   router.get('/search-results', asyncHandler(searchController.search))
+  router.get('/design-system-components', asyncHandler(searchController.designSystemComponents))
+  router.get('/design-system-component-search', asyncHandler(searchController.designSystemComponentSearch))
 
   router.markdown('/about', 'about')
   router.markdown('/contribute', 'contribute')

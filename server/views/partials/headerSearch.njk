@@ -1,0 +1,25 @@
+<div class="moj-search moj-search--ondark hero__search">
+  <form action="/search-results/?" method="get">
+    <div class="govuk-form-group govuk-!-margin-bottom-0">
+      <label class="govuk-label govuk-visually-hidden" for="header-search-query">
+        Search
+      </label>
+      <input
+        class="govuk-input moj-search__input"
+        id="header-search-query"
+        name="searchQuery"
+        type="search"
+        placeholder="Search by component, pattern, service manual or style guide"
+        autocomplete="off"
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded="false"
+        aria-controls="header-search-suggestions"
+        aria-describedby="header-search-status"
+      >
+    </div>
+
+    <div class="hero__search-results" id="header-search-suggestions" role="listbox" aria-label="Search suggestions" hidden></div>
+    <p class="govuk-body-s govuk-visually-hidden hero__search-help" id="header-search-status" aria-live="polite"></p>
+  </form>
+</div>

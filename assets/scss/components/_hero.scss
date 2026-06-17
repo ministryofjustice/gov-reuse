@@ -35,4 +35,86 @@
       line-height: 1.3157894737;
     }
   }
+
+  &__search {
+    margin-top: 20px;
+    max-width: 100%;
+    position: relative;
+
+    .moj-search__input {
+      border: 2px solid #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+      font-size: 1.1875rem;
+      width: 100%;
+      padding: 12px 14px;
+    }
+
+    .moj-search__input::placeholder {
+      color: govuk-colour('dark-grey');
+      opacity: 1;
+    }
+
+    .moj-search__input:focus {
+      border-color: $govuk-focus-colour;
+      box-shadow: 0 0 0 3px $govuk-focus-colour;
+      outline: none;
+    }
+  }
+
+  &__search-results {
+    background: #ffffff;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+    left: 0;
+    margin-top: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 2px);
+    z-index: 20;
+  }
+
+  &__search-result-list {
+    border-top: 1px solid govuk-colour('light-grey');
+  }
+
+  &__search-result {
+    border-bottom: 1px solid govuk-colour('light-grey');
+    color: govuk-colour('black');
+    display: block;
+    padding: 12px 14px;
+    text-decoration: none;
+  }
+
+  &__search-result:hover,
+  &__search-result:focus,
+  &__search-result--active {
+    background: govuk-colour('light-grey');
+    outline: none;
+  }
+
+  &__search-result-title {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  &__search-result-meta {
+    color: govuk-colour('dark-grey');
+    display: block;
+    font-size: 1rem;
+  }
+
+  &__search-empty {
+    color: govuk-colour('dark-grey');
+    margin: 0;
+    padding: 12px 14px;
+  }
+
+  &__search-help {
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
 }
