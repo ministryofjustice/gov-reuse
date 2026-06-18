@@ -67,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function initialiseHeaderSearchAut
             target="_blank"
             rel="noopener noreferrer"
           >
-            ${result.type ? `<span class="hero__search-result-type">${escapeHtml(result.type)}</span>` : ''}
             <span class="hero__search-result-title">${escapeHtml(result.title)}</span>
             ${result.description ? `<span class="hero__search-result-description">${escapeHtml(result.description)}</span>` : ''}
             <span class="hero__search-result-meta">${escapeHtml(result.parent)}</span>
