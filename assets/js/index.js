@@ -175,9 +175,14 @@ document.addEventListener('DOMContentLoaded', function initialiseHeaderSearchAut
     }
 
     if (event.key === 'Enter') {
+      if (activeIndex < 0) {
+        return
+      }
+
       event.preventDefault()
-      if (activeIndex >= 0 && currentResults[activeIndex] && currentResults[activeIndex].url) {
-        window.location.assign(currentResults[activeIndex].url)
+      const activeItem = resultsContainer.querySelector(`#header-search-option-${activeIndex}`)
+      if (activeItem instanceof HTMLAnchorElement) {
+        activeItem.click()
       }
     }
   })
