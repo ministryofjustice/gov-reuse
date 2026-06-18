@@ -64,8 +64,12 @@ document.addEventListener('DOMContentLoaded', function initialiseHeaderSearchAut
             role="option"
             aria-selected="false"
             href="${encodeURI(result.url)}"
+            target="_blank"
+            rel="noopener noreferrer"
           >
+            ${result.type ? `<span class="hero__search-result-type">${escapeHtml(result.type)}</span>` : ''}
             <span class="hero__search-result-title">${escapeHtml(result.title)}</span>
+            ${result.description ? `<span class="hero__search-result-description">${escapeHtml(result.description)}</span>` : ''}
             <span class="hero__search-result-meta">${escapeHtml(result.parent)}</span>
           </a>
         `
@@ -105,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function initialiseHeaderSearchAut
     const query = rawQuery.trim()
     if (query.length < 2) {
       hideResults()
-      statusText.textContent = 'Start typing to see matching results.'
+      statusText.textContent = 'Start typing to search reuse library.'
       return
     }
 
@@ -147,10 +151,6 @@ document.addEventListener('DOMContentLoaded', function initialiseHeaderSearchAut
 
   input.addEventListener('keydown', event => {
     if (resultsContainer.hidden || !currentResults.length) {
-      if (event.key === 'Enter' && input.value.trim().length > 0) {
-        event.preventDefault()
-        window.location.assign(`/search-results/?searchQuery=${encodeURIComponent(input.value.trim())}`)
-      }
       return
     }
 
@@ -175,13 +175,14 @@ document.addEventListener('DOMContentLoaded', function initialiseHeaderSearchAut
     }
 
     if (event.key === 'Enter') {
-      event.preventDefault()
-      if (activeIndex >= 0 && currentResults[activeIndex] && currentResults[activeIndex].url) {
-        window.location.assign(currentResults[activeIndex].url)
+      if (activeIndex < 0) {
         return
       }
-      if (input.value.trim().length > 0) {
-        window.location.assign(`/search-results/?searchQuery=${encodeURIComponent(input.value.trim())}`)
+
+      event.preventDefault()
+      const activeItem = resultsContainer.querySelector(`#header-search-option-${activeIndex}`)
+      if (activeItem instanceof HTMLAnchorElement) {
+        activeItem.click()
       }
     }
   })
