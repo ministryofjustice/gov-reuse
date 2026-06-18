@@ -640,16 +640,18 @@ export default class SearchController extends BaseController {
 
     const componentMatches = await this.matchDesignSystemComponents(query)
     const aggregatedMatches = this.aggregateComponentMatches(componentMatches)
-    const componentResults = aggregatedMatches.flatMap(match => {
-      // Create a separate result for each source system
-      return match.sources.map(source => ({
-        title: match.componentName,
-        url: source.componentUrl,
-        parent: source.sourceTitle,
-        type: 'Component',
-        description: `${match.componentName} from ${source.sourceTitle}`,
-      }))
-    }).slice(0, 12)
+    const componentResults = aggregatedMatches
+      .flatMap(match => {
+        // Create a separate result for each source system
+        return match.sources.map(source => ({
+          title: match.componentName,
+          url: source.componentUrl,
+          parent: source.sourceTitle,
+          type: 'Component',
+          description: `${match.componentName} from ${source.sourceTitle}`,
+        }))
+      })
+      .slice(0, 12)
 
     const suggestionOptions = { maxPerDomain: 2, maxPerDepartment: 2, maxPerTitle: 1 }
     const catalogueResults = (await this.searchLocalCatalogue(query, suggestionOptions)).map(component => ({
