@@ -1,11 +1,24 @@
+/**
+ * @fileoverview SearchController - HTTP request handler for search operations
+ * @module SearchController
+ * Handles incoming search HTTP requests and delegates to service layer for business logic.
+ * Thin controller focused on request/response handling; logic delegated to services.
+ * @example
+ * // Inject services in routes
+ * const controller = new SearchController(infoService, auditService, searchScoringService, queryExpansionService, searchIndexRepository)
+ * router.get('/search-suggest', asyncHandler(controller.suggest))
+ */
+
 import { Request, Response } from 'express'
 import BaseController from './BaseController'
 import InfoService from '../services/infoService'
 import AuditService from '../services/auditService'
+import SearchScoringService from '../services/searchScoringService'
+import QueryExpansionService from '../services/queryExpansionService'
+import SearchIndexRepository from '../data/searchIndexRepository'
 import { ContentFilter } from '../@types/filters'
 import logger from '../../logger'
 import { Component } from '../@types/search'
-import externalSearchIndexJson from '../data/generated/externalSearchIndex.json'
 
 type CatalogueRecord = {
   title: string
@@ -20,23 +33,6 @@ type CatalogueRecord = {
 type ScoredRecord = {
   item: CatalogueRecord
   score: number
-}
-
-type RecordSignals = {
-  levelLabel: string
-  concepts: string[]
-}
-
-type ExternalSearchIndexEntry = {
-  url: string
-  externalTitle?: string
-  externalDescription?: string
-  externalHeadings?: string[]
-  externalComponents?: string[]
-  externalComponentEntries?: Array<{ name: string; url: string }>
-  externalText?: string
-  crawledAt?: string
-  crawlStatus?: string
 }
 
 type DesignSystemComponentMatch = {
@@ -58,59 +54,43 @@ type AggregatedComponentMatch = {
   }>
 }
 
+/**
+ * Search controller for handling HTTP search requests.
+ * Coordinates between HTTP layer, services, and data access.
+ * @extends BaseController
+ */
 export default class SearchController extends BaseController {
   private infoService: InfoService
 
   private auditService?: AuditService
 
-  private readonly externalIndexByUrl: Map<string, ExternalSearchIndexEntry>
+  private scoringService: SearchScoringService
 
-  private readonly stopWords = new Set([
-    'a',
-    'an',
-    'and',
-    'for',
-    'from',
-    'guide',
-    'guidance',
-    'how',
-    'in',
-    'of',
-    'on',
-    'service',
-    'services',
-    'system',
-    'the',
-    'to',
-    'uk',
-  ])
+  private queryExpansionService: QueryExpansionService
 
-  private readonly synonymMap: Record<string, string[]> = {
-    ai: ['artificial', 'intelligence', 'machine', 'learning', 'data', 'science'],
-    artificial: ['ai'],
-    component: ['components'],
-    components: ['component'],
-    form: ['forms'],
-    forms: ['form'],
-    pattern: ['patterns'],
-    patterns: ['pattern'],
-    date: ['datepicker', 'calendar'],
-    picker: ['datepicker', 'calendar'],
-    datepicker: ['date', 'picker', 'calendar'],
-  }
+  private searchIndexRepository: SearchIndexRepository
 
-  constructor(infoService: InfoService, auditService?: AuditService) {
+  /**
+   * Initialise controller with required services.
+   * @param infoService - Service for accessing catalogue data
+   * @param auditService - Optional service for logging audit events
+   * @param scoringService - Service for scoring search results
+   * @param queryExpansionService - Service for query expansion and stemming
+   * @param searchIndexRepository - Repository for accessing external indices
+   */
+  constructor(
+    infoService: InfoService,
+    auditService: AuditService | undefined,
+    scoringService: SearchScoringService,
+    queryExpansionService: QueryExpansionService,
+    searchIndexRepository: SearchIndexRepository,
+  ) {
     super()
     this.infoService = infoService
     this.auditService = auditService
-    const safeExternalEntries = Array.isArray(externalSearchIndexJson)
-      ? (externalSearchIndexJson as ExternalSearchIndexEntry[])
-      : []
-    this.externalIndexByUrl = new Map(
-      safeExternalEntries
-        .filter(entry => typeof entry.url === 'string' && entry.url.length > 0)
-        .map(entry => [this.getUrlKey(entry.url), entry]),
-    )
+    this.scoringService = scoringService
+    this.queryExpansionService = queryExpansionService
+    this.searchIndexRepository = searchIndexRepository
   }
 
   private getAllFilters = (): ContentFilter => ({
@@ -119,87 +99,65 @@ export default class SearchController extends BaseController {
     profession: 'All professions',
   })
 
-  private mapRecordToComponent = (record: CatalogueRecord): Component => ({
-    title: record.title,
-    url: record.url,
-    description: this.buildSnippet(record),
-    parent: record.department,
-    accessibility: '',
-    created_at: '',
-    updated_at: '',
-    has_research: false,
-    favourites: 0,
-  })
+  /**
+   * Map catalogue record to component response format.
+   * @param record - Catalogue record to map
+   * @returns Component response object
+   * @private
+   */
+  private mapRecordToComponent(record: CatalogueRecord): Component {
+    const signals = this.extractRecordSignals(record)
+    const { levelLabel } = signals
+    const snippet = `${levelLabel} - ${record.description}`
 
-  private normaliseTerm = (term: string): string => {
-    return term
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, ' ')
-      .trim()
-  }
-
-  private stemTerm = (term: string): string => {
-    if (term.length <= 3) {
-      return term
-    }
-    return term.replace(/(ing|ed|es|s)$/i, '')
-  }
-
-  private getUrlKeywords = (url: string): string[] => {
-    try {
-      const parsedUrl = new URL(url)
-      return parsedUrl.pathname
-        .split('/')
-        .map(pathPart => this.normaliseTerm(pathPart.replace(/[-_]+/g, ' ')))
-        .filter(Boolean)
-    } catch {
-      return []
+    return {
+      title: record.title,
+      url: record.url,
+      description: snippet,
+      parent: record.department,
+      accessibility: '',
+      created_at: '',
+      updated_at: '',
+      has_research: false,
+      favourites: 0,
     }
   }
 
-  private getPathSegments = (url: string): string[] => {
-    try {
-      return new URL(url).pathname
-        .split('/')
-        .map(segment => this.normaliseTerm(segment.replace(/[-_]+/g, ' ')))
-        .filter(Boolean)
-    } catch {
-      return []
-    }
-  }
-
-  private getRecordSignals = (record: CatalogueRecord): RecordSignals => {
-    const segments = this.getPathSegments(record.url)
+  /**
+   * Extract signals from catalogue record (level, concepts from URL/title).
+   * @param record - Catalogue record
+   * @returns Record signals object
+   * @private
+   */
+  private extractRecordSignals(record: CatalogueRecord): { levelLabel: string; concepts: string[] } {
     const concepts = new Set<string>()
     let levelLabel = record.contentType
 
-    const addToken = (value: string) => {
-      const token = this.normaliseTerm(value)
-      if (token.length > 2 && !this.stopWords.has(token)) {
-        concepts.add(token)
+    try {
+      const url = new URL(record.url)
+      const segments = url.pathname
+        .split('/')
+        .map(seg => seg.toLowerCase().replace(/[-_]/g, ' ').trim())
+        .filter(Boolean)
+
+      const componentIndex = segments.indexOf('components')
+      if (componentIndex >= 0) {
+        levelLabel = 'Components'
+        if (segments[componentIndex + 1]) {
+          concepts.add(segments[componentIndex + 1])
+        }
       }
-    }
 
-    segments.forEach(addToken)
-
-    const componentIndex = segments.indexOf('components')
-    if (componentIndex >= 0) {
-      levelLabel = 'Components'
-      if (segments[componentIndex + 1]) {
-        addToken(segments[componentIndex + 1])
+      const patternIndex = segments.findIndex(seg => seg === 'patterns' || seg === 'service patterns')
+      if (patternIndex >= 0) {
+        levelLabel = 'Patterns'
+        if (segments[patternIndex + 1]) {
+          concepts.add(segments[patternIndex + 1])
+        }
       }
+    } catch {
+      // Invalid URL, skip signal extraction
     }
-
-    const patternIndex = segments.findIndex(segment => segment === 'patterns' || segment === 'service patterns')
-    if (patternIndex >= 0) {
-      levelLabel = 'Patterns'
-      if (segments[patternIndex + 1]) {
-        addToken(segments[patternIndex + 1])
-      }
-    }
-
-    const titleTokens = this.normaliseTerm(record.title).split(/\s+/).filter(Boolean)
-    titleTokens.forEach(addToken)
 
     return {
       levelLabel,
@@ -207,64 +165,13 @@ export default class SearchController extends BaseController {
     }
   }
 
-  private expandQueryTerms = (terms: string[]): string[] => {
-    const expanded = new Set<string>()
-    terms.forEach(term => {
-      const token = this.normaliseTerm(term)
-      if (!token) {
-        return
-      }
-      expanded.add(token)
-      const stem = this.stemTerm(token)
-      if (stem) {
-        expanded.add(stem)
-      }
-      const mappedTerms = this.synonymMap[token] || []
-      mappedTerms.forEach(mapped => expanded.add(mapped))
-    })
-    return Array.from(expanded)
-  }
-
-  private getSearchableParts = (record: CatalogueRecord): string[] => {
-    const signals = this.getRecordSignals(record)
-    const externalEntry = this.externalIndexByUrl.get(this.getUrlKey(record.url))
-    const externalHeadings = externalEntry?.externalHeadings || []
-    const externalComponents = externalEntry?.externalComponents || []
-    const externalText = (externalEntry?.externalText || '').slice(0, 5000)
-    return [
-      record.title,
-      record.description,
-      record.department,
-      record.contentType,
-      signals.levelLabel,
-      record.profession,
-      ...(record.tags || []),
-      ...signals.concepts,
-      ...this.getUrlKeywords(record.url),
-      externalEntry?.externalTitle || '',
-      externalEntry?.externalDescription || '',
-      ...externalHeadings,
-      ...externalComponents,
-      externalText,
-    ]
-  }
-
-  private getTokenSet = (value: string): Set<string> => {
-    const words = this.normaliseTerm(value).split(/\s+/).filter(Boolean)
-    const stems = words.map(word => this.stemTerm(word))
-    return new Set([...words, ...stems].filter(Boolean))
-  }
-
-  private buildSnippet = (record: CatalogueRecord): string => {
-    const signals = this.getRecordSignals(record)
-    return `${signals.levelLabel} - ${record.description}`
-  }
-
-  private getTitleKey = (title: string): string => {
-    return this.normaliseTerm(title)
-  }
-
-  private getUrlKey = (url: string): string => {
+  /**
+   * Normalise URL to canonical form for lookups.
+   * @param url - URL to normalise
+   * @returns Canonical URL key
+   * @private
+   */
+  private getUrlKey(url: string): string {
     try {
       const parsedUrl = new URL(url)
       const path = parsedUrl.pathname.replace(/\/+$/, '').toLowerCase()
@@ -274,7 +181,13 @@ export default class SearchController extends BaseController {
     }
   }
 
-  private getDomain = (url: string): string => {
+  /**
+   * Get domain from URL.
+   * @param url - URL to extract domain from
+   * @returns Domain name
+   * @private
+   */
+  private getDomain(url: string): string {
     try {
       return new URL(url).hostname.toLowerCase()
     } catch {
@@ -282,10 +195,28 @@ export default class SearchController extends BaseController {
     }
   }
 
-  private applyDiversity = (
+  /**
+   * Normalise title to comparison key.
+   * @param title - Title to normalise
+   * @returns Normalised key
+   * @private
+   */
+  private getTitleKey(title: string): string {
+    return title.toLowerCase().trim()
+  }
+
+  /**
+   * Apply diversity constraints to scored results.
+   * Limits results per domain, department, and title to improve variety.
+   * @param scored - Scored records to filter
+   * @param options - Diversity constraints
+   * @returns Filtered records respecting constraints
+   * @private
+   */
+  private applyDiversity(
     scored: ScoredRecord[],
     options: { maxPerDomain: number; maxPerDepartment: number; maxPerTitle: number },
-  ): CatalogueRecord[] => {
+  ): CatalogueRecord[] {
     const seenUrlKeys = new Set<string>()
     const domainCount: Record<string, number> = {}
     const departmentCount: Record<string, number> = {}
@@ -315,118 +246,38 @@ export default class SearchController extends BaseController {
     return selected
   }
 
-  private scoreRecord = (record: CatalogueRecord, terms: string[], phrase: string): number => {
-    const title = record.title.toLowerCase()
-    const description = record.description.toLowerCase()
-    const allText = this.getSearchableParts(record).join(' ').toLowerCase()
-    const titleTokenSet = this.getTokenSet(title)
-    const descriptionTokenSet = this.getTokenSet(description)
-    const tokenSet = this.getTokenSet(allText)
-    const signals = this.getRecordSignals(record)
-    const conceptSet = new Set(signals.concepts.map(concept => this.normaliseTerm(concept)))
-    const externalEntry = this.externalIndexByUrl.get(this.getUrlKey(record.url))
-    const externalText = [
-      externalEntry?.externalTitle || '',
-      externalEntry?.externalDescription || '',
-      ...(externalEntry?.externalHeadings || []),
-      ...(externalEntry?.externalComponents || []),
-      externalEntry?.externalText || '',
-    ]
-      .join(' ')
-      .toLowerCase()
-    const phraseStem = this.stemTerm(phrase)
-    const phraseIsShort = phrase.length <= 4
-    const phraseInTitle = phraseIsShort
-      ? titleTokenSet.has(phrase) || (phraseStem ? titleTokenSet.has(phraseStem) : false)
-      : title.includes(phrase)
-    const phraseInDescription = phraseIsShort
-      ? descriptionTokenSet.has(phrase) || (phraseStem ? descriptionTokenSet.has(phraseStem) : false)
-      : description.includes(phrase)
-    const phraseInAllText = phraseIsShort
-      ? tokenSet.has(phrase) || (phraseStem ? tokenSet.has(phraseStem) : false)
-      : allText.includes(phrase)
-
-    let score = 0
-    if (phrase.length >= 3) {
-      if (phraseInTitle) {
-        score += 50
-      }
-      if (phraseInDescription) {
-        score += 12
-      }
-      if (phraseInAllText) {
-        score += 6
-      }
-    }
-
-    for (const term of terms) {
-      const termStem = this.stemTerm(term)
-      const isShortTerm = term.length <= 4
-      const titleHasToken = titleTokenSet.has(term) || (termStem ? titleTokenSet.has(termStem) : false)
-      const descriptionHasToken =
-        descriptionTokenSet.has(term) || (termStem ? descriptionTokenSet.has(termStem) : false)
-      const textHasToken = tokenSet.has(term) || (termStem ? tokenSet.has(termStem) : false)
-      const titleHasMatch = isShortTerm ? titleHasToken : title.includes(term) || titleHasToken
-      const descriptionHasMatch = isShortTerm ? descriptionHasToken : description.includes(term) || descriptionHasToken
-      const textHasMatch = isShortTerm ? textHasToken : allText.includes(term) || textHasToken
-
-      if (titleHasMatch) {
-        score += 14
-      }
-      if (descriptionHasMatch) {
-        score += 8
-      }
-      if (textHasMatch) {
-        score += 4
-      }
-      if (termStem && tokenSet.has(termStem)) {
-        score += 3
-      }
-      if (conceptSet.has(term) || (termStem && conceptSet.has(termStem))) {
-        score += 10
-      }
-      if (externalText.includes(term)) {
-        score += 5
-      }
-    }
-    return score
-  }
-
-  private matchDesignSystemComponents = async (query: string): Promise<DesignSystemComponentMatch[]> => {
+  /**
+   * Search for matching components across design systems.
+   * @param query - Search query
+   * @returns Array of component matches
+   * @private
+   */
+  private async matchDesignSystemComponents(query: string): Promise<DesignSystemComponentMatch[]> {
     const filters = this.getAllFilters()
     const designSystems = await this.infoService.getDesignSystems(filters)
-    const normalisedPhrase = this.normaliseTerm(query)
-    const expandedTerms = this.expandQueryTerms(
-      normalisedPhrase
-        .split(/\s+/)
-        .map(term => this.normaliseTerm(term))
-        .filter(Boolean),
-    )
+    const expandedTerms = this.queryExpansionService.expandQueryTerms(query.split(/\s+/).filter(Boolean))
 
     const matches: Array<DesignSystemComponentMatch & { score: number }> = []
-    designSystems.forEach(system => {
-      const entry = this.externalIndexByUrl.get(this.getUrlKey(system.url))
-      const componentEntries = entry?.externalComponentEntries || []
-      componentEntries.forEach(component => {
-        const name = this.normaliseTerm(component.name)
-        if (!name) {
-          return
-        }
 
+    for (const system of designSystems) {
+      const entry = this.searchIndexRepository.getEntryByUrl(system.url)
+      const componentEntries = entry?.externalComponentEntries || []
+
+      for (const component of componentEntries) {
+        const normalised = component.name.toLowerCase()
         let score = 0
-        if (normalisedPhrase.length >= 3 && name.includes(normalisedPhrase)) {
+
+        // Phrase match
+        if (query.length >= 3 && normalised.includes(query.toLowerCase())) {
           score += 20
         }
 
-        expandedTerms.forEach(term => {
-          const stem = this.stemTerm(term)
-          if (name.includes(term)) {
+        // Term matching
+        for (const term of expandedTerms) {
+          if (normalised.includes(term)) {
             score += 8
           }
-          if (stem && name.includes(stem)) {
-            score += 4
-          }
-        })
+        }
 
         if (score > 0) {
           matches.push({
@@ -438,14 +289,15 @@ export default class SearchController extends BaseController {
             score,
           })
         }
-      })
-    })
+      }
+    }
 
+    // Deduplicate by component name and source title
     const seen = new Set<string>()
     const deduped = matches
       .sort((a, b) => b.score - a.score || a.sourceTitle.localeCompare(b.sourceTitle))
       .filter(match => {
-        const key = `${this.normaliseTerm(match.componentName)}|${this.normaliseTerm(match.sourceTitle)}`
+        const key = `${match.componentName.toLowerCase()}|${match.sourceTitle.toLowerCase()}`
         if (seen.has(key)) {
           return false
         }
@@ -456,12 +308,19 @@ export default class SearchController extends BaseController {
     return deduped.map(({ score, ...rest }) => rest)
   }
 
-  private aggregateComponentMatches = (matches: DesignSystemComponentMatch[]): AggregatedComponentMatch[] => {
+  /**
+   * Aggregate component matches by name, grouping all sources.
+   * @param matches - Component matches to aggregate
+   * @returns Aggregated matches with source arrays
+   * @private
+   */
+  private aggregateComponentMatches(matches: DesignSystemComponentMatch[]): AggregatedComponentMatch[] {
     const grouped = new Map<string, AggregatedComponentMatch>()
 
-    matches.forEach(match => {
-      const key = this.normaliseTerm(match.componentName)
+    for (const match of matches) {
+      const key = match.componentName.toLowerCase()
       const existing = grouped.get(key)
+
       if (!existing) {
         grouped.set(key, {
           componentName: match.componentName,
@@ -475,32 +334,40 @@ export default class SearchController extends BaseController {
             },
           ],
         })
-        return
-      }
+      } else {
+        // Check if source already exists
+        const sourceKey = `${match.sourceTitle.toLowerCase()}|${this.getUrlKey(match.componentUrl)}`
+        const hasSource = existing.sources.some(
+          source => `${source.sourceTitle.toLowerCase()}|${this.getUrlKey(source.componentUrl)}` === sourceKey,
+        )
 
-      const sourceKey = `${this.normaliseTerm(match.sourceTitle)}|${this.getUrlKey(match.componentUrl)}`
-      const hasSource = existing.sources.some(
-        source => `${this.normaliseTerm(source.sourceTitle)}|${this.getUrlKey(source.componentUrl)}` === sourceKey,
-      )
-      if (!hasSource) {
-        existing.sources.push({
-          sourceTitle: match.sourceTitle,
-          sourceUrl: match.sourceUrl,
-          department: match.department,
-          componentUrl: match.componentUrl,
-        })
+        if (!hasSource) {
+          existing.sources.push({
+            sourceTitle: match.sourceTitle,
+            sourceUrl: match.sourceUrl,
+            department: match.department,
+            componentUrl: match.componentUrl,
+          })
+        }
       }
-    })
+    }
 
     return Array.from(grouped.values()).sort(
       (a, b) => b.sources.length - a.sources.length || a.componentName.localeCompare(b.componentName),
     )
   }
 
-  private searchLocalCatalogue = async (
+  /**
+   * Search the local catalogue with the provided query.
+   * @param query - Search query
+   * @param options - Diversity options
+   * @returns Array of matching catalogue components
+   * @private
+   */
+  private async searchLocalCatalogue(
     query: string,
     options = { maxPerDomain: 4, maxPerDepartment: 4, maxPerTitle: 1 },
-  ): Promise<Component[]> => {
+  ): Promise<Component[]> {
     const allFilters = this.getAllFilters()
     const catalogue = [
       ...(await this.infoService.getDesignSystems(allFilters)),
@@ -511,22 +378,32 @@ export default class SearchController extends BaseController {
       ...(await this.infoService.getStyleGuides(allFilters)),
     ] as CatalogueRecord[]
 
-    const phrase = this.normaliseTerm(query)
-    const rawTerms = phrase
-      .split(/\s+/)
-      .map(term => this.normaliseTerm(term))
-      .filter(term => term.length > 0)
-    const terms = this.expandQueryTerms(rawTerms)
+    const phrase = query.toLowerCase().trim()
+    const rawTerms = phrase.split(/\s+/).filter(term => term.length > 0)
+    const terms = this.queryExpansionService.expandQueryTerms(rawTerms)
 
+    // Score each record
     const scored: ScoredRecord[] = catalogue
-      .map(item => ({ item, score: this.scoreRecord(item, terms, phrase) }))
+      .map(item => {
+        const externalEntry = this.searchIndexRepository.getEntryByUrl(item.url)
+        const externalText = externalEntry?.externalText?.slice(0, 5000)
+        const score = this.scoringService.scoreRecord(item, terms, phrase, externalText)
+        return { item, score }
+      })
       .filter(result => result.score > 0)
       .sort((a, b) => b.score - a.score || a.item.title.localeCompare(b.item.title))
 
+    // Apply diversity constraints
     const diversified = this.applyDiversity(scored, options)
     return diversified.map(item => this.mapRecordToComponent(item))
   }
 
+  /**
+   * GET / - Display search landing page.
+   * @param req - Express request object
+   * @param res - Express response object
+   * @returns Renders search index page with recommendations
+   */
   index = async (req: Request, res: Response) => {
     const filters: ContentFilter = {
       department: 'All departments',
@@ -538,7 +415,6 @@ export default class SearchController extends BaseController {
     const props = {
       servicePatterns: servicePatterns.slice(0, 3),
       styleGuides: styleGuides.slice(0, 3),
-      // filters
       departmentFilters: await this.infoService.getDepartmentFilters(),
       contentTypeFilters: await this.infoService.getContentTypesFilters(),
       professionFilters: await this.infoService.getProfessionsFilters(),
@@ -546,14 +422,23 @@ export default class SearchController extends BaseController {
     return res.render('pages/search/index', { props })
   }
 
+  /**
+   * GET /search-results - Full page search with filters and results.
+   * @param req - Express request with searchQuery parameter
+   * @param res - Express response object
+   * @returns Renders search results page or validation errors
+   */
   search = async (req: Request, res: Response) => {
     let formError = ''
-    // ensure search query is a string before validating length, to avoid type confusion.
+
     if (typeof req.query.searchQuery !== 'string') {
       formError = 'Invalid data type for search query'
       return res.status(422).render('pages/search/index', { props: { formError, searchQuery: '' } })
     }
+
     const query = req.query.searchQuery
+
+    // Log and audit search query
     if (query.length > 0) {
       logger.info(
         {
@@ -582,52 +467,71 @@ export default class SearchController extends BaseController {
       }
     }
 
-    if (query.length < 2) {
-      formError = 'Input must be at least 2 characters long'
-    }
+    // Validate query length
     if (query.length === 0) {
       formError = 'Please enter a description'
+    } else if (query.length < 2) {
+      formError = 'Input must be at least 2 characters long'
     }
+
     if (formError.length > 0) {
       return res.status(422).render('pages/search/index', { props: { formError, searchQuery: query } })
     }
 
+    // Execute search
     const filters: ContentFilter = {
       department: (req.query.department as string) || '',
       contentType: (req.query.contentType as string) || '',
       profession: (req.query.profession as string) || '',
     }
+
     const searchResults = {
       message: 'Showing catalogue matches from GOV Reuse Library content',
       components: await this.searchLocalCatalogue(query),
     }
+
     const servicePatterns = await this.infoService.getServicePatterns(filters)
     const styleGuides = await this.infoService.getStyleGuides(filters)
+
     const props = {
       formError,
       searchQuery: query,
-      // Search results
       components: searchResults.components,
       message: searchResults.message,
-      // Catalogue recommendations
       servicePatterns: servicePatterns.slice(0, 3),
       styleGuides: styleGuides.slice(0, 3),
-      // filters
       departmentFilters: await this.infoService.getDepartmentFilters(),
       contentTypeFilters: await this.infoService.getContentTypesFilters(),
       professionFilters: await this.infoService.getProfessionsFilters(),
-      // active filters
       filters,
-      // reset filter links
       removeFilters: `/search-results/?${new URLSearchParams({ searchQuery: query }).toString()}`,
-      removeContentTypeLink: `/search-results/?${new URLSearchParams({ ...filters, searchQuery: query, contentType: '' }).toString()}`,
-      removeDepartmentLink: `/search-results/?${new URLSearchParams({ ...filters, searchQuery: query, department: '' }).toString()}`,
-      removeProfessionLink: `/search-results/?${new URLSearchParams({ ...filters, searchQuery: query, profession: '' }).toString()}`,
+      removeContentTypeLink: `/search-results/?${new URLSearchParams({
+        ...filters,
+        searchQuery: query,
+        contentType: '',
+      }).toString()}`,
+      removeDepartmentLink: `/search-results/?${new URLSearchParams({
+        ...filters,
+        searchQuery: query,
+        department: '',
+      }).toString()}`,
+      removeProfessionLink: `/search-results/?${new URLSearchParams({
+        ...filters,
+        searchQuery: query,
+        profession: '',
+      }).toString()}`,
     }
 
     return res.status(200).render('pages/search/index', { props })
   }
 
+  /**
+   * GET /search-suggest - Autocomplete suggestions for search input.
+   * Returns merged component and catalogue matches.
+   * @param req - Express request with searchQuery parameter
+   * @param res - Express response object (JSON)
+   * @returns JSON with results array
+   */
   suggest = async (req: Request, res: Response) => {
     if (typeof req.query.searchQuery !== 'string') {
       return res.status(400).json({ results: [] })
@@ -638,30 +542,31 @@ export default class SearchController extends BaseController {
       return res.status(200).json({ results: [] })
     }
 
+    // Get component matches from design systems
     const componentMatches = await this.matchDesignSystemComponents(query)
     const aggregatedMatches = this.aggregateComponentMatches(componentMatches)
+
     const componentResults = aggregatedMatches
-      .flatMap(match => {
-        // Create a separate result for each source system
-        return match.sources.map(source => ({
+      .flatMap(match =>
+        match.sources.map(source => ({
           title: match.componentName,
           url: source.componentUrl,
           parent: source.sourceTitle,
-          type: 'Component',
           description: `${match.componentName} from ${source.sourceTitle}`,
-        }))
-      })
+        })),
+      )
       .slice(0, 12)
 
+    // Get catalogue matches
     const suggestionOptions = { maxPerDomain: 2, maxPerDepartment: 2, maxPerTitle: 1 }
     const catalogueResults = (await this.searchLocalCatalogue(query, suggestionOptions)).map(component => ({
       title: component.title,
       url: component.url,
       parent: component.parent,
-      type: 'Catalogue',
       description: component.description,
     }))
 
+    // Merge and deduplicate by URL
     const seenSuggestionUrls = new Set<string>()
     const mergedResults = [...componentResults, ...catalogueResults].filter(result => {
       const key = this.getUrlKey(result.url)
@@ -675,14 +580,20 @@ export default class SearchController extends BaseController {
     return res.status(200).json({ results: mergedResults.slice(0, 15) })
   }
 
+  /**
+   * GET /design-system-components - List all design systems with their components.
+   * @param req - Express request with optional source filter
+   * @param res - Express response object (JSON)
+   * @returns JSON with design systems and component listings
+   */
   designSystemComponents = async (req: Request, res: Response) => {
     const filters = this.getAllFilters()
     const designSystems = await this.infoService.getDesignSystems(filters)
-    const sourceFilter = typeof req.query.source === 'string' ? this.normaliseTerm(req.query.source) : ''
+    const sourceFilter = typeof req.query.source === 'string' ? req.query.source.toLowerCase().trim() : ''
 
     const list = designSystems
       .map(item => {
-        const entry = this.externalIndexByUrl.get(this.getUrlKey(item.url))
+        const entry = this.searchIndexRepository.getEntryByUrl(item.url)
         const components = (entry?.externalComponentEntries || []).map(component => ({
           name: component.name,
           url: component.url,
@@ -701,13 +612,19 @@ export default class SearchController extends BaseController {
         if (!sourceFilter) {
           return true
         }
-        const haystack = this.normaliseTerm(`${item.title} ${item.url}`)
+        const haystack = `${item.title} ${item.url}`.toLowerCase()
         return haystack.includes(sourceFilter)
       })
 
     return res.status(200).json({ results: list })
   }
 
+  /**
+   * GET /design-system-component-search - Search for a component across all design systems.
+   * @param req - Express request with component query parameter
+   * @param res - Express response object (JSON)
+   * @returns JSON with aggregated component matches (deduplicated by name)
+   */
   designSystemComponentSearch = async (req: Request, res: Response) => {
     if (typeof req.query.component !== 'string' || req.query.component.trim().length < 2) {
       return res.status(400).json({ results: [] })

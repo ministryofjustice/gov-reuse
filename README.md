@@ -17,6 +17,140 @@ When deployed to an environment with multiple pods we run applications with an i
 a distributed cache of sessions.
 The template app is, by default, configured not to use REDIS when running locally.
 
+## Architecture & Search System
+
+The search system follows a **modular, service-layer architecture** designed for
+maintainability, testability, and clarity. All layers have explicit responsibilities
+with minimal coupling.
+
+### System Layers
+
+**HTTP Request Handler** (routes/index.ts)
+
+- Route definitions and service composition
+
+**HTTP Controllers** (controllers/SearchController.ts)
+
+- Handles HTTP requests
+- Validates inputs
+- Coordinates services
+- Returns JSON/HTML responses
+
+**Service Layer** (Business Logic)
+
+- QueryExpansionService: Stemming, synonyms, stop words
+- SearchScoringService: Multi-factor ranking
+- SearchIndexRepository: Data access integration
+
+**Data Access Layer** (Repositories & Clients)
+
+- SearchIndexRepository (loaded JSON indices)
+- InfoService (catalogue data from APIs)
+- AuditService (optional event logging)
+- Generated search index from build-time crawler
+
+### Search Query Flow
+
+#### Autocomplete (Real-Time Client Suggestions)
+
+User types in search box → Debounced (180ms) → Fetch /search-suggest → Match components
+and search catalogue → Return merged results (max 15) → Render dropdown with keyboard
+navigation → User clicks result or presses Enter → Opens in new tab
+
+#### Component Matching (Design Systems)
+
+Query expanded with synonyms (e.g., "date" → [date, picker, datepicker, calendar])
+→ Score each component entry by name matching → Aggregate by component name (group all
+sources) → Result shows each design system's implementation
+
+#### Full Search (Catalogue Query)
+
+User submits form → Validate query length (≥2 chars) → Log audit event → Fetch all
+catalogue items → Score against query (title: 50pts, description: 12pts, other: 6pts)
+→ Sort by score → Apply diversity constraints (max 4 per domain, max 4 per department,
+max 1 per title) → Render results page with filters
+
+### Service Responsibilities
+
+#### QueryExpansionService
+
+- Normalise terms to lowercase
+- Apply simple stemming (remove suffixes: -ing, -ed, -s, -tion)
+- Expand queries with synonyms (e.g., "form" → "forms")
+- Filter stop words (common words that don't help matching)
+
+#### SearchScoringService
+
+- Implements multi-factor scoring algorithm
+- Uses token-based matching for flexibility
+- Combines signals from title, description, and external data
+- Returns score between 0 and maximum (for ranking)
+
+#### SearchIndexRepository
+
+- Loads pre-built search index from JSON (generated at build time)
+- Provides typed access to external component data
+- Caches lookups by normalised URL
+- Handles malformed URLs gracefully
+
+#### SearchController
+
+- Thin HTTP handler (coordinates services)
+- Validates user inputs
+- Maps service responses to JSON/HTML
+- Logs audit events (with graceful failure handling)
+
+### Key Design Principles
+
+1. Separation of Concerns
+
+   - Controllers handle HTTP only (request/response)
+   - Services contain business logic (scoring, expansion)
+   - Data layer handles retrieval (repositories, clients)
+
+2. Type Safety
+
+   - Strict TypeScript throughout
+   - Explicit service dependencies via constructor injection
+   - Well-defined interfaces for all data types
+
+3. Modularity
+
+   - Each service has single responsibility
+   - Easy to test individually
+   - Can be reused in other contexts
+
+4. Clarity
+
+   - Comprehensive JSDoc comments on all public methods
+   - Clear naming (e.g., `scoreRecord`, `expandQueryTerms`)
+   - Private methods marked explicitly
+   - Detailed error handling
+
+### Client-Side Architecture
+
+#### HeaderSearchAutocomplete Class
+
+- Encapsulates all autocomplete logic in one class
+- Private state management (activeIndex, currentResults)
+- Event delegation for keyboard navigation (arrow keys, Enter, Escape)
+- HTML escaping to prevent XSS attacks
+- Debounced fetch requests (180ms) with AbortController for cancellation
+
+#### Usage
+
+```typescript
+// Initialised automatically on page load
+const search = new HeaderSearchAutocomplete(container)
+
+// Features:
+// - Keyboard navigation (arrow keys cycle through results)
+// - Enter selects result (respects target="_blank")
+// - Escape closes dropdown
+// - Click outside hides suggestions
+// - Accessibility: ARIA labels, combobox roles
+```
+
 ## Running the app via docker-compose
 
 The easiest way to run the app is to use docker compose to create the service and all dependencies.
