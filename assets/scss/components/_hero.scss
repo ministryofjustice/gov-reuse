@@ -100,6 +100,25 @@
     margin-bottom: 2px;
   }
 
+  &__search-result-type {
+    color: govuk-colour('white');
+    background-color: govuk-colour('blue');
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  &__search-result-description {
+    color: govuk-colour('dark-grey');
+    display: block;
+    font-size: 0.9375rem;
+    margin-bottom: 4px;
+  }
+
   &__search-result-meta {
     color: govuk-colour('dark-grey');
     display: block;

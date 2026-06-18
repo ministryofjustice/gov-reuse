@@ -28,6 +28,8 @@ services:
       - TOKEN_VERIFICATION_ENABLED=false
       - INGRESS_URL=http://localhost:3000
       - NO_HTTPS=true
+      - EXAMPLE_API_URL=http://localhost:9090
+      - SEARCH_API_URL=http://localhost:9091
 
 networks:
   hmpps:
