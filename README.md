@@ -19,164 +19,82 @@ The template app is, by default, configured not to use REDIS when running locall
 
 ## Architecture & Search System
 
-The search system follows a **modular, service-layer architecture** designed for maintainability, testability, and clarity. All layers have explicit responsibilities with minimal coupling.
+The search system follows a **modular, service-layer architecture** designed for
+maintainability, testability, and clarity. All layers have explicit responsibilities
+with minimal coupling.
 
 ### System Layers
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  HTTP Request Handler (Express Routes)                      │
-│  routes/index.ts - Route definitions & service composition  │
-└──────────────────────┬──────────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────────┐
-│  HTTP Controllers (Thin Request/Response Layer)             │
-│  controllers/SearchController.ts                            │
-│  ├─ Handles HTTP requests                                   │
-│  ├─ Validates inputs                                        │
-│  ├─ Coordinates services                                    │
-│  └─ Returns JSON/HTML responses                             │
-└──────────────────────┬──────────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────────┐
-│  Service Layer (Business Logic)                             │
-│  ├─ QueryExpansionService                                   │
-│  │  ├─ Stemming (convert words to base form)                │
-│  │  ├─ Synonym expansion (ai → artificial intelligence)     │
-│  │  └─ Stop word filtering (the, a, and, etc)              │
-│  │                                                          │
-│  ├─ SearchScoringService                                    │
-│  │  ├─ Multi-factor scoring algorithm                       │
-│  │  ├─ Title matching (50 points)                           │
-│  │  ├─ Description matching (12 points)                     │
-│  │  └─ External enrichment weighting                        │
-│  │                                                          │
-│  └─ (SearchIndexRepository integrated in data access)      │
-└──────────────────────┬──────────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────────┐
-│  Data Access Layer (Repositories & Clients)                 │
-│  ├─ SearchIndexRepository (loaded JSON indices)             │
-│  ├─ InfoService (catalogue data from APIs)                  │
-│  ├─ AuditService (optional event logging)                   │
-│  └─ Generated search index from build-time crawler          │
-└──────────────────────────────────────────────────────────────┘
-```
+**HTTP Request Handler** (routes/index.ts)
+
+- Route definitions and service composition
+
+**HTTP Controllers** (controllers/SearchController.ts)
+
+- Handles HTTP requests
+- Validates inputs
+- Coordinates services
+- Returns JSON/HTML responses
+
+**Service Layer** (Business Logic)
+
+- QueryExpansionService: Stemming, synonyms, stop words
+- SearchScoringService: Multi-factor ranking
+- SearchIndexRepository: Data access integration
+
+**Data Access Layer** (Repositories & Clients)
+
+- SearchIndexRepository (loaded JSON indices)
+- InfoService (catalogue data from APIs)
+- AuditService (optional event logging)
+- Generated search index from build-time crawler
 
 ### Search Query Flow
 
-**Autocomplete (Real-Time Client Suggestions)**
+#### Autocomplete (Real-Time Client Suggestions)
 
-```
-User Input (e.g., "date picker")
-         │
-         ▼
-    Debounce (180ms)
-         │
-         ▼
-   Fetch /search-suggest
-         │
-         ├─────────────────────┬─────────────────────┐
-         ▼                     ▼                     ▼
- Match Components    Search Catalogue       Return merged
- (from external)     (local scoring)        results (max 15)
-         │                     │                     │
-         └─────────────────────┴─────────────────────┘
-                       │
-                       ▼
-            Render in dropdown overlay
-                (keyboard navigation)
-                       │
-                       ▼
-         User clicks result → Opens in new tab
-```
+User types in search box → Debounced (180ms) → Fetch /search-suggest → Match components
+and search catalogue → Return merged results (max 15) → Render dropdown with keyboard
+navigation → User clicks result or presses Enter → Opens in new tab
 
-**Component Matching (Design Systems)**
+#### Component Matching (Design Systems)
 
-```
-Query: "date picker"
-        │
-        ▼
-Expand terms: [date, picker, datepicker, calendar]
-        │
-        ▼
-Score each component entry by name matching
-        │
-        ▼
-Aggregate by component name (group all sources)
-        │
-        ├─ Result: "Date Picker" from 4 different design systems
-        │         with links to each implementation
-        │
-        ▼
-Return to controller
-        │
-        ▼
-Flatten for suggestions (show each source separately)
-```
+Query expanded with synonyms (e.g., "date" → [date, picker, datepicker, calendar])
+→ Score each component entry by name matching → Aggregate by component name (group all
+sources) → Result shows each design system's implementation
 
-**Full Search (Catalogue Query)**
+#### Full Search (Catalogue Query)
 
-```
-User submits search form
-        │
-        ▼
-Validate query length (minimum 2 chars)
-        │
-        ▼
-Log audit event (if enabled)
-        │
-        ▼
-Fetch all catalogue items:
-  ├─ Design Systems
-  ├─ Manuals
-  ├─ Products
-  ├─ Service Patterns
-  ├─ Standards
-  └─ Style Guides
-        │
-        ▼
-Score each item against query:
-  1. Expand query terms (stemming + synonyms)
-  2. Match title (50 points if match found)
-  3. Match description (12 points)
-  4. Match other fields (6 points)
-  5. Consider external enrichment data
-        │
-        ▼
-Sort by score (highest first)
-        │
-        ▼
-Apply diversity constraints:
-  ├─ Max 4 per domain (e.g., gov.uk)
-  ├─ Max 4 per department
-  └─ Max 1 per title
-        │
-        ▼
-Render results page with filters
-```
+User submits form → Validate query length (≥2 chars) → Log audit event → Fetch all
+catalogue items → Score against query (title: 50pts, description: 12pts, other: 6pts)
+→ Sort by score → Apply diversity constraints (max 4 per domain, max 4 per department,
+max 1 per title) → Render results page with filters
 
 ### Service Responsibilities
 
-**QueryExpansionService**
+#### QueryExpansionService
+
 - Normalise terms to lowercase
 - Apply simple stemming (remove suffixes: -ing, -ed, -s, -tion)
 - Expand queries with synonyms (e.g., "form" → "forms")
 - Filter stop words (common words that don't help matching)
 
-**SearchScoringService**
+#### SearchScoringService
+
 - Implements multi-factor scoring algorithm
 - Uses token-based matching for flexibility
 - Combines signals from title, description, and external data
 - Returns score between 0 and maximum (for ranking)
 
-**SearchIndexRepository**
+#### SearchIndexRepository
+
 - Loads pre-built search index from JSON (generated at build time)
 - Provides typed access to external component data
 - Caches lookups by normalised URL
 - Handles malformed URLs gracefully
 
-**SearchController**
+#### SearchController
+
 - Thin HTTP handler (coordinates services)
 - Validates user inputs
 - Maps service responses to JSON/HTML
@@ -184,22 +102,26 @@ Render results page with filters
 
 ### Key Design Principles
 
-1. **Separation of Concerns**
+1. Separation of Concerns
+
    - Controllers handle HTTP only (request/response)
    - Services contain business logic (scoring, expansion)
    - Data layer handles retrieval (repositories, clients)
 
-2. **Type Safety**
+2. Type Safety
+
    - Strict TypeScript throughout
    - Explicit service dependencies via constructor injection
    - Well-defined interfaces for all data types
 
-3. **Modularity**
+3. Modularity
+
    - Each service has single responsibility
    - Easy to test individually
    - Can be reused in other contexts
 
-4. **Clarity**
+4. Clarity
+
    - Comprehensive JSDoc comments on all public methods
    - Clear naming (e.g., `scoreRecord`, `expandQueryTerms`)
    - Private methods marked explicitly
@@ -207,14 +129,16 @@ Render results page with filters
 
 ### Client-Side Architecture
 
-**HeaderSearchAutocomplete Class**
+#### HeaderSearchAutocomplete Class
+
 - Encapsulates all autocomplete logic in one class
 - Private state management (activeIndex, currentResults)
 - Event delegation for keyboard navigation (arrow keys, Enter, Escape)
 - HTML escaping to prevent XSS attacks
 - Debounced fetch requests (180ms) with AbortController for cancellation
 
-**Usage**
+#### Usage
+
 ```typescript
 // Initialised automatically on page load
 const search = new HeaderSearchAutocomplete(container)
