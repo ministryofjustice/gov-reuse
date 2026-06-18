@@ -140,7 +140,9 @@ export default class HeaderSearchAutocomplete {
       return
     }
 
-    const listMarkup = results
+    const limitedResults = results.slice(0, this.RESULTS_LIMIT)
+
+    const listMarkup = limitedResults
       .map((result, index) => {
         const itemId = `header-search-option-${index}`
         return `
@@ -149,7 +151,7 @@ export default class HeaderSearchAutocomplete {
             class="hero__search-result"
             role="option"
             aria-selected="false"
-            href="${this.encodeURI(result.url)}"
+            href="${this.escapeHtml(this.encodeURI(result.url))}"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -163,7 +165,7 @@ export default class HeaderSearchAutocomplete {
 
     this.resultsContainer!.innerHTML = `<div class="hero__search-result-list">${listMarkup}</div>`
     this.resultsContainer!.hidden = false
-    this.statusText!.textContent = `${results.length} result${results.length === 1 ? '' : 's'} available.`
+    this.statusText!.textContent = `${limitedResults.length} result${limitedResults.length === 1 ? '' : 's'} available.`
     this.setExpanded(true)
   }
 
