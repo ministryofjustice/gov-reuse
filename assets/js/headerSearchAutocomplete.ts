@@ -5,6 +5,13 @@
  * Handles user input, keyboard navigation, and result rendering.
  */
 
+// Define window.gtag to prevent Typescript warning.
+declare global {
+  interface Window {
+    gtag?: (command: string, action: string, params?: Record<string, string | number | boolean>) => void
+  }
+}
+
 type SearchResult = {
   title: string
   url: string
@@ -57,6 +64,7 @@ export default class HeaderSearchAutocomplete {
     }
 
     this.attachEventListeners()
+    this.attachDelegatedClickTracking()
   }
 
   /**
@@ -151,6 +159,7 @@ export default class HeaderSearchAutocomplete {
             class="hero__search-result"
             role="option"
             aria-selected="false"
+            data-index="${index}"
             href="${this.escapeHtml(this.encodeURI(result.url))}"
             target="_blank"
             rel="noopener noreferrer"
@@ -167,6 +176,39 @@ export default class HeaderSearchAutocomplete {
     this.resultsContainer!.hidden = false
     this.statusText!.textContent = `${limitedResults.length} result${limitedResults.length === 1 ? '' : 's'} available.`
     this.setExpanded(true)
+  }
+
+  /**
+   * Delegated click tracking so we capture the users query when they select a link.
+   *
+   * Uses event delegation so we don't create/destroy listeners on each render cycle.
+   * The listener persists for the lifetime of the component; child elements can
+   * be freely replaced via innerHTML without any listener cleanup.
+   * @private
+   */
+  private attachDelegatedClickTracking(): void {
+    this.resultsContainer.addEventListener('click', (event: Event) => {
+      // Appeasing TypeScript by casting to HTMLElement
+      const target = (event.target as HTMLElement).closest('.hero__search-result') as HTMLElement | null
+      if (!target) return
+
+      const index = parseInt(target.dataset.index || '', 10)
+      if (Number.isNaN(index)) return
+
+      const selected = this.currentResults[index]
+      if (!selected || typeof window.gtag !== 'function') return
+
+      const queryAtClick = this.input?.value?.trim() || ''
+      // TODO: We need to manually define all the event properties like `selected_title` as custom dimensions in GA4,
+      // although `search_term` is already defined as built-in.
+      window.gtag('event', 'select_search_suggestion', {
+        search_term: queryAtClick,
+        selected_title: selected.title,
+        selected_url: selected.url,
+        selected_source: selected.parent,
+        suggestion_position: index + 1,
+      })
+    })
   }
 
   /**
@@ -246,6 +288,7 @@ export default class HeaderSearchAutocomplete {
 
   /**
    * Click the active result link.
+   * Triggers the link's click handler, which includes GA tracking.
    * @private
    */
   private clickActiveResult(): void {
@@ -253,6 +296,18 @@ export default class HeaderSearchAutocomplete {
       `#header-search-option-${this.activeIndex}`,
     ) as HTMLAnchorElement | null
     if (activeItem instanceof HTMLAnchorElement) {
+      // Track keyboard selection via GA4
+      const selected = this.currentResults[this.activeIndex]
+      if (selected && typeof window.gtag === 'function') {
+        const queryAtSelect = this.input?.value?.trim() || ''
+        window.gtag('event', 'select_search_suggestion', {
+          search_term: queryAtSelect,
+          selected_title: selected.title,
+          selected_url: selected.url,
+          selected_source: selected.parent,
+          suggestion_position: this.activeIndex + 1,
+        })
+      }
       activeItem.click()
     }
   }
