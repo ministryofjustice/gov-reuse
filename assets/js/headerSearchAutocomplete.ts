@@ -64,9 +64,19 @@ export default class HeaderSearchAutocomplete {
    * @private
    */
   private attachEventListeners(): void {
+    this.form?.addEventListener('submit', e => this.handleFormSubmit(e))
     this.input?.addEventListener('input', e => this.handleInput(e as InputEvent))
     this.input?.addEventListener('keydown', e => this.handleKeyDown(e as KeyboardEvent))
     document.addEventListener('click', e => this.handleDocumentClick(e as MouseEvent))
+  }
+
+  /**
+   * Prevent direct form submission; users should choose a suggestion link.
+   * @private
+   */
+  private handleFormSubmit(event: Event): void {
+    event.preventDefault()
+    this.statusText!.textContent = 'Select a suggested result to continue.'
   }
 
   /**
@@ -174,6 +184,18 @@ export default class HeaderSearchAutocomplete {
    * @private
    */
   private handleKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+
+      if (this.activeIndex >= 0) {
+        this.clickActiveResult()
+      } else {
+        this.statusText!.textContent = 'Select a suggested result to continue.'
+      }
+
+      return
+    }
+
     if (this.resultsContainer?.hidden || !this.currentResults.length) {
       return
     }
@@ -192,14 +214,6 @@ export default class HeaderSearchAutocomplete {
       case 'Escape':
         event.preventDefault()
         this.hideResults()
-        break
-
-      case 'Enter':
-        if (this.activeIndex < 0) {
-          return
-        }
-        event.preventDefault()
-        this.clickActiveResult()
         break
 
       default:
