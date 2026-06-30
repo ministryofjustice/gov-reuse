@@ -197,9 +197,9 @@ export default class HeaderSearchAutocomplete {
    * @private
    */
   private attachDelegatedClickTracking(): void {
-    this.resultsContainer.addEventListener('click', (event: Event) => {
-      // Appeasing TypeScript by casting to HTMLElement
-      const target = (event.target as HTMLElement).closest('.hero__search-result') as HTMLElement | null
+    this.resultsContainer.addEventListener('click', (event: MouseEvent) => {
+      if (!(event.target instanceof Element)) return
+      const target = event.target.closest('.hero__search-result') as HTMLElement | null
       if (!target) return
 
       const index = parseInt(target.dataset.index || '', 10)
@@ -310,18 +310,6 @@ export default class HeaderSearchAutocomplete {
       `#header-search-option-${this.activeIndex}`,
     ) as HTMLAnchorElement | null
     if (activeItem instanceof HTMLAnchorElement) {
-      // Track keyboard selection via GA4
-      const selected = this.currentResults[this.activeIndex]
-      if (selected && typeof window.gtag === 'function') {
-        const queryAtSelect = this.input?.value?.trim() || ''
-        window.gtag('event', 'select_search_suggestion', {
-          search_term: queryAtSelect,
-          selected_title: selected.title,
-          selected_url: selected.url,
-          selected_source: selected.parent,
-          suggestion_position: this.activeIndex + 1,
-        })
-      }
       activeItem.click()
     }
   }
