@@ -5,7 +5,7 @@
  * Handles user input, keyboard navigation, and result rendering.
  */
 
-// Define window.gtag to prevent Typescript warning.
+// Define window.gtag to prevent TypeScript warning.
 declare global {
   interface Window {
     gtag?: (command: string, action: string, params?: Record<string, string | number | boolean>) => void
@@ -189,11 +189,11 @@ export default class HeaderSearchAutocomplete {
   }
 
   /**
-   * Delegated click tracking so we capture the users query when they select a link.
+   * Delegated click tracking so we capture the user's query when they select a link.
    *
    * Uses event delegation so we don't create/destroy listeners on each render cycle.
    * The listener persists for the lifetime of the component; child elements can
-   * be freely replaced via innerHTML without any listener cleanup.
+   * be freely replaced via innerHTML without any listener clean-up.
    * @private
    */
   private attachDelegatedClickTracking(): void {
