@@ -209,8 +209,8 @@ export default class HeaderSearchAutocomplete {
       if (!selected || typeof window.gtag !== 'function') return
 
       const queryAtClick = this.input?.value?.trim() || ''
-      // TODO: We need to manually define all the event properties like `selected_title` as custom dimensions in GA4,
-      // although `search_term` is already defined as built-in.
+      // The event properties like `selected_title` are manually defined in GA4 as custom dimensions,
+      // but `search_term` is already defined as built-in.
       window.gtag('event', 'select_search_suggestion', {
         search_term: queryAtClick,
         selected_title: selected.title,
