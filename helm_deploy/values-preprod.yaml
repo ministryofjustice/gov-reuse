@@ -10,9 +10,10 @@ generic-service:
       - prep.reuselibrary.service.justice.gov.uk
     tlsSecretName: reuse-library-cert
     annotations:
+      external-dns.alpha.kubernetes.io/hostname: "prep.reuselibrary.service.justice.gov.uk"
+      external-dns.alpha.kubernetes.io/ingress-hostname-source: "defined-hosts-only"
       external-dns.alpha.kubernetes.io/set-identifier: reuse-library-preprod-gov-reuse-green
       external-dns.alpha.kubernetes.io/aws-weight: "100"
-      external-dns.alpha.kubernetes.io/exclude: "prep.reuselibrary.service.justice.gov.uk"
 #      nginx.ingress.kubernetes.io/server-alias: prep.reuselibrary.service.justice.gov.uk
 
   env:
