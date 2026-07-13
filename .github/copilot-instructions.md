@@ -33,7 +33,7 @@
 
 - Use 2-space indentation
 - Include descriptive comments for configuration sections
-- Follow the existing patterns for renovate.json, pre-commit hooks, and workflow files
+- Follow the existing patterns for renovate.json and workflow files
 
 ## Security Practices
 
