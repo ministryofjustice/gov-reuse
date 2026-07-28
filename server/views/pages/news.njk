@@ -27,6 +27,17 @@
 
         {% if pagination and pagination.totalPages > 1 %}
           <nav class="govuk-pagination news-page__pagination" aria-label="Pagination">
+            {% if pagination.previousPageHref %}
+              <div class="govuk-pagination__prev">
+                <a class="govuk-link govuk-pagination__link" href="{{ pagination.previousPageHref }}" rel="prev">
+                  <span class="govuk-pagination__link-title">Previous</span>
+                  <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+                    <path d="m6.893 0.0078125 1.413 1.4062375-5.09375 5.09375h11.78125v2h-11.78125l5.09375 5.09375-1.413 1.4062-7.5-7.5z"></path>
+                  </svg>
+                </a>
+              </div>
+            {% endif %}
+
             <ul class="govuk-pagination__list">
               {% for pageNumber in pagination.pageNumbers %}
                 <li class="govuk-pagination__item{% if pageNumber == pagination.currentPage %} govuk-pagination__item--current{% endif %}">
