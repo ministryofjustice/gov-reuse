@@ -79,3 +79,45 @@ describe('GET /', () => {
       })
   })
 })
+
+describe('GET /news', () => {
+  it('should render the news page', () => {
+    return request(app)
+      .get('/news')
+      .expect('Content-Type', /html/)
+      .expect(200)
+      .expect(res => {
+        expect(res.text).toContain('What&rsquo;s new')
+        expect(res.text).toContain('Updated accessibility statement')
+        expect(res.text).toContain('href="/news?page=2"')
+      })
+  })
+
+  it('should render page 2 of the news list', () => {
+    return request(app)
+      .get('/news?page=2')
+      .expect('Content-Type', /html/)
+      .expect(200)
+      .expect(res => {
+        expect(res.text).toContain('Reuse Library vision published')
+        expect(res.text).toContain('Contributor guidance refreshed')
+        expect(res.text).not.toContain('Updated accessibility statement')
+      })
+  })
+})
+
+describe('GET /news/:slug', () => {
+  it('should render a markdown-backed blog post', () => {
+    return request(app)
+      .get('/news/launching-gov-reuse-library')
+      .expect('Content-Type', /html/)
+      .expect(200)
+      .expect(res => {
+        expect(res.text).toContain('Launching the GOV Reuse Library')
+      })
+  })
+
+  it('should return 404 for unknown post slugs', () => {
+    return request(app).get('/news/does-not-exist').expect(404)
+  })
+})

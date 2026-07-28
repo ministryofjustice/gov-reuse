@@ -1,0 +1,48 @@
+.news-page {
+  .govuk-back-link {
+    margin-bottom: 28px;
+  }
+}
+
+.news-page__intro {
+  margin-bottom: 34px;
+}
+
+.news-list {
+  margin: 0 0 40px;
+  padding: 0;
+}
+
+.news-list__item {
+  border-bottom: 1px solid #b1b4b6;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+}
+
+.news-list__title {
+  font-size: 36px;
+  line-height: 1.15;
+}
+
+.news-list__title-link {
+  color: #0b0c0c;
+  text-decoration: none;
+}
+
+.news-list__title-link:hover,
+.news-list__title-link:focus {
+  text-decoration: underline;
+}
+
+.news-list__date {
+  color: #505a5f;
+  margin-bottom: 14px;
+}
+
+.news-list__summary {
+  margin-bottom: 0;
+}
+
+.news-page__pagination {
+  margin-top: 10px;
+}
