@@ -46,7 +46,7 @@ export default class NewsController extends BaseController {
     const markdownContent = parseMarkdownFile(path.join(NEWS_MARKDOWN_DIR, post.fileName))
 
     return res.render('pages/markdown', {
-      pageTitle: `${post.title} - News`,
+      pageTitle: `${res.app.locals.applicationName} - ${post.title}`,
       markdownContent,
     })
   }
