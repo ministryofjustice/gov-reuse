@@ -67,5 +67,4 @@ const blogPosts: BlogPost[] = [
 export const getBlogPosts = (): BlogPost[] =>
   [...blogPosts].sort((a, b) => b.publishedDate.localeCompare(a.publishedDate))
 
-export const getBlogPostBySlug = (slug: string): BlogPost | undefined =>
-  blogPosts.find(post => post.slug === slug)
+export const getBlogPostBySlug = (slug: string): BlogPost | undefined => blogPosts.find(post => post.slug === slug)
