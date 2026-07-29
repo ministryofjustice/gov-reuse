@@ -178,32 +178,6 @@ And then, to build the assets and start the app with esbuild:
 
 `npm run start:dev`
 
-### Pre-commit hooks
-
-This project uses [pre-commit](https://pre-commit.com) to run security checks, linting, and spell checking before each commit.
-
-Install pre-commit on macOS with Homebrew:
-
-```bash
-brew install pre-commit
-```
-
-Then install the hooks (one-time setup):
-
-```bash
-pre-commit install
-```
-
-This will configure Git to automatically run the following checks on each commit:
-
-- **MoJ DevSecOps hooks** – scans for secrets and sensitive data (see [devsecops-hooks](https://github.com/ministryofjustice/devsecops-hooks))
-- **Lint check** – runs TypeScript, YAML, and Markdown validation (`npm run validate:all`)
-- **Spell check** – checks spelling across the codebase (`npm run spellcheck`)
-
-To run all hooks manually against the entire repository:
-
-`pre-commit run --all-files`
-
 ### Run linter
 
 - `npm run lint` runs `eslint`.

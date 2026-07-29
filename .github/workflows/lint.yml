@@ -1,13 +1,13 @@
 # Linting Workflow
 #
 # Purpose:
-#   Performs comprehensive linting and validation checks on YAML, Markdown,
-#   and pre-commit configuration files to maintain code quality standards.
+#   Performs comprehensive linting and validation checks on YAML and Markdown
+#   files to maintain code quality standards.
 #
 # Description:
-#   This workflow executes multiple linting tools to validate file formatting,
-#   syntax, and pre-commit configuration integrity. It ensures consistency
-#   across documentation and configuration files.
+#   This workflow executes multiple linting tools to validate file formatting
+#   and syntax. It ensures consistency across documentation and configuration
+#   files.
 #
 # Trigger Events:
 #   - pull_request: On pull requests targeting main branch
@@ -44,23 +44,15 @@
 #        3. npm dependencies installation (npm ci --ignore-scripts)
 #        4. YAML validation (npm run validate:yml)
 #           - Validates .github/workflows/*.yml syntax
-#           - Checks .pre-commit-*.yaml files
 #           - Uses yamllint for standards compliance
 #        5. Markdown validation (npm run validate:md)
 #           - Validates README.md, CHANGELOG.md syntax
 #           - Checks documentation formatting
 #           - Uses markdownlint for style enforcement
-#        6. Python setup using version from vars.PYTHON_VERSION
-#        7. Pre-commit installation (pip install pre-commit)
-#        8. Pre-commit validation
-#           - Validates .pre-commit-hooks.yaml manifest
-#           - Validates .pre-commit-config.yaml configuration
-#           - Ensures hook definitions are correct
 #
 # Required Variables:
 #   - TIMEZONE: Repository timezone configuration
 #   - NODE_VERSION: Node.js version for npm operations
-#   - PYTHON_VERSION: Python version for pre-commit operations
 #
 # Required Secrets:
 #   - None (GITHUB_TOKEN automatically provided but not explicitly used)
@@ -68,20 +60,16 @@
 # Validation Tools:
 #   - yamllint: YAML syntax and style validation
 #   - markdownlint: Markdown formatting and style validation
-#   - pre-commit: Pre-commit hook validation
 #   - cspell: Spell checking (via npm run spellcheck, if triggered)
 #
 # Validation Rules:
 #   - YAML: Indentation, line length, trailing spaces, duplicate keys
 #   - Markdown: Headers, lists, links, code blocks, line length
-#   - Pre-commit: Hook syntax, configuration structure, repository URLs
 #
 # Failure Conditions:
 #   - Invalid YAML syntax
 #   - Markdown formatting violations
-#   - Pre-commit configuration errors
 #   - Missing required files
-#   - Malformed hook definitions
 #
 # Security Features:
 #   - Pinned action versions with commit SHAs
@@ -99,8 +87,6 @@
 #   - .yamllint.yml: YAML linting rules (if present)
 #   - .markdownlint.json: Markdown linting rules
 #   - .markdownlintignore: Files to exclude from Markdown linting
-#   - .pre-commit-hooks.yaml: Hook manifest
-#   - .pre-commit-config.yaml: Local configuration
 #
 # Notes:
 #   - Fast execution (~1-2 minutes typical)
