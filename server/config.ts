@@ -75,4 +75,5 @@ export default {
   },
   ingressUrl: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   environmentName: get('ENVIRONMENT_NAME', ''),
+  showNewsPage: get('SHOW_NEWS_PAGE', 'false') === 'true',
 }
