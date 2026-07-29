@@ -23,6 +23,14 @@ export default function createApp(services: Services): express.Application {
   app.set('trust proxy', true)
   app.set('port', process.env.PORT || 3000)
 
+  // Redirect the old dev domain to production domain, plz excuse magic strings.
+  app.use((req, res, next) => {
+    if (req.hostname === 'dev.reuselibrary.service.justice.gov.uk') {
+      return res.redirect(301, `https://reuselibrary.service.justice.gov.uk${req.originalUrl}`)
+    }
+    return next()
+  })
+
   // TODO: decide if we want to use app insights, otherwise remove.
   //  see ticket: https://dsdmoj.atlassian.net/browse/GOV-19
   // app.use(appInsightsMiddleware())

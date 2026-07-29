@@ -10,20 +10,15 @@ generic-service:
   ingress:
     hosts:
       - reuse-library-dev.apps.live.cloud-platform.service.justice.gov.uk
-      - dev.reuselibrary.service.justice.gov.uk
-    tlsSecretName: reuse-library-cert
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: "dev.reuselibrary.service.justice.gov.uk"
-      external-dns.alpha.kubernetes.io/ingress-hostname-source: "defined-hosts-only"
       external-dns.alpha.kubernetes.io/set-identifier: reuse-library-dev-gov-reuse-green
       external-dns.alpha.kubernetes.io/aws-weight: "100"
-#      nginx.ingress.kubernetes.io/server-alias: dev.reuselibrary.service.justice.gov.uk
 
   env:
-    INGRESS_URL: "https://dev.reuselibrary.service.justice.gov.uk"
+    INGRESS_URL: "https://reuse-library-dev.apps.live.cloud-platform.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-dev.prison.service.justice.gov.uk"
-    EXAMPLE_API_URL: 'https://dev.reuselibrary.service.justice.gov.uk'
+    EXAMPLE_API_URL: 'https://reuse-library-dev.apps.live.cloud-platform.service.justice.gov.uk'
     ENVIRONMENT_NAME: DEV
     AUDIT_ENABLED: "false"
     SEARCH_API_URL: "http://localhost:8080"
