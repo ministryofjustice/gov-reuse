@@ -6,11 +6,12 @@ generic-service:
     hosts:
       - reuse-library-prod.apps.live.cloud-platform.service.justice.gov.uk
       - reuselibrary.service.justice.gov.uk
-#      - dev.reuselibrary.service.justice.gov.uk
+      - dev.reuselibrary.service.justice.gov.uk
   tlsSecretName: reuse-library-cert
   annotations:
 #    external-dns.alpha.kubernetes.io/hostname: "reuselibrary.service.justice.gov.uk"
 #    external-dns.alpha.kubernetes.io/ingress-hostname-source: "defined-hosts-only"
+    external-dns.alpha.kubernetes.io/controller: "disabled"
     external-dns.alpha.kubernetes.io/set-identifier: reuse-library-prod-gov-reuse-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
 
