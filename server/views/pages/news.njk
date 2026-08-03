@@ -7,17 +7,22 @@
 {% block content %}
   <div class="govuk-grid-row news-page">
     <div class="govuk-grid-column-two-thirds">
-      <a href="/" class="govuk-back-link">Back</a>
+    
 
-      <h1 class="govuk-heading-xl govuk-!-margin-top-6 govuk-!-margin-bottom-6">What&rsquo;s new</h1>
-      <p class="govuk-body-l news-page__intro">Find out what&rsquo;s happening with the Reuse Library.</p>
+      <h1 class="govuk-heading-l">What&rsquo;s new</h1>
+      <p class="govuk-body news-page__intro">Find out what&rsquo;s happening with the Reuse Library.</p>
 
       {% if posts and posts | length %}
         <ul class="govuk-list news-list">
           {% for post in posts %}
             <li class="news-list__item">
-              <h2 class="govuk-heading-l news-list__title govuk-!-margin-bottom-1">
-                <a class="govuk-link news-list__title-link" href="/news/{{ post.slug }}">{{ post.title }}</a>
+              <h2 class="govuk-heading-s news-list__title govuk-!-margin-bottom-1">
+                <a
+                  class="govuk-link news-list__title-link"
+                  href="{% if post.externalUrl %}{{ post.externalUrl }}{% else %}/news/{{ post.slug }}{% endif %}"
+                  >
+                   {{ post.title }}
+                    </a>
               </h2>
               <p class="govuk-body-s news-list__date">{{ post.publishedDateDisplay }}</p>
               <p class="govuk-body news-list__summary">{{ post.summary }}</p>

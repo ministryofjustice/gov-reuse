@@ -2,22 +2,24 @@ export type BlogPost = {
   slug: string
   title: string
   summary: string
-  fileName: string
+  fileName?: string
+  externalUrl?: string
   publishedDate: string
   publishedDateDisplay: string
 }
 
 const blogPosts: BlogPost[] = [
-  {
-    slug: 'updated-accessibility-statement',
-    title: 'Updated accessibility statement',
-    summary:
-      'We have reviewed and refreshed our accessibility statement to reflect current standards, testing approach and known limitations across the platform.',
-    fileName: 'updated-accessibility-statement.md',
-    publishedDate: '2026-07-22',
-    publishedDateDisplay: '22 July 2026',
-  },
-  {
+ {
+  slug: 'home-office-supporting-gov-reuse-library',
+  title: 'Home Office shares how it’s supporting the GOV Reuse Library',
+  summary:
+    'Home Office Digital has published a blog about our cross-government work to make reusable design resources easier to find. It covers contributions to the library, ongoing user research and what we learned from testing AI-powered search across government design systems.',
+  externalUrl:
+    'https://hodigital.blog.gov.uk/2026/07/20/design-once-reuse-everywhere/',
+  publishedDate: '2026-07-20',
+  publishedDateDisplay: '20 July 2026',
+},
+/* {
     slug: 'reusable-forms-patterns-expanded',
     title: 'Reusable forms patterns expanded',
     summary:
@@ -25,8 +27,8 @@ const blogPosts: BlogPost[] = [
     fileName: 'reusable-forms-patterns-expanded.md',
     publishedDate: '2026-07-18',
     publishedDateDisplay: '18 July 2026',
-  },
-  {
+  }, */
+ /*  {
     slug: 'reuse-library-new-domain-name',
     title: 'Reuse Library gets new domain name',
     summary:
@@ -61,7 +63,7 @@ const blogPosts: BlogPost[] = [
     fileName: 'contributor-guidance-refreshed.md',
     publishedDate: '2026-06-28',
     publishedDateDisplay: '28 June 2026',
-  },
+  }, */
 ]
 
 export const getBlogPosts = (): BlogPost[] =>
