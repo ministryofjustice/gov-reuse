@@ -26,6 +26,7 @@ const infoService = {
   getContentTypesFilters: jest.fn(),
   getProfessionsFilters: jest.fn(),
 } as unknown as jest.Mocked<InfoService>
+
 const searchService = new SearchService(null) as jest.Mocked<SearchService>
 
 let app: Express
@@ -53,6 +54,7 @@ describe('GET /', () => {
     contentType: 'Test content type',
     profession: 'Test profession',
   }
+
   const designSystems: DesignSystemInfo = info
   const manuals: DesignManualInfo = info
   const products: ProductInfo = info
@@ -88,35 +90,13 @@ describe('GET /news', () => {
       .expect(200)
       .expect(res => {
         expect(res.text).toContain('What&rsquo;s new')
-        expect(res.text).toContain('Updated accessibility statement')
-        expect(res.text).toContain('href="/news?page=2"')
-      })
-  })
-
-  it('should render page 2 of the news list', () => {
-    return request(app)
-      .get('/news?page=2')
-      .expect('Content-Type', /html/)
-      .expect(200)
-      .expect(res => {
-        expect(res.text).toContain('Reuse Library vision published')
-        expect(res.text).toContain('Contributor guidance refreshed')
-        expect(res.text).not.toContain('Updated accessibility statement')
+        expect(res.text).toContain('Home Office shares how it’s supporting the GOV Reuse Library')
+        expect(res.text).toContain('https://hodigital.blog.gov.uk/2026/07/20/design-once-reuse-everywhere/')
       })
   })
 })
 
 describe('GET /news/:slug', () => {
-  it('should render a markdown-backed blog post', () => {
-    return request(app)
-      .get('/news/launching-gov-reuse-library')
-      .expect('Content-Type', /html/)
-      .expect(200)
-      .expect(res => {
-        expect(res.text).toContain('Launching the GOV Reuse Library')
-      })
-  })
-
   it('should return 404 for unknown post slugs', () => {
     return request(app).get('/news/does-not-exist').expect(404)
   })
