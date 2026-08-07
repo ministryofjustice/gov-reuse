@@ -27,6 +27,11 @@
 
               <p class="govuk-body news-list__summary">
                 {{ post.summary }}
+                {% if post.linkUrl and post.linkText %}
+                  <a class="govuk-link" href="{{ post.linkUrl }}">
+                    {{ post.linkText }}
+                  </a>.
+                {% endif %}
               </p>
 
               {% if post.quotes and post.quotes | length %}
@@ -35,14 +40,6 @@
                     <li>{{ quote }}</li>
                   {% endfor %}
                 </ul>
-              {% endif %}
-
-              {% if post.linkUrl and post.linkText %}
-                <p class="govuk-body">
-                  <a class="govuk-link" href="{{ post.linkUrl }}">
-                    {{ post.linkText }}
-                  </a>
-                </p>
               {% endif %}
             </li>
           {% endfor %}
