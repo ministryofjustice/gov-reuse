@@ -7,25 +7,43 @@
 {% block content %}
   <div class="govuk-grid-row news-page">
     <div class="govuk-grid-column-two-thirds">
-    
-
       <h1 class="govuk-heading-l">What&rsquo;s new</h1>
-      <p class="govuk-body news-page__intro">Find out what&rsquo;s happening with the Reuse Library.</p>
+
+      <p class="govuk-body news-page__intro">
+        Find out what&rsquo;s happening with the GOV Reuse Library.
+      </p>
 
       {% if posts and posts | length %}
         <ul class="govuk-list news-list">
           {% for post in posts %}
             <li class="news-list__item">
               <h2 class="govuk-heading-s news-list__title govuk-!-margin-bottom-1">
-                <a
-                  class="govuk-link news-list__title-link"
-                  href="{% if post.externalUrl %}{{ post.externalUrl }}{% else %}/news/{{ post.slug }}{% endif %}"
-                  >
-                   {{ post.title }}
-                    </a>
+                {{ post.title }}
               </h2>
-              <p class="govuk-body-s news-list__date">{{ post.publishedDateDisplay }}</p>
-              <p class="govuk-body news-list__summary">{{ post.summary }}</p>
+
+              <p class="govuk-body-s news-list__date">
+                {{ post.publishedDateDisplay }}
+              </p>
+
+              <p class="govuk-body news-list__summary">
+                {{ post.summary }}
+              </p>
+
+              {% if post.quotes and post.quotes | length %}
+                <ul class="govuk-list govuk-list--bullet">
+                  {% for quote in post.quotes %}
+                    <li>{{ quote }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+
+              {% if post.linkUrl and post.linkText %}
+                <p class="govuk-body">
+                  <a class="govuk-link" href="{{ post.linkUrl }}">
+                    {{ post.linkText }}
+                  </a>
+                </p>
+              {% endif %}
             </li>
           {% endfor %}
         </ul>
@@ -34,9 +52,21 @@
           <nav class="govuk-pagination news-page__pagination" aria-label="Pagination">
             {% if pagination.previousPageHref %}
               <div class="govuk-pagination__prev">
-                <a class="govuk-link govuk-pagination__link" href="{{ pagination.previousPageHref }}" rel="prev">
+                <a
+                  class="govuk-link govuk-pagination__link"
+                  href="{{ pagination.previousPageHref }}"
+                  rel="prev"
+                >
                   <span class="govuk-pagination__link-title">Previous</span>
-                  <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+                  <svg
+                    class="govuk-pagination__icon govuk-pagination__icon--prev"
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="13"
+                    width="15"
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 15 13"
+                  >
                     <path d="m6.893 0.0078125 1.413 1.4062375-5.09375 5.09375h11.78125v2h-11.78125l5.09375 5.09375-1.413 1.4062-7.5-7.5z"></path>
                   </svg>
                 </a>
@@ -46,16 +76,35 @@
             <ul class="govuk-pagination__list">
               {% for pageNumber in pagination.pageNumbers %}
                 <li class="govuk-pagination__item{% if pageNumber == pagination.currentPage %} govuk-pagination__item--current{% endif %}">
-                  <a class="govuk-link govuk-pagination__link" href="{% if pageNumber == 1 %}/news{% else %}/news?page={{ pageNumber }}{% endif %}" aria-label="Page {{ pageNumber }}"{% if pageNumber == pagination.currentPage %} aria-current="page"{% endif %}>{{ pageNumber }}</a>
+                  <a
+                    class="govuk-link govuk-pagination__link"
+                    href="{% if pageNumber == 1 %}/news{% else %}/news?page={{ pageNumber }}{% endif %}"
+                    aria-label="Page {{ pageNumber }}"
+                    {% if pageNumber == pagination.currentPage %}aria-current="page"{% endif %}
+                  >
+                    {{ pageNumber }}
+                  </a>
                 </li>
               {% endfor %}
             </ul>
 
             {% if pagination.nextPageHref %}
               <div class="govuk-pagination__next">
-                <a class="govuk-link govuk-pagination__link" href="{{ pagination.nextPageHref }}" rel="next">
+                <a
+                  class="govuk-link govuk-pagination__link"
+                  href="{{ pagination.nextPageHref }}"
+                  rel="next"
+                >
                   <span class="govuk-pagination__link-title">Next</span>
-                  <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+                  <svg
+                    class="govuk-pagination__icon govuk-pagination__icon--next"
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="13"
+                    width="15"
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 15 13"
+                  >
                     <path d="m8.107 0.0078125-1.413 1.4062375 5.09375 5.09375h-11.78125v2h11.78125l-5.09375 5.09375 1.413 1.4062 7.5-7.5z"></path>
                   </svg>
                 </a>
