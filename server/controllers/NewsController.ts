@@ -6,7 +6,7 @@ import { getBlogPostBySlug, getBlogPosts } from '../data/blogPosts'
 import { parseMarkdownFile } from '../utils/markdownParser'
 
 const NEWS_MARKDOWN_DIR = path.join(__dirname, '../views/markdown/news')
-const POSTS_PER_PAGE = 4
+const POSTS_PER_PAGE = 8
 
 const getPageHref = (page: number): string => (page <= 1 ? '/news' : `/news?page=${page}`)
 
