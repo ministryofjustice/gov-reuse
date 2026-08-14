@@ -51,6 +51,7 @@
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "govuk-frontend": "^6.1.0",
+    "@govuk-prototype-kit/step-by-step": "^2.2.4",
     "helmet": "^8.1.0",
     "http-errors": "^2.0.1",
     "jsdom": "26.1.0",

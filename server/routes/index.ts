@@ -40,6 +40,7 @@ export default function routes({ infoService, auditService }: Services): Router 
   router.get('/design-system-component-search', asyncHandler(searchController.designSystemComponentSearch))
 
   router.markdown('/about', 'about')
+  router.render('/new-starter-guide', 'pages/new-starter-guide')
   router.markdown('/contribute', 'contribute')
   router.markdown('/accessibility-statement', 'accessibility-statement')
   router.markdown('/cookies', 'cookies')

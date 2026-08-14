@@ -82,6 +82,20 @@ describe('GET /', () => {
   })
 })
 
+describe('GET /new-starter-guide', () => {
+  it('should render the new starter guide page', () => {
+    return request(app)
+      .get('/new-starter-guide')
+      .expect('Content-Type', /html/)
+      .expect(200)
+      .expect(res => {
+        expect(res.text).toContain('New starter guide to government digital, data and technology')
+        expect(res.text).toContain('Understand the basics')
+        expect(res.text).toContain('Use artificial intelligence responsibly')
+      })
+  })
+})
+
 describe('GET /news', () => {
   it('should render the news page', () => {
     return request(app)
