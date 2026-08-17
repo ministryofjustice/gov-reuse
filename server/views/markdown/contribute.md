@@ -34,7 +34,7 @@ We do not include:
 
 Use the form to suggest a new resource or tell us about an update to an existing listing.
 
-[Send a suggestion or update](https://forms.office.com/e/XNDLPeu7Mv)
+[Send a suggestion or update](https://forms.cloud.microsoft/e/9qFugLihRa)
 
 You can also suggest changes on GitHub by opening an issue or pull request in the GOV Reuse Library repository.
 
