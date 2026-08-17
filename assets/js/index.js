@@ -18,8 +18,6 @@ document.addEventListener('DOMContentLoaded', function initialiseHeaderSearchAut
     window.headerSearch = new HeaderSearchAutocomplete(searchContainer)
   }
 })
-<<<<<<< Updated upstream
-=======
 
 document.addEventListener('DOMContentLoaded', function initialiseStepByStep() {
   const stepNavElement = document.querySelector('#step-by-step-navigation')
@@ -29,4 +27,3 @@ document.addEventListener('DOMContentLoaded', function initialiseStepByStep() {
     stepNav.init()
   }
 })
->>>>>>> Stashed changes

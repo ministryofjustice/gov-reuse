@@ -11,16 +11,16 @@ export type BlogPost = {
 }
 
 const blogPosts: BlogPost[] = [
- {
-  slug: 'home-office-user-researchers-join-working-group',
-  title: 'Home Office user researchers join working group',
-  summary:
-    'Home Office user researchers have joined the Reuse Library working group to help ensure the website continues to evolve based on the needs of digital teams across the public sector. Find out more about their research plans and the different ways you can get involved.',
-  linkText: 'Read the ‘Design once, reuse everywhere’ blog',
-  linkUrl: 'https://hodigital.blog.gov.uk/2026/07/20/design-once-reuse-everywhere/',
-  publishedDate: '2026-07-20',
-  publishedDateDisplay: '20 July 2026',
-},
+  {
+    slug: 'home-office-user-researchers-join-working-group',
+    title: 'Home Office user researchers join working group',
+    summary:
+      'Home Office user researchers have joined the Reuse Library working group to help ensure the website continues to evolve based on the needs of digital teams across the public sector. Find out more about their research plans and the different ways you can get involved.',
+    linkText: 'Read the ‘Design once, reuse everywhere’ blog',
+    linkUrl: 'https://hodigital.blog.gov.uk/2026/07/20/design-once-reuse-everywhere/',
+    publishedDate: '2026-07-20',
+    publishedDateDisplay: '20 July 2026',
+  },
   {
     slug: 'research-participants-needed',
     title: 'Research participants needed for the GOV Reuse Library',
