@@ -31,6 +31,11 @@ export default function routes({ infoService, auditService }: Services): Router 
   )
 
   router.get('/', asyncHandler(homeController.index))
+
+  router.get('/new-starter-guide', (_req, res) => {
+    res.render('pages/new-starter-guide')
+  })
+
   router.get('/news', asyncHandler(newsController.index))
   router.get('/news/:slug', asyncHandler(newsController.post))
   router.get('/search', asyncHandler(searchController.index))
