@@ -90,7 +90,7 @@ describe('GET /news', () => {
       .expect(200)
       .expect(res => {
         expect(res.text).toContain('What&rsquo;s new')
-        expect(res.text).toContain('Home Office shares how it’s supporting the GOV Reuse Library')
+        expect(res.text).toContain('Home Office user researchers join working group')
         expect(res.text).toContain('https://hodigital.blog.gov.uk/2026/07/20/design-once-reuse-everywhere/')
       })
   })
