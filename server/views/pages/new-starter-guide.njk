@@ -1,0 +1,318 @@
+{% extends "../partials/layout.njk" %}
+
+{% set pageTitle = "New starter guide to government digital, data and technology" %}
+{% set containerClasses = "govuk-width-container" %}
+{% set mainClasses = "govuk-main-wrapper govuk-body" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <div
+  class="govuk-notification-banner"
+  role="region"
+  aria-labelledby="new-guide-notification-title"
+  data-module="govuk-notification-banner"
+>
+  <div class="govuk-notification-banner__header">
+    <h2
+      class="govuk-notification-banner__title"
+      id="new-guide-notification-title"
+    >
+      New
+    </h2>
+  </div>
+
+  <div class="govuk-notification-banner__content">
+    <p class="govuk-notification-banner__heading">
+      We’re testing this new starter guide
+    </p>
+
+    <p class="govuk-body">
+      <a
+        class="govuk-notification-banner__link"
+        href="https://forms.cloud.microsoft/pages/responsepage.aspx?id=KEeHxuZx_kGp4S6MNndq2BWuCYiathpHp2puk8YlVv9UM1ZISUdWSjFNMFNIT1czSVg5MU5UT0Y4SS4u&amp;route=shorturl"
+        target="_blank"
+        rel="noreferrer noopener"
+      >Give feedback on the new starter guide (opens in new tab)</a>
+      to help us improve it.
+    </p>
+  </div>
+</div>
+      <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
+
+      <p class="govuk-body-l">
+        Use this guide to understand how government service teams work, find trusted guidance and connect with people across government.
+      </p>
+
+      <div
+        data-module="appstepnav"
+        id="step-by-step-navigation"
+        class="app-step-nav js-hidden app-step-nav--large"
+        data-show-text="Show"
+        data-hide-text="Hide"
+        data-show-all-text="Show all steps"
+        data-hide-all-text="Hide all steps"
+      >
+        <ol class="app-step-nav__steps">
+          <li class="app-step-nav__step js-step" id="understand-the-basics">
+            <div class="app-step-nav__header js-toggle-panel" data-position="1">
+              <h2 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                      <span class="govuk-visually-hidden govuk-!-display-none-print">Step</span>
+                      1<span class="govuk-visually-hidden govuk-!-display-none-print" aria-hidden="true">:</span>
+                    </span>
+                  </span>
+                </span>
+
+                <span class="js-step-title">Understand the basics</span>
+              </h2>
+            </div>
+
+            <div class="app-step-nav__panel js-panel" id="step-panel-understand-the-basics-1">
+              <p class="app-step-nav__paragraph">
+                Start with the guidance, standards and principles used by government digital, data and technology teams.
+              </p>
+
+              <ol class="app-step-nav__list" data-length="5">
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="1.1" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual">Read the GOV.UK Service Manual</a>
+                  <p class="app-step-nav__paragraph">Guidance for creating and running public services that meet the Service Standard.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="1.2" class="app-step-nav__link js-link" href="https://ddat-capability-framework.service.gov.uk/">Explore the Government Digital and Data Profession Capability Framework</a>
+                  <p class="app-step-nav__paragraph">Find government roles and the skills needed to do them.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="1.3" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/service-standard">Understand the Service Standard</a>
+                  <p class="app-step-nav__paragraph">Learn about the 14 points used to define a good government service.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="1.4" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/service-assessments">Learn about service assessments</a>
+                  <p class="app-step-nav__paragraph">Check whether a service needs an assessment and how to apply the Service Standard.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="1.5" class="app-step-nav__link js-link" href="https://www.gov.uk/guidance/government-design-principles">Read the Government Design Principles</a>
+                  <p class="app-step-nav__paragraph">Use the principles to design simple, inclusive and sustainable services.</p>
+                </li>
+              </ol>
+            </div>
+          </li>
+
+          <li class="app-step-nav__step js-step" id="learn-how-service-teams-work">
+            <div class="app-step-nav__header js-toggle-panel" data-position="2">
+              <h2 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                      <span class="govuk-visually-hidden govuk-!-display-none-print">Step</span>
+                      2<span class="govuk-visually-hidden govuk-!-display-none-print" aria-hidden="true">:</span>
+                    </span>
+                  </span>
+                </span>
+
+                <span class="js-step-title">Learn how service teams work</span>
+              </h2>
+            </div>
+
+            <div class="app-step-nav__panel js-panel" id="step-panel-learn-how-service-teams-work-2">
+              <p class="app-step-nav__paragraph">
+                Learn how multidisciplinary service teams work and how services move through different phases.
+              </p>
+
+              <ol class="app-step-nav__list" data-length="4">
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="2.1" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/agile-delivery">Learn about agile delivery</a>
+                  <p class="app-step-nav__paragraph">Read guidance about agile methods, service phases and governance.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="2.2" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/the-team/what-each-role-does-in-service-team">Understand what each role does in a service team</a>
+                  <p class="app-step-nav__paragraph">Learn about responsibilities within a multidisciplinary service team.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="2.3" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works">Understand discovery, alpha, beta and live</a>
+                  <p class="app-step-nav__paragraph">Find out what teams do and learn during each phase of a service.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="2.4" class="app-step-nav__link js-link" href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/">Follow Secure by Design guidance</a>
+                  <p class="app-step-nav__paragraph">Build effective security practices into digital services from the start.</p>
+                </li>
+              </ol>
+            </div>
+          </li>
+
+          <li class="app-step-nav__step js-step" id="make-services-accessible-and-inclusive">
+            <div class="app-step-nav__header js-toggle-panel" data-position="3">
+              <h2 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                      <span class="govuk-visually-hidden govuk-!-display-none-print">Step</span>
+                      3<span class="govuk-visually-hidden govuk-!-display-none-print" aria-hidden="true">:</span>
+                    </span>
+                  </span>
+                </span>
+
+                <span class="js-step-title">Make services accessible and inclusive</span>
+              </h2>
+            </div>
+
+            <div class="app-step-nav__panel js-panel" id="step-panel-make-services-accessible-and-inclusive-3">
+              <p class="app-step-nav__paragraph">
+                Understand how to make services accessible and support people who cannot use digital services independently.
+              </p>
+
+              <ol class="app-step-nav__list" data-length="5">
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="3.1" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/helping-people-to-use-your-service/making-your-service-accessible-an-introduction">Learn how to make a service accessible</a>
+                  <p class="app-step-nav__paragraph">Understand government accessibility requirements and your team’s responsibilities.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="3.2" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/helping-people-to-use-your-service/testing-for-accessibility">Test against Web Content Accessibility Guidelines 2.2</a>
+                  <p class="app-step-nav__paragraph">Test code, content and journeys with disabled users and assistive technologies.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="3.3" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/assisted-digital/">Plan assisted digital support</a>
+                  <p class="app-step-nav__paragraph">Learn when users may need help to use the online parts of a service.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="3.4" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/helping-people-to-use-your-service/how-your-assisted-digital-support-will-be-assessed">Learn how assisted digital support is assessed</a>
+                  <p class="app-step-nav__paragraph">Show how research, support design and testing meet users’ needs.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="3.5" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/helping-people-to-use-your-service/getting-an-accessibility-audit">Get an accessibility audit</a>
+                  <p class="app-step-nav__paragraph">Plan an audit and allow time to fix the issues it finds.</p>
+                </li>
+              </ol>
+            </div>
+          </li>
+
+          <li class="app-step-nav__step js-step" id="use-research-and-evidence">
+            <div class="app-step-nav__header js-toggle-panel" data-position="4">
+              <h2 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                      <span class="govuk-visually-hidden govuk-!-display-none-print">Step</span>
+                      4<span class="govuk-visually-hidden govuk-!-display-none-print" aria-hidden="true">:</span>
+                    </span>
+                  </span>
+                </span>
+
+                <span class="js-step-title">Use research and evidence</span>
+              </h2>
+            </div>
+
+            <div class="app-step-nav__panel js-panel" id="step-panel-use-research-and-evidence-4">
+              <p class="app-step-nav__paragraph">
+                Start with evidence, learn about users and check what other teams already know before designing a solution.
+              </p>
+
+              <ol class="app-step-nav__list" data-length="4">
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="4.1" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/user-research/start-by-learning-user-needs">Start by learning about users and their needs</a>
+                  <p class="app-step-nav__paragraph">Understand users’ goals, problems and context before building anything.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="4.2" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/user-research/plan-user-research-for-your-service">Plan user research for your service</a>
+                  <p class="app-step-nav__paragraph">Set research objectives, choose methods and share findings with the team.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="4.3" class="app-step-nav__link js-link" href="https://research.localgov.digital/">Search the local government user research library</a>
+                  <p class="app-step-nav__paragraph">Find existing research and insights from local government teams.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="4.4" class="app-step-nav__link js-link" href="/">Search the GOV Reuse Library</a>
+                  <p class="app-step-nav__paragraph">Find existing components, patterns, standards and guidance before starting again.</p>
+                </li>
+              </ol>
+            </div>
+          </li>
+
+          <li class="app-step-nav__step js-step" id="use-artificial-intelligence-responsibly">
+            <div class="app-step-nav__header js-toggle-panel" data-position="5">
+              <h2 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                      <span class="govuk-visually-hidden govuk-!-display-none-print">Step</span>
+                      5<span class="govuk-visually-hidden govuk-!-display-none-print" aria-hidden="true">:</span>
+                    </span>
+                  </span>
+                </span>
+
+                <span class="js-step-title">Use artificial intelligence responsibly</span>
+              </h2>
+            </div>
+
+            <div class="app-step-nav__panel js-panel" id="step-panel-use-artificial-intelligence-responsibly-5">
+              <p class="app-step-nav__paragraph">
+                Understand the opportunities, limitations and responsibilities involved in using artificial intelligence (AI). Always follow your organisation’s policies.
+              </p>
+
+              <ol class="app-step-nav__list" data-length="3">
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="5.1" class="app-step-nav__link js-link" href="https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government/artificial-intelligence-playbook-for-the-uk-government-html">Read the AI Playbook for the UK Government</a>
+                  <p class="app-step-nav__paragraph">Follow 10 principles for using AI safely, effectively and securely in government.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="5.2" class="app-step-nav__link js-link" href="https://www.gov.uk/government/publications/ministry-of-justice-ai-and-data-science-ethics-framework">Use the Ministry of Justice AI and Data Science Ethics Framework</a>
+                  <p class="app-step-nav__paragraph">Use tools and guidance for ethical reflection throughout a project.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="5.3" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/communities/artificial-intelligence-community">Join the artificial intelligence community of practice</a>
+                  <p class="app-step-nav__paragraph">Connect with people interested in using AI across government.</p>
+                </li>
+              </ol>
+            </div>
+          </li>
+
+          <li class="app-step-nav__step js-step" id="connect-reuse-and-keep-learning">
+            <div class="app-step-nav__header js-toggle-panel" data-position="6">
+              <h2 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                      <span class="govuk-visually-hidden govuk-!-display-none-print">Step</span>
+                      6<span class="govuk-visually-hidden govuk-!-display-none-print" aria-hidden="true">:</span>
+                    </span>
+                  </span>
+                </span>
+
+                <span class="js-step-title">Connect, reuse and keep learning</span>
+              </h2>
+            </div>
+
+            <div class="app-step-nav__panel js-panel" id="step-panel-connect-reuse-and-keep-learning-6">
+              <p class="app-step-nav__paragraph">
+                Connect with practitioners, learn from existing work and share resources that could help other service teams.
+              </p>
+
+              <ol class="app-step-nav__list" data-length="4">
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="6.1" class="app-step-nav__link js-link" href="https://www.gov.uk/service-manual/communities">Find cross-government communities of practice</a>
+                  <p class="app-step-nav__paragraph">Find profession and topic communities across government.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="6.2" class="app-step-nav__link js-link" href="/">Explore the GOV Reuse Library</a>
+                  <p class="app-step-nav__paragraph">Search government design systems, manuals, standards, products and style guides.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="6.3" class="app-step-nav__link js-link" href="https://www.futurelearn.com/partners/government-campus-uk">Explore Government Digital and Data courses on FutureLearn</a>
+                  <p class="app-step-nav__paragraph">Find short courses for new starters and people developing their skills. A FutureLearn account is required and some access options are limited or paid.</p>
+                </li>
+                <li class="app-step-nav__list-item js-list-item">
+                  <a data-position="6.4" class="app-step-nav__link js-link" href="/contribute">Suggest a resource</a>
+                  <p class="app-step-nav__paragraph">Help keep the library useful, accurate and up to date.</p>
+                </li>
+              </ol>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      
+    </div>
+  </div>
+{% endblock %}
