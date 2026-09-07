@@ -12,6 +12,14 @@ const contentData = {
           profession: 'Interaction designer, Content designer, Service designer',
         },
         {
+          title: 'DfE Design System',
+          description: 'Patterns, components and styles for designing and building consistent DfE services',
+          url: 'https://design.education.gov.uk/design-system/',
+          department: 'Department for Education',
+          contentType: 'Design systems',
+          profession: 'Interaction designer, Content designer, Service designer, Developer',
+        },
+        {
           title: 'DWP Design System',
           description: 'Standard design elements and best practice for services',
           url: 'https://design-system.dwp.gov.uk/',
@@ -136,7 +144,7 @@ const contentData = {
         {
           title: 'AI context for the GOV.UK Prototype Kit',
           description: 'Context file for generating accessible, GOV.UK-compliant prototype code with AI tools',
-          url: 'https://dev.reuselibrary.service.justice.gov.uk/assets/ai-context.md',
+          url: 'https://reuselibrary.service.justice.gov.uk/assets/ai-context.md',
           department: 'Ministry of Justice',
           contentType: 'Manuals',
           profession: 'Interaction designer',

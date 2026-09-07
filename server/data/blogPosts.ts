@@ -12,6 +12,24 @@ export type BlogPost = {
 
 const blogPosts: BlogPost[] = [
   {
+    slug: 'gov-reuse-library-updates',
+    title: 'GOV Reuse Library updates',
+    summary:
+      'Thanks to everyone who continues to contribute resources and share feedback. We’ve added the Department for Education Design System and fixed the broken link to the AI context file for the GOV.UK Prototype Kit.',
+    linkText: 'Explore the Department for Education Design System',
+    linkUrl: 'https://design.education.gov.uk/design-system/',
+    publishedDate: '2026-09-07',
+    publishedDateDisplay: '7 September 2026',
+  },
+  {
+    slug: 'getting-started-with-reuse',
+    title: 'Getting started with reuse',
+    summary:
+      'Our new guide brings together useful resources for people who are new to designing and delivering government services. It covers six areas, from understanding government standards and how service teams work, to accessibility, research, artificial intelligence and finding opportunities to reuse and learn from others. This is our first guide of this kind, and we’re currently researching and testing how useful this approach is. What we learn will help us understand how the GOV Reuse Library can better support people to discover relevant resources and know where to start. We’d love to know what you think.',
+    publishedDate: '2026-09-07',
+    publishedDateDisplay: '7 September 2026',
+  },
+  {
     slug: 'home-office-user-researchers-join-working-group',
     title: 'Home Office user researchers join working group',
     summary:

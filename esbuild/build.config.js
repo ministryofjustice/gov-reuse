@@ -41,6 +41,11 @@ const getBuildConfig = () => {
           to: path.join(cwd, 'dist/assets/images'),
           watch: isWatchMode,
         },
+        {
+          from: path.join(cwd, 'assets/ai-context.md'),
+          to: path.join(cwd, 'dist/assets'),
+          watch: isWatchMode,
+        },
       ],
       clear: globSync([path.join(cwd, 'dist/assets/{css,js}')]),
     },
