@@ -21,8 +21,7 @@ const blogPosts: BlogPost[] = [
     imageUrl: '/assets/images/image1.png',
     imageAlt: 'Panel discussion at the Local Public Services Innovation Summit',
     linkText: 'View the Local Public Services Innovation Summit',
-    linkUrl:
-      'https://www.techuk.org/what-we-deliver/events/local-public-services-innovation-summit-2026.html',
+    linkUrl: 'https://www.techuk.org/what-we-deliver/events/local-public-services-innovation-summit-2026.html',
     publishedDate: '2026-09-15',
     publishedDateDisplay: '15 September 2026',
   },
@@ -39,8 +38,7 @@ const blogPosts: BlogPost[] = [
   {
     slug: 'ai-context-file-link-fixed',
     title: 'AI context file link fixed',
-    summary:
-      'We’ve fixed the broken link to the AI context file for the GOV.UK Prototype Kit.',
+    summary: 'We’ve fixed the broken link to the AI context file for the GOV.UK Prototype Kit.',
     linkText: 'View the AI context file',
     linkUrl: '/assets/ai-context.md',
     publishedDate: '2026-09-07',
@@ -178,5 +176,4 @@ const blogPosts: BlogPost[] = [
 export const getBlogPosts = (): BlogPost[] =>
   [...blogPosts].sort((a, b) => b.publishedDate.localeCompare(a.publishedDate))
 
-export const getBlogPostBySlug = (slug: string): BlogPost | undefined =>
-  blogPosts.find(post => post.slug === slug)
+export const getBlogPostBySlug = (slug: string): BlogPost | undefined => blogPosts.find(post => post.slug === slug)
