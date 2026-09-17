@@ -6,18 +6,43 @@ export type BlogPost = {
   linkText?: string
   linkUrl?: string
   fileName?: string
+  imageUrl?: string
+  imageAlt?: string
   publishedDate: string
   publishedDateDisplay: string
 }
 
 const blogPosts: BlogPost[] = [
   {
-    slug: 'gov-reuse-library-updates',
-    title: 'GOV Reuse Library updates',
+    slug: 'reuse-and-share-local-public-services-innovation-summit',
+    title: 'GOV Reuse Library joins the #ReuseAndShare conversation',
     summary:
-      'Thanks to everyone who continues to contribute resources and share feedback. We’ve added the Department for Education Design System and fixed the broken link to the AI context file for the GOV.UK Prototype Kit.',
+      'The GOV Reuse Library joined local government and technology leaders at techUK’s Local Public Services Innovation Summit to discuss how sharing and reusing existing work can help public sector teams avoid duplication. The #ReuseAndShare session brought together central government, local government and industry to explore how teams can collaborate, build on what already works and make technology easier to reuse across public services.',
+    imageUrl: '/assets/images/image1.png',
+    imageAlt: 'Panel discussion at the Local Public Services Innovation Summit',
+    linkText: 'View the Local Public Services Innovation Summit',
+    linkUrl:
+      'https://www.techuk.org/what-we-deliver/events/local-public-services-innovation-summit-2026.html',
+    publishedDate: '2026-09-15',
+    publishedDateDisplay: '15 September 2026',
+  },
+  {
+    slug: 'department-for-education-design-system-added',
+    title: 'Department for Education Design System added',
+    summary:
+      'We’ve added the Department for Education Design System to the GOV Reuse Library, making it easier to find and learn from components, patterns and guidance used by Department for Education teams.',
     linkText: 'Explore the Department for Education Design System',
     linkUrl: 'https://design.education.gov.uk/design-system/',
+    publishedDate: '2026-09-07',
+    publishedDateDisplay: '7 September 2026',
+  },
+  {
+    slug: 'ai-context-file-link-fixed',
+    title: 'AI context file link fixed',
+    summary:
+      'We’ve fixed the broken link to the AI context file for the GOV.UK Prototype Kit.',
+    linkText: 'View the AI context file',
+    linkUrl: '/assets/ai-context.md',
     publishedDate: '2026-09-07',
     publishedDateDisplay: '7 September 2026',
   },
@@ -25,7 +50,9 @@ const blogPosts: BlogPost[] = [
     slug: 'getting-started-with-reuse',
     title: 'Getting started with reuse',
     summary:
-      'Our new guide brings together useful resources for people who are new to designing and delivering government services. It covers six areas, from understanding government standards and how service teams work, to accessibility, research, artificial intelligence and finding opportunities to reuse and learn from others. This is our first guide of this kind, and we’re currently researching and testing how useful this approach is. What we learn will help us understand how the GOV Reuse Library can better support people to discover relevant resources and know where to start. We’d love to know what you think.',
+      'Our new guide brings together useful resources for people designing, researching, developing or managing government services. It helps you start with work that already exists, find research and evidence, use artificial intelligence responsibly, make services accessible and inclusive, understand how service teams work, and find relevant government standards and guidance. This is our first guide of this kind, and we’re researching and testing how useful this approach is. What we learn will help us understand how the GOV Reuse Library can better support people to discover relevant resources and know where to start.',
+    linkText: 'Explore the Getting started with reuse guide',
+    linkUrl: '/new-starter-guide',
     publishedDate: '2026-09-07',
     publishedDateDisplay: '7 September 2026',
   },
@@ -151,4 +178,5 @@ const blogPosts: BlogPost[] = [
 export const getBlogPosts = (): BlogPost[] =>
   [...blogPosts].sort((a, b) => b.publishedDate.localeCompare(a.publishedDate))
 
-export const getBlogPostBySlug = (slug: string): BlogPost | undefined => blogPosts.find(post => post.slug === slug)
+export const getBlogPostBySlug = (slug: string): BlogPost | undefined =>
+  blogPosts.find(post => post.slug === slug)

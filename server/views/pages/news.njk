@@ -17,6 +17,15 @@
         <ul class="govuk-list news-list">
           {% for post in posts %}
             <li class="news-list__item" id="{{ post.slug }}">
+
+              {% if post.imageUrl %}
+                <img
+                  src="{{ post.imageUrl }}"
+                  alt="{{ post.imageAlt | default('') }}"
+                  class="news-list__image govuk-!-margin-bottom-4"
+                >
+              {% endif %}
+
               <h2 class="govuk-heading-s news-list__title govuk-!-margin-bottom-1">
                 {{ post.title }}
               </h2>
