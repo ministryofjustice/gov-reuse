@@ -55,3 +55,10 @@
 .news-page__pagination {
   margin-top: 10px;
 }
+
+.news-list__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
