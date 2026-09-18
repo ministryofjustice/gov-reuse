@@ -14,7 +14,7 @@ export type BlogPost = {
 
 const blogPosts: BlogPost[] = [
   {
-    slug: 'reuse-and-share-local-public-services-innovation-summit',
+    slug: 'reuse-and-share-local-public-services-innovation-summit-2026',
     title: 'GOV Reuse Library joins the #ReuseAndShare conversation',
     summary:
       'The GOV Reuse Library joined local government and technology leaders at techUK’s Local Public Services Innovation Summit to discuss how sharing and reusing existing work can help public sector teams avoid duplication. The #ReuseAndShare session brought together central government, local government and industry to explore how teams can collaborate, build on what already works and make technology easier to reuse across public services.',
@@ -22,8 +22,8 @@ const blogPosts: BlogPost[] = [
     imageAlt: 'Panel discussion at the Local Public Services Innovation Summit',
     linkText: 'View the Local Public Services Innovation Summit',
     linkUrl: 'https://www.techuk.org/what-we-deliver/events/local-public-services-innovation-summit-2026.html',
-    publishedDate: '2026-09-15',
-    publishedDateDisplay: '15 September 2026',
+    publishedDate: '2026-09-18',
+    publishedDateDisplay: '18 September 2026',
   },
   {
     slug: 'department-for-education-design-system-added',
