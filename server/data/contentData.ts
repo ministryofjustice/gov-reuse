@@ -36,6 +36,14 @@ const contentData = {
           profession: 'Interaction designer, Content designer, Service designer',
         },
         {
+          title: 'GOV.UK Design System community resources and tools',
+          description: 'Community-contributed resources and tools for people using the GOV.UK Design System',
+          url: 'https://design-system.service.gov.uk/community/resources-and-tools/',
+          department: 'GOV.UK',
+          contentType: 'Design systems',
+          profession: 'All professions',
+        },
+        {
           title: 'GOV.UK Publishing Design Guide',
           description: 'Components, patterns and frontend templates for designing publishing experiences on GOV.UK',
           url: 'https://design-guide.publishing.service.gov.uk/',
@@ -132,24 +140,6 @@ const contentData = {
           contentType: 'Manuals',
           profession: 'Developer, Interaction designer, Content designer',
         },
-        {
-          title: 'AI Playbook for the UK Government',
-          description: 'Guidance on implementing AI solutions responsibly',
-          url: 'https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government',
-          department: 'GOV.UK',
-          contentType: 'Manuals',
-          profession: 'All professions',
-        },
-
-        {
-          title: 'AI context for the GOV.UK Prototype Kit',
-          description: 'Context file for generating accessible, GOV.UK-compliant prototype code with AI tools',
-          url: 'https://reuselibrary.service.justice.gov.uk/assets/ai-context.md',
-          department: 'Ministry of Justice',
-          contentType: 'Manuals',
-          profession: 'Interaction designer',
-        },
-
         {
           title: 'Defra Digital Delivery Governance Model',
           description:
@@ -272,14 +262,6 @@ const contentData = {
           profession: 'Developer, Interaction designer, Content designer',
         },
         {
-          title: 'MOJ AI and Data Science Ethics Framework',
-          description: 'Tools and guidance to foster responsible ecosystems for data-driven technologies',
-          url: 'https://www.gov.uk/government/publications/ministry-of-justice-ai-and-data-science-ethics-framework',
-          department: 'GOV.UK',
-          contentType: 'Manuals',
-          profession: 'All professions',
-        },
-        {
           title: 'MOJ service design playbook',
           description: 'Guide to service design practices at MOJ (password: playbook)',
           url: 'https://miro.com/app/board/o9J_lEirG9Q=/',
@@ -382,6 +364,52 @@ const contentData = {
           url: 'https://digitalpublicservices.gov.wales/guidance-and-standards/service-manual',
           department: 'Welsh Government',
           contentType: 'Manuals',
+          profession: 'All professions',
+        },
+      ],
+    },
+
+    ai: {
+      title: 'AI',
+      items: [
+        {
+          title: 'AI Knowledge Hub',
+          description: 'A collection of guidance and resources about artificial intelligence',
+          url: 'https://ai.gov.uk/knowledge-hub/',
+          department: 'GOV.UK',
+          contentType: 'AI',
+          profession: 'All professions',
+        },
+        {
+          title: 'Artificial intelligence resources for the public sector',
+          description: 'Government guidance, reports and resources on artificial intelligence for the public sector',
+          url: 'https://www.gov.uk/government/collections/artificial-intelligence-resources-for-the-public-sector?mc_cid=b97cd2f51b&mc_eid=17ce865235',
+          department: 'GOV.UK',
+          contentType: 'AI',
+          profession: 'All professions',
+        },
+        {
+          title: 'AI Playbook for the UK Government',
+          description: 'Guidance on implementing AI solutions responsibly',
+          url: 'https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government',
+          department: 'GOV.UK',
+          contentType: 'AI',
+          profession: 'All professions',
+        },
+        {
+          title: 'AI context for the GOV.UK Prototype Kit',
+          description: 'Context file for generating accessible, GOV.UK-compliant prototype code with AI tools',
+          url: 'https://reuselibrary.service.justice.gov.uk/assets/ai-context.md',
+          department: 'Ministry of Justice',
+          contentType: 'AI',
+          profession: 'Interaction designer',
+        },
+        {
+          title: 'MOJ AI and Data Science Ethics Framework',
+          description: 'Tools and guidance to foster responsible ecosystems for data-driven technologies',
+          url: 'https://www.gov.uk/government/publications/ministry-of-justice-ai-and-data-science-ethics-framework',
+          department: 'GOV.UK',
+          contentType: 'AI',
           profession: 'All professions',
         },
       ],
@@ -731,6 +759,7 @@ const contentData = {
     ],
     contentTypes: [
       'All types',
+      'AI',
       'Design systems',
       'Manuals',
       'Products',

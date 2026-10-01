@@ -43,6 +43,20 @@ describe('InfoApiClient', () => {
     expect(designSystemsInfo[0].department).toBe('Ministry of Justice')
   })
 
+  it('should return AI resources and filter them by content type', () => {
+    const filter: ContentFilter = { department: '', contentType: 'AI', profession: '' }
+    const aiResources = infoApiClient.getAiResources(filter)
+
+    expect(aiResources.map(resource => resource.title)).toEqual([
+      'AI Knowledge Hub',
+      'Artificial intelligence resources for the public sector',
+      'AI Playbook for the UK Government',
+      'AI context for the GOV.UK Prototype Kit',
+      'MOJ AI and Data Science Ethics Framework',
+    ])
+    expect(aiResources.every(resource => resource.contentType === 'AI')).toBe(true)
+  })
+
   it('should combine filters', () => {
     // department=Ministry+of+Justice&contentType=Design+systems&profession=All+professions
     const filter: ContentFilter = {

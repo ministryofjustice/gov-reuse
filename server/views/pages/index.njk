@@ -22,6 +22,25 @@
 
 {% block content %}
 
+{% if props.aiResources | length %}
+<section>
+  <h2 class="govuk-heading-l">Artificial intelligence</h2>
+  <ul class="govuk-grid-row card-group">
+    {% for item in props.aiResources %}
+      <li class="govuk-grid-column-one-third card-group__item">
+        {{ card({
+          title: item.title,
+          description: item.description,
+          url: item.url,
+          department: item.department
+        }) }}
+      </li>
+    {% else %}
+      <p>No data.</p>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
 {% if props.designSystems | length %}
 <section>
  <h2 class="govuk-heading-l">Design systems</h2>

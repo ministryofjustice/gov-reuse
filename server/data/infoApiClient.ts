@@ -46,6 +46,10 @@ export default class InfoApiClient {
     return this.applyFilters(contentData.sections.manuals.items, filters) as Array<DesignManualInfo>
   }
 
+  getAiResources = (filters: ContentFilter): Array<DesignManualInfo> => {
+    return this.applyFilters(contentData.sections.ai.items, filters) as Array<DesignManualInfo>
+  }
+
   getProducts = (filters: ContentFilter): Array<ProductInfo> => {
     return this.applyFilters(contentData.sections.products.items, filters) as Array<ProductInfo>
   }

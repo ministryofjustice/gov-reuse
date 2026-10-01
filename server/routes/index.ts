@@ -72,7 +72,7 @@ export default function routes({ infoService, auditService }: Services): Router 
 
     const items = posts
       .map(post => {
-        const postUrl = `${baseUrl}/news/${post.slug}`
+        const postUrl = post.fileName ? `${baseUrl}/news/${post.slug}` : `${baseUrl}/news#${post.slug}`
         const publishedDate = new Date(`${post.publishedDate}T00:00:00Z`).toUTCString()
 
         return `
@@ -80,7 +80,7 @@ export default function routes({ infoService, auditService }: Services): Router 
             <title>${escapeXml(post.title)}</title>
             <link>${postUrl}</link>
             <guid isPermaLink="true">${postUrl}</guid>
-            <description>${escapeXml(post.summary)}</description>
+            <description>${escapeXml([post.summary, post.summaryContinuation].filter(Boolean).join(' '))}</description>
             <pubDate>${publishedDate}</pubDate>
           </item>
         `
