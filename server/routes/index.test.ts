@@ -143,9 +143,13 @@ describe('GET /news/rss.xml', () => {
         expect(res.text).toContain('<title>GOV.UK Design System community resources and tools added</title>')
         expect(res.text).toContain('<title>AI Knowledge Hub added</title>')
         expect(res.text).toContain('<title>Artificial intelligence resources for the public sector added</title>')
-        expect(res.text).toContain('https://reuselibrary.service.justice.gov.uk/news#govuk-design-system-community-resources-added')
+        expect(res.text).toContain(
+          'https://reuselibrary.service.justice.gov.uk/news#govuk-design-system-community-resources-added',
+        )
         expect(res.text).toContain('https://reuselibrary.service.justice.gov.uk/news#ai-knowledge-hub-added')
-        expect(res.text).toContain('https://reuselibrary.service.justice.gov.uk/news#artificial-intelligence-public-sector-resources-added')
+        expect(res.text).toContain(
+          'https://reuselibrary.service.justice.gov.uk/news#artificial-intelligence-public-sector-resources-added',
+        )
         expect(res.text.indexOf('<title>GOV Reuse Library turns one at SD in Gov</title>')).toBeLessThan(
           res.text.indexOf('<title>GOV.UK Design System community resources and tools added</title>'),
         )

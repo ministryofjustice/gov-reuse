@@ -21,7 +21,7 @@ const blogPosts: BlogPost[] = [
     title: 'GOV Reuse Library turns one at SD in Gov',
     summary:
       'A year after launching the GOV Reuse Library, we took it to SD in Gov in Edinburgh to share what we’ve learned so far about reuse across government.',
-      
+
     previewContent: `
       <p>Our goal was to bring together useful things that already exist across government and make them easier to find. A year on, thousands of people have come through the library, found something useful, and followed it back to the team or resource it came from.</p>
       <p>Over that year, we’ve learned that finding the resource is often only one part of the job. People also need to understand what something is for, whether it will work in their context, how current it is, and sometimes who they can speak to about it.</p>
