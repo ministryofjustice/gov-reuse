@@ -2,6 +2,9 @@ export type BlogPost = {
   slug: string
   title: string
   summary: string
+  summaryContinuation?: string
+  previewContent?: string
+  expandedContent?: string
   quotes?: string[]
   linkText?: string
   linkUrl?: string
@@ -13,6 +16,62 @@ export type BlogPost = {
 }
 
 const blogPosts: BlogPost[] = [
+  {
+    slug: 'gov-reuse-library-turns-one-at-sd-in-gov',
+    title: 'GOV Reuse Library turns one at SD in Gov',
+    summary:
+      'A year after launching the GOV Reuse Library, we took it to SD in Gov in Edinburgh to share what we’ve learned so far about reuse across government.',
+      
+    previewContent: `
+      <p>Our goal was to bring together useful things that already exist across government and make them easier to find. A year on, thousands of people have come through the library, found something useful, and followed it back to the team or resource it came from.</p>
+      <p>Over that year, we’ve learned that finding the resource is often only one part of the job. People also need to understand what something is for, whether it will work in their context, how current it is, and sometimes who they can speak to about it.</p>
+    `,
+    expandedContent: `
+      <p>At SD in Gov, we talked through some of the things we’ve been trying in response to that, including better discovery, connecting design systems, different ways into the library, and how we might support more informal sharing between teams.</p>
+      <p>We also set up a <strong>Great Wall of Reuse</strong> at the conference. We asked people two questions: what are you looking to reuse, and what have you made that someone else could reuse?</p>
+      <p>Some of the things people shared included a request for “personas and research about accessibility and inclusion”. Others offered resources they already had, including DWP internal style guides for health and disability and Universal Credit, and work on safeguarding and trauma-informed design.</p>
+      <p>It gave us a useful glimpse of what could happen if more of this work was visible across government. People are looking for things that already exist, and other teams are often happy to share them.</p>
+      <p>As we head into the library’s second year, we want to work with more people across government to find that work, understand what would be useful to share, and keep improving the library based on what people actually need.</p>
+      <p>If your team has something that others could reuse, or you’d like to get involved in the work, we’d love to hear from you.</p>
+      <p><a class="govuk-link" href="https://forms.cloud.microsoft/e/9qFugLihRa">Contribute to the GOV Reuse Library – Fill in form</a></p>
+    `,
+    imageUrl: '/assets/images/great-wall-of-reuse.jpg',
+    imageAlt: 'Great Wall of Reuse board with sticky notes at the SD in Gov conference in Edinburgh',
+    fileName: 'gov-reuse-library-turns-one-at-sd-in-gov.md',
+    publishedDate: '2026-10-01',
+    publishedDateDisplay: '1 October 2026',
+  },
+  {
+    slug: 'govuk-design-system-community-resources-added',
+    title: 'GOV.UK Design System community resources and tools added',
+    summary:
+      'We’ve added the GOV.UK Design System community resources and tools to the GOV Reuse Library, making community-contributed resources easier to find.',
+    linkText: 'Explore GOV.UK Design System community resources and tools',
+    linkUrl: 'https://design-system.service.gov.uk/community/resources-and-tools/',
+    publishedDate: '2026-10-01',
+    publishedDateDisplay: '1 October 2026',
+  },
+  {
+    slug: 'ai-knowledge-hub-added',
+    title: 'AI Knowledge Hub added',
+    summary:
+      'We’ve added the AI Knowledge Hub to the GOV Reuse Library, making guidance and resources about artificial intelligence easier to find.',
+    linkText: 'Explore the AI Knowledge Hub',
+    linkUrl: 'https://ai.gov.uk/knowledge-hub/',
+    publishedDate: '2026-10-01',
+    publishedDateDisplay: '1 October 2026',
+  },
+  {
+    slug: 'artificial-intelligence-public-sector-resources-added',
+    title: 'Artificial intelligence resources for the public sector added',
+    summary:
+      'We’ve added the GOV.UK collection of artificial intelligence resources for the public sector to the GOV Reuse Library, making government AI guidance and resources easier to find.',
+    linkText: 'Explore artificial intelligence resources for the public sector',
+    linkUrl:
+      'https://www.gov.uk/government/collections/artificial-intelligence-resources-for-the-public-sector?mc_cid=b97cd2f51b&mc_eid=17ce865235',
+    publishedDate: '2026-10-01',
+    publishedDateDisplay: '1 October 2026',
+  },
   {
     slug: 'reuse-and-share-local-public-services-innovation-summit-2026',
     title: 'GOV Reuse Library joins the #ReuseAndShare conversation',
@@ -48,7 +107,9 @@ const blogPosts: BlogPost[] = [
     slug: 'getting-started-with-reuse',
     title: 'Getting started with reuse',
     summary:
-      'Our new guide brings together useful resources for people designing, researching, developing or managing government services. It helps you start with work that already exists, find research and evidence, use artificial intelligence responsibly, make services accessible and inclusive, understand how service teams work, and find relevant government standards and guidance. This is our first guide of this kind, and we’re researching and testing how useful this approach is. What we learn will help us understand how the GOV Reuse Library can better support people to discover relevant resources and know where to start.',
+      'Our new guide brings together useful resources for people designing, researching, developing or managing government services. It helps you start with work that already exists, find research and evidence, use artificial intelligence responsibly, make services accessible and inclusive, understand how service teams work, and find relevant government standards and guidance.',
+    summaryContinuation:
+      'This is our first guide of this kind, and we’re researching and testing how useful this approach is. What we learn will help us understand how the GOV Reuse Library can better support people to discover relevant resources and know where to start.',
     linkText: 'Explore the Getting started with reuse guide',
     linkUrl: '/new-starter-guide',
     publishedDate: '2026-09-07',

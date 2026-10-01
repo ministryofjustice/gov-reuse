@@ -21,6 +21,7 @@ export default class HomeController extends BaseController {
       // content
       designSystems: await this.infoService.getDesignSystems(filters),
       manuals: await this.infoService.getManuals(filters),
+      aiResources: await this.infoService.getAiResources(filters),
       products: await this.infoService.getProducts(filters),
       servicePatterns: await this.infoService.getServicePatterns(filters),
       standards: await this.infoService.getStandards(filters),

@@ -20,6 +20,10 @@ export default class InfoService {
     return this.dataApiClient.getManuals(filters)
   }
 
+  getAiResources = async (filters: ContentFilter): Promise<Array<DesignManualInfo>> => {
+    return this.dataApiClient.getAiResources(filters)
+  }
+
   getProducts = async (filters: ContentFilter): Promise<Array<ProductInfo>> => {
     return this.dataApiClient.getProducts(filters)
   }

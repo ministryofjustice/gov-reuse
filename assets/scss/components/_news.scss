@@ -62,3 +62,19 @@
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
+
+.news-list__banner-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin-top: 10px;
+}
+
+.news-list__expanded-content p:last-child {
+  margin-bottom: 0;
+}
+
+.news-list__details {
+  margin-bottom: 0;
+}

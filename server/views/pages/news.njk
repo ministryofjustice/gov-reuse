@@ -36,30 +36,70 @@
 
               <p class="govuk-body news-list__summary">
                 {{ post.summary }}
-                {% if post.linkUrl and post.linkText %}
+                {% if post.linkUrl and post.linkText and not post.expandedContent and not post.summaryContinuation %}
                   <a class="govuk-link" href="{{ post.linkUrl }}">
                     {{ post.linkText }}
                   </a>.
                 {% endif %}
               </p>
 
-              {% if post.quotes and post.quotes | length %}
-                <ul class="govuk-list govuk-list--bullet">
-                  {% for quote in post.quotes %}
-                    <li>{{ quote }}</li>
-                  {% endfor %}
-                </ul>
+              {% if post.summaryContinuation %}
+                <p class="govuk-body govuk-!-margin-top-4">
+                  {{ post.summaryContinuation }}
+                  {% if post.linkUrl and post.linkText and not post.expandedContent %}
+                    <a class="govuk-link" href="{{ post.linkUrl }}">
+                      {{ post.linkText }}
+                    </a>.
+                  {% endif %}
+                </p>
               {% endif %}
 
-              <p class="govuk-body-s govuk-!-margin-top-3">
-                <button
-                  type="button"
-                  class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0 js-copy-news-link"
-                  data-news-slug="{{ post.slug }}"
-                >
-                  Copy link to this update
-                </button>
-              </p>
+              {% if post.expandedContent %}
+                {% if post.previewContent %}
+                  <div class="news-list__expanded-content govuk-!-margin-top-4">
+                    {{ post.previewContent | safe }}
+                  </div>
+                {% endif %}
+
+                <details class="govuk-details govuk-!-margin-top-0 news-list__details">
+                  <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">Read more</span>
+                  </summary>
+                  <div class="govuk-details__text">
+                    <div class="news-list__expanded-content">
+                      {{ post.expandedContent | safe }}
+                    </div>
+
+                    <p class="govuk-body-s govuk-!-margin-top-3 govuk-!-margin-bottom-0">
+                      <button
+                        type="button"
+                        class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0 js-copy-news-link"
+                        data-news-slug="{{ post.slug }}"
+                      >
+                        Copy link to this update
+                      </button>
+                    </p>
+                  </div>
+                </details>
+              {% else %}
+                {% if post.quotes and post.quotes | length %}
+                  <ul class="govuk-list govuk-list--bullet">
+                    {% for quote in post.quotes %}
+                      <li>{{ quote }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+
+                <p class="govuk-body-s govuk-!-margin-top-3">
+                  <button
+                    type="button"
+                    class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0 js-copy-news-link"
+                    data-news-slug="{{ post.slug }}"
+                  >
+                    Copy link to this update
+                  </button>
+                </p>
+              {% endif %}
             </li>
           {% endfor %}
         </ul>
