@@ -81,6 +81,7 @@ describe('GET /', () => {
       .expect(200)
       .expect(res => {
         expect(res.text).toContain('GOV Reuse Library')
+        expect(res.text).toContain('Artificial intelligence')
         expect(res.text).toContain('AI Knowledge Hub')
       })
   })
