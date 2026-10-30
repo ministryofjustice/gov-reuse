@@ -14,6 +14,16 @@ export type DesignManualInfo = {
   department: string
   contentType: string
   profession: string
+  tags?: string[]
+}
+
+export type DesignHistoryInfo = {
+  title: string
+  description: string
+  url: string
+  department: string
+  contentType: string
+  profession: string
 }
 
 export type ProductInfo = {

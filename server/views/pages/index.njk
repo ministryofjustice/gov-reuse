@@ -41,9 +41,10 @@
   </ul>
 </section>
 {% endif %}
+
 {% if props.designSystems | length %}
 <section>
- <h2 class="govuk-heading-l">Design systems</h2>
+  <h2 class="govuk-heading-l">Design systems</h2>
   <ul class="govuk-grid-row card-group">
     {% for item in props.designSystems %}
       <li class="govuk-grid-column-one-third card-group__item">
@@ -60,11 +61,12 @@
   </ul>
 </section>
 {% endif %}
-{% if props.manuals | length %}
+
+{% if props.designHistories | length %}
 <section>
-  <h2 class="govuk-heading-l">Manuals</h2>
+  <h2 class="govuk-heading-l">Design histories</h2>
   <ul class="govuk-grid-row card-group">
-    {% for item in props.manuals %}
+    {% for item in props.designHistories %}
       <li class="govuk-grid-column-one-third card-group__item">
         {{ card({
           title: item.title,
@@ -79,6 +81,28 @@
   </ul>
 </section>
 {% endif %}
+
+{% if props.manuals | length %}
+<section>
+  <h2 class="govuk-heading-l">Manuals</h2>
+  <ul class="govuk-grid-row card-group">
+    {% for item in props.manuals %}
+      <li class="govuk-grid-column-one-third card-group__item">
+        {{ card({
+          title: item.title,
+          description: item.description,
+          url: item.url,
+          department: item.department,
+          tags: item.tags
+        }) }}
+      </li>
+    {% else %}
+      <p>No data.</p>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
 {% if props.products | length %}
 <section>
   <h2 class="govuk-heading-l">Products</h2>
@@ -98,6 +122,7 @@
   </ul>
 </section>
 {% endif %}
+
 {% if props.servicePatterns | length %}
 <section>
   <h2 class="govuk-heading-l">Service patterns</h2>
@@ -117,6 +142,7 @@
   </ul>
 </section>
 {% endif %}
+
 {% if props.standards | length %}
 <section>
   <h2 class="govuk-heading-l">Standards</h2>
@@ -137,6 +163,7 @@
   </ul>
 </section>
 {% endif %}
+
 {% if props.styleGuides | length %}
 <section>
   <h2 class="govuk-heading-l">Style guides</h2>

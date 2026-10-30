@@ -17,21 +17,26 @@ export default class HomeController extends BaseController {
       contentType: (req.query.contentType as string) || '',
       profession: (req.query.profession as string) || '',
     }
+
     const props = {
       // content
       designSystems: await this.infoService.getDesignSystems(filters),
       manuals: await this.infoService.getManuals(filters),
+      designHistories: await this.infoService.getDesignHistories(filters),
       aiResources: await this.infoService.getAiResources(filters),
       products: await this.infoService.getProducts(filters),
       servicePatterns: await this.infoService.getServicePatterns(filters),
       standards: await this.infoService.getStandards(filters),
       styleGuides: await this.infoService.getStyleGuides(filters),
+
       // filters
       departmentFilters: await this.infoService.getDepartmentFilters(),
       contentTypeFilters: await this.infoService.getContentTypesFilters(),
       professionFilters: await this.infoService.getProfessionsFilters(),
+
       // active filters
       filters,
+
       // reset filter links
       removeContentTypeLink: `/?${new URLSearchParams({ ...filters, contentType: '' }).toString()}`,
       removeDepartmentLink: `/?${new URLSearchParams({ ...filters, department: '' }).toString()}`,
