@@ -372,6 +372,7 @@ export default class SearchController extends BaseController {
     const catalogue = [
       ...(await this.infoService.getDesignSystems(allFilters)),
       ...(await this.infoService.getManuals(allFilters)),
+      ...(await this.infoService.getDesignHistories(allFilters)),
       ...(await this.infoService.getProducts(allFilters)),
       ...(await this.infoService.getServicePatterns(allFilters)),
       ...(await this.infoService.getStandards(allFilters)),

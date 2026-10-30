@@ -2,6 +2,11 @@
   min-height: 600px;
 }
 
+.govuk-grid-column-two-thirds img {
+  max-width: 100%;
+  height: auto;
+}
+
 .govuk-service-navigation {
   border-bottom-color: transparent;
   //background-color: govuk-colour("magenta", $variant: "tint-95");

@@ -1,6 +1,7 @@
 import {
-  DesignSystemInfo,
   DesignManualInfo,
+  DesignHistoryInfo,
+  DesignSystemInfo,
   ProductInfo,
   ServicePatternInfo,
   StandardInfo,
@@ -13,29 +14,44 @@ type InfoItem = {
   title: string
   description: string
   url: string
-  department: string
+  department?: string
   contentType: string
   profession: string
+  tags?: string[]
 }
-type InfoTypes = DesignSystemInfo | DesignManualInfo | ProductInfo | ServicePatternInfo | StandardInfo | StyleGuideInfo
+
+type CommunityResourceInfo = InfoItem
+
+type InfoTypes =
+  | DesignSystemInfo
+  | DesignManualInfo
+  | DesignHistoryInfo
+  | ProductInfo
+  | ServicePatternInfo
+  | StandardInfo
+  | StyleGuideInfo
+  | CommunityResourceInfo
 
 export default class InfoApiClient {
   applyFilters = (items: Array<InfoItem>, filters: ContentFilter): Array<InfoTypes> => {
-    return items.filter(item => {
-      // It's not clean code, but it does the job for our prototype and there's test coverage.
-      // We can always refactor later if we decide to add more filters.
-      return (
-        (item.contentType === filters.contentType ||
-          filters.contentType === 'All types' ||
-          filters.contentType === '') &&
-        (item.department === filters.department ||
-          filters.department === 'All departments' ||
-          filters.department === '') &&
-        (item.profession.includes(filters.profession) ||
-          filters.profession === 'All professions' ||
-          filters.profession === '')
-      )
-    })
+    return items
+      .filter(item => {
+        // It's not clean code, but it does the job for our prototype and there's test coverage.
+        // We can always refactor later if we decide to add more filters.
+        return (
+          (item.contentType === filters.contentType ||
+            filters.contentType === 'All types' ||
+            filters.contentType === '') &&
+          (item.department === filters.department ||
+            filters.department === 'All departments' ||
+            filters.department === '') &&
+          (item.profession === 'All professions' ||
+            item.profession.includes(filters.profession) ||
+            filters.profession === 'All professions' ||
+            filters.profession === '')
+        )
+      })
+      .sort((first, second) => first.title.localeCompare(second.title))
   }
 
   getDesignSystems = (filters: ContentFilter): Array<DesignSystemInfo> => {
@@ -46,8 +62,16 @@ export default class InfoApiClient {
     return this.applyFilters(contentData.sections.manuals.items, filters) as Array<DesignManualInfo>
   }
 
+  getDesignHistories = (filters: ContentFilter): Array<DesignHistoryInfo> => {
+    return this.applyFilters(contentData.sections['design-histories'].items, filters) as Array<DesignHistoryInfo>
+  }
+
   getAiResources = (filters: ContentFilter): Array<DesignManualInfo> => {
     return this.applyFilters(contentData.sections.ai.items, filters) as Array<DesignManualInfo>
+  }
+
+  getCommunityResources = (filters: ContentFilter): Array<CommunityResourceInfo> => {
+    return this.applyFilters(contentData.sections['community-resources'].items, filters) as Array<CommunityResourceInfo>
   }
 
   getProducts = (filters: ContentFilter): Array<ProductInfo> => {

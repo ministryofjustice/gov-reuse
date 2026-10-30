@@ -129,9 +129,77 @@ const contentData = {
       ],
     },
 
+    'design-histories': {
+      title: 'Design histories',
+      items: [
+        {
+          title: 'DfE design histories',
+          description: 'Design histories documenting design work and decisions for Department for Education services',
+          url: 'https://design-histories.education.gov.uk/',
+          department: 'Department for Education',
+          contentType: 'Design histories',
+          profession: 'Interaction designer, Service designer, User researcher',
+        },
+        {
+          title: 'Ofqual design histories',
+          description: 'A permanent record of user research and design decisions across Ofqual digital services',
+          url: 'https://design-histories.ofqual.gov.uk/',
+          department: 'Ofqual',
+          contentType: 'Design histories',
+          profession: 'Interaction designer, Service designer, User researcher',
+        },
+        {
+          title: 'GOV.UK design history template',
+          description:
+            'An open-source template for creating shareable GOV.UK design histories with screenshots and design decisions',
+          url: 'https://govuk-design-history.x-govuk.org/get-started/',
+          department: 'GOV.UK',
+          contentType: 'Design histories',
+          profession: 'Interaction designer, Service designer, User researcher',
+        },
+        {
+          title: 'NHS App design history',
+          description: 'Design history documenting design and development of the NHS App',
+          url: 'https://design-history.nhsapp.service.nhs.uk/',
+          department: 'NHS',
+          contentType: 'Design histories',
+          profession: 'Interaction designer, Service designer, User researcher',
+        },
+        {
+          title: 'NHS digital prevention services design history',
+          description:
+            'Design history for an NHS alpha exploring how screening information can be provided through digital channels',
+          url: 'https://design-history.prevention-services.nhs.uk/',
+          department: 'NHS',
+          contentType: 'Design histories',
+          profession: 'Interaction designer, Service designer, User researcher',
+        },
+      ],
+    },
+
     manuals: {
       title: 'Manuals',
       items: [
+        {
+          title: 'National School of Government and Public Services',
+          description:
+            'Learning for civil servants and public sector leaders, including digital skills, leadership and operational delivery',
+          url: 'https://nationalschool.gov.uk/',
+          department: 'GOV.UK',
+          contentType: 'Manuals',
+          profession: 'All professions',
+          tags: ['New'],
+        },
+        {
+          title: 'Test, Learn and Grow Playbook',
+          description:
+            'Guidance on using test and learn methods to design or adapt interventions that meet user needs and deliver outcomes',
+          url: 'https://www.gov.uk/guidance/test-learn-and-grow-playbook',
+          department: 'GOV.UK',
+          contentType: 'Manuals',
+          profession: 'All professions',
+          tags: ['New'],
+        },
         {
           title: 'Accessibility in government blog',
           description: 'Guidance, case studies and updates on accessibility across government services',
@@ -415,6 +483,21 @@ const contentData = {
       ],
     },
 
+    'community-resources': {
+      title: 'Community resources',
+      items: [
+        {
+          title: 'Principles of prototyping',
+          description:
+            'Nine community-developed principles to help teams plan prototypes, test assumptions and reduce delivery risk',
+          url: 'https://designnotes.blog.gov.uk/2026/09/29/what-are-the-principles-of-prototyping/',
+          contentType: 'Community resources',
+          profession: 'Interaction designer, Service designer, User researcher, Product manager',
+          tags: ['New'],
+        },
+      ],
+    },
+
     products: {
       title: 'Products',
       items: [
@@ -533,6 +616,7 @@ const contentData = {
         },
       ],
     },
+
     standards: {
       title: 'Standards',
       items: [
@@ -743,6 +827,7 @@ const contentData = {
       'Attorney General’s Office',
       'Department for Environment, Food & Rural Affairs',
       'Department for Education',
+      'Ofqual',
       'Department for Work and Pensions',
       'GOV.UK',
       `His Majesty's Revenue and Customs`,
@@ -757,10 +842,12 @@ const contentData = {
       'The National Archives',
       'Welsh Government',
     ],
+
     contentTypes: [
       'All types',
       'AI',
       'Design systems',
+      'Design histories',
       'Manuals',
       'Products',
       'Service patterns',

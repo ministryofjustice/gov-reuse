@@ -18,7 +18,9 @@ jest.mock('../services/searchService')
 const infoService = {
   getDesignSystems: jest.fn(),
   getManuals: jest.fn(),
+  getDesignHistories: jest.fn(),
   getAiResources: jest.fn(),
+  getCommunityResources: jest.fn(),
   getProducts: jest.fn(),
   getServicePatterns: jest.fn(),
   getStandards: jest.fn(),
@@ -57,7 +59,8 @@ describe('GET /', () => {
   }
 
   const designSystems: DesignSystemInfo = info
-  const manuals: DesignManualInfo = info
+  const manuals: DesignManualInfo = { ...info, tags: ['New'] }
+  const designHistories = [{ ...info, title: 'DfE design histories', contentType: 'Design histories' }]
   const aiResource: DesignManualInfo = { ...info, title: 'AI Knowledge Hub', contentType: 'AI' }
   const products: ProductInfo = info
   const servicePatterns: ServicePatternInfo = info
@@ -67,7 +70,9 @@ describe('GET /', () => {
   beforeEach(() => {
     infoService.getDesignSystems.mockResolvedValue([designSystems])
     infoService.getManuals.mockResolvedValue([manuals])
+    infoService.getDesignHistories.mockResolvedValue(designHistories)
     infoService.getAiResources.mockResolvedValue([aiResource])
+    infoService.getCommunityResources.mockResolvedValue([])
     infoService.getProducts.mockResolvedValue([products])
     infoService.getServicePatterns.mockResolvedValue([servicePatterns])
     infoService.getStandards.mockResolvedValue([standards])
@@ -83,6 +88,38 @@ describe('GET /', () => {
         expect(res.text).toContain('GOV Reuse Library')
         expect(res.text).toContain('Artificial intelligence')
         expect(res.text).toContain('AI Knowledge Hub')
+        expect(res.text).toContain('Design histories')
+        expect(res.text).toContain('DfE design histories')
+        expect(res.text).not.toContain('Community resources')
+        expect(res.text).toContain('New')
+      })
+  })
+})
+
+describe('GET /research-on-reuse', () => {
+  it('should render research about reuse in government', () => {
+    return request(app)
+      .get('/research-on-reuse')
+      .expect('Content-Type', /html/)
+      .expect(200)
+      .expect(res => {
+        expect(res.text).toContain('Understanding reuse across government')
+        expect(res.text).toContain('Deciders')
+        expect(res.text).toContain('Connecting with others')
+        expect(res.text).toContain('alt="Illustrations of four reuse behaviour types')
+        expect(res.text).toContain('src="/assets/images/research-reuse-behaviour-types.png"')
+        expect(res.text).toContain('alt="Colleagues considering where to find help')
+        expect(res.text).toContain('src="/assets/images/research-reuse-where-to-find-help.png"')
+        expect(res.text).toContain('How we’re using our research')
+        expect(res.text).toContain('https://forms.cloud.microsoft/e/W4UFgnqgPi')
+        expect(res.text).toContain('Research on reuse')
+        const navigationStart = res.text.indexOf('class="govuk-service-navigation"')
+        const navigationEnd = res.text.indexOf('</section>', navigationStart)
+        const navigation = res.text.slice(navigationStart, navigationEnd)
+        const navigationPaths = ['/new-starter-guide', '/research-on-reuse', '/contribute', '/news', '/about']
+        const navPositions = navigationPaths.map(path => navigation.indexOf(`href="${path}"`))
+        expect(navPositions.every(position => position >= 0)).toBe(true)
+        expect(navPositions).toEqual([...navPositions].sort((a, b) => a - b))
       })
   })
 })
@@ -94,8 +131,12 @@ describe('GET /news', () => {
       .expect('Content-Type', /html/)
       .expect(200)
       .expect(res => {
+        expect(res.text).not.toContain('New learning resources and design histories added')
+        expect(res.text).not.toContain('Test, Learn and Grow Playbook')
+        expect(res.text).not.toContain('NHS digital prevention services design history')
         expect(res.text).toContain('What&rsquo;s new')
         expect(res.text).toContain('GOV Reuse Library turns one at SD in Gov')
+        expect(res.text).toContain('Getting started with reuse')
         expect(res.text).toContain('GOV.UK Design System community resources and tools added')
         expect(res.text).toContain('AI Knowledge Hub added')
         expect(res.text).toContain('Artificial intelligence resources for the public sector added')
@@ -113,6 +154,8 @@ describe('GET /news', () => {
 
         expect(firstParagraphEnd).toBeGreaterThan(-1)
         expect(secondParagraphTag).toBeGreaterThan(firstParagraphEnd)
+        expect(res.text).toContain('Read more')
+        expect(res.text.match(/js-copy-news-link/g) ?? []).toHaveLength(8)
       })
   })
 
@@ -141,6 +184,7 @@ describe('GET /news/rss.xml', () => {
       .expect('Content-Type', /application\/rss\+xml/)
       .expect(200)
       .expect(res => {
+        expect(res.text).not.toContain('<title>New learning resources and design histories added</title>')
         expect(res.text).toContain('<title>GOV.UK Design System community resources and tools added</title>')
         expect(res.text).toContain('<title>AI Knowledge Hub added</title>')
         expect(res.text).toContain('<title>Artificial intelligence resources for the public sector added</title>')

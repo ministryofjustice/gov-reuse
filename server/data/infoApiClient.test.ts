@@ -34,6 +34,26 @@ describe('InfoApiClient', () => {
     expect(designSystemsInfo[0]).toHaveProperty('profession')
   })
 
+  it('should return resources in alphabetical order within each section', () => {
+    const filter: ContentFilter = { department: '', contentType: '', profession: '' }
+    const sections = [
+      infoApiClient.getDesignSystems(filter),
+      infoApiClient.getDesignHistories(filter),
+      infoApiClient.getManuals(filter),
+      infoApiClient.getAiResources(filter),
+      infoApiClient.getCommunityResources(filter),
+      infoApiClient.getProducts(filter),
+      infoApiClient.getServicePatterns(filter),
+      infoApiClient.getStandards(filter),
+      infoApiClient.getStyleGuides(filter),
+    ]
+
+    sections.forEach(resources => {
+      const titles = resources.map(resource => resource.title)
+      expect(titles).toEqual([...titles].sort((first, second) => first.localeCompare(second)))
+    })
+  })
+
   it('should filter designSystemsInfo based on department filter', () => {
     const filter: ContentFilter = { department: 'Ministry of Justice', contentType: '', profession: '' }
     const designSystemsInfo = infoApiClient.getDesignSystems(filter)
@@ -48,13 +68,40 @@ describe('InfoApiClient', () => {
     const aiResources = infoApiClient.getAiResources(filter)
 
     expect(aiResources.map(resource => resource.title)).toEqual([
-      'AI Knowledge Hub',
-      'Artificial intelligence resources for the public sector',
-      'AI Playbook for the UK Government',
       'AI context for the GOV.UK Prototype Kit',
+      'AI Knowledge Hub',
+      'AI Playbook for the UK Government',
+      'Artificial intelligence resources for the public sector',
       'MOJ AI and Data Science Ethics Framework',
     ])
     expect(aiResources.every(resource => resource.contentType === 'AI')).toBe(true)
+  })
+
+  it('should include new resources in the manuals section', () => {
+    const filter: ContentFilter = { department: '', contentType: 'Manuals', profession: '' }
+    const manuals = infoApiClient.getManuals(filter)
+
+    expect(manuals.filter(resource => resource.tags?.includes('New')).map(resource => resource.title)).toEqual([
+      'Defra Service manual',
+      'National School of Government and Public Services',
+      'Test, Learn and Grow Playbook',
+    ])
+
+    const developerFilter: ContentFilter = { department: '', contentType: '', profession: 'Developer' }
+    const developerManualTitles = infoApiClient.getManuals(developerFilter).map(resource => resource.title)
+    expect(developerManualTitles).toContain('National School of Government and Public Services')
+    expect(developerManualTitles).toContain('Test, Learn and Grow Playbook')
+  })
+
+  it('should return design histories and filter them by department', () => {
+    const filter: ContentFilter = { department: 'NHS', contentType: 'Design histories', profession: '' }
+    const designHistories = infoApiClient.getDesignHistories(filter)
+
+    expect(designHistories.map(resource => resource.title)).toEqual([
+      'NHS App design history',
+      'NHS digital prevention services design history',
+    ])
+    expect(designHistories.every(resource => resource.contentType === 'Design histories')).toBe(true)
   })
 
   it('should combine filters', () => {

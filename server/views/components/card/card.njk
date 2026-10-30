@@ -5,7 +5,9 @@
   </h2>
   <p class="govuk-body card__description">{{ params.description }}</p>
   <footer class="card__footer">
-    <!-- additional tags and info to go here. -->
+    {% for tag in params.tags %}
+      <p>{{ govukTag({text: tag}) }}</p>
+    {% endfor %}
     {% if params.views %}
       <p>Views <span>{{ params.views }}</span></p>
     {% endif %}
