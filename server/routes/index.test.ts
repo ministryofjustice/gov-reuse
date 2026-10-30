@@ -143,6 +143,8 @@ describe('GET /news', () => {
         expect(res.text.indexOf('GOV Reuse Library turns one at SD in Gov')).toBeLessThan(
           res.text.indexOf('GOV.UK Design System community resources and tools added'),
         )
+        expect(res.text).toContain('Read more')
+        expect(res.text.match(/js-copy-news-link/g) ?? []).toHaveLength(8)
         const firstParagraphEnd = res.text.indexOf('relevant government standards and guidance.')
         const secondParagraphStart = res.text.indexOf('This is our first guide')
         const secondParagraphTag = res.text.lastIndexOf(
