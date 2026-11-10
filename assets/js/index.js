@@ -36,6 +36,17 @@ document.addEventListener('DOMContentLoaded', function initialiseStepByStep() {
   }
 })
 
+document.addEventListener('DOMContentLoaded', function resolveNewsFragmentLink() {
+  const slug = decodeURIComponent(window.location.hash.slice(1))
+  const isNewsPage = window.location.pathname === '/news'
+  const alreadyResolving = new URLSearchParams(window.location.search).has('post')
+
+  // Updates move to later pages as new ones are added, so ask the server which page holds this one
+  if (isNewsPage && slug && !alreadyResolving && !document.getElementById(slug)) {
+    window.location.replace(`/news?post=${encodeURIComponent(slug)}`)
+  }
+})
+
 document.addEventListener('DOMContentLoaded', function initialiseNewsShareLinks() {
   const shareButtons = document.querySelectorAll('.js-copy-news-link')
 

@@ -172,6 +172,26 @@ describe('GET /news', () => {
   })
 })
 
+describe('GET /news?post=:slug', () => {
+  it('should redirect to the page containing an update that has moved off page 1', () => {
+    return request(app)
+      .get('/news?post=getting-started-with-reuse')
+      .expect(302)
+      .expect('Location', '/news?page=2#getting-started-with-reuse')
+  })
+
+  it('should redirect to page 1 for an update on the first page', () => {
+    return request(app)
+      .get('/news?post=building-a-culture-of-reuse-research')
+      .expect(302)
+      .expect('Location', '/news#building-a-culture-of-reuse-research')
+  })
+
+  it('should render page 1 for an unknown slug', () => {
+    return request(app).get('/news?post=does-not-exist').expect(200)
+  })
+})
+
 describe('GET /news/:slug', () => {
   it('should return 404 for unknown post slugs', () => {
     return request(app).get('/news/does-not-exist').expect(404)
