@@ -17,6 +17,16 @@ export type BlogPost = {
 
 const blogPosts: BlogPost[] = [
   {
+    slug: 'building-a-culture-of-reuse-research',
+    title: 'Building a culture of reuse: researching the behaviours, needs and barriers across government',
+    summary:
+      'When it comes to reusing digital assets, are you a decider, maker, learner or contributor? Find out in our newly published summary of research on reuse. It brings together everything we’ve learned since the Reuse Library launched in October 2025, and we’ll keep updating it as new insights emerge.',
+    linkText: 'Read our research on reuse',
+    linkUrl: '/research-on-reuse',
+    publishedDate: '2026-11-10',
+    publishedDateDisplay: '10 November 2026',
+  },
+  {
     slug: 'gov-reuse-library-turns-one-at-sd-in-gov',
     title: 'GOV Reuse Library turns one at SD in Gov',
     summary:

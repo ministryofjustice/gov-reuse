@@ -15,6 +15,16 @@ export default class NewsController extends BaseController {
     const allPosts = getBlogPosts()
     const totalPages = Math.max(1, Math.ceil(allPosts.length / POSTS_PER_PAGE))
 
+    const postQueryValue = Array.isArray(req.query.post) ? req.query.post[0] : req.query.post
+    if (typeof postQueryValue === 'string') {
+      const postIndex = allPosts.findIndex(post => post.slug === postQueryValue)
+
+      if (postIndex >= 0) {
+        const postPage = Math.floor(postIndex / POSTS_PER_PAGE) + 1
+        return res.redirect(`${getPageHref(postPage)}#${allPosts[postIndex].slug}`)
+      }
+    }
+
     const pageQueryValue = Array.isArray(req.query.page) ? req.query.page[0] : req.query.page
     const requestedPage = Number.parseInt(`${pageQueryValue ?? '1'}`, 10)
 
