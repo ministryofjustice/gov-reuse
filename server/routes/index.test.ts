@@ -135,25 +135,16 @@ describe('GET /news', () => {
         expect(res.text).not.toContain('Test, Learn and Grow Playbook')
         expect(res.text).not.toContain('NHS digital prevention services design history')
         expect(res.text).toContain('What&rsquo;s new')
+        expect(res.text).toContain(
+          'Building a culture of reuse: researching the behaviours, needs and barriers across government',
+        )
         expect(res.text).toContain('GOV Reuse Library turns one at SD in Gov')
-        expect(res.text).toContain('Getting started with reuse')
         expect(res.text).toContain('GOV.UK Design System community resources and tools added')
         expect(res.text).toContain('AI Knowledge Hub added')
         expect(res.text).toContain('Artificial intelligence resources for the public sector added')
         expect(res.text.indexOf('GOV Reuse Library turns one at SD in Gov')).toBeLessThan(
           res.text.indexOf('GOV.UK Design System community resources and tools added'),
         )
-        expect(res.text).toContain('Read more')
-        expect(res.text.match(/js-copy-news-link/g) ?? []).toHaveLength(8)
-        const firstParagraphEnd = res.text.indexOf('relevant government standards and guidance.')
-        const secondParagraphStart = res.text.indexOf('This is our first guide')
-        const secondParagraphTag = res.text.lastIndexOf(
-          '<p class="govuk-body govuk-!-margin-top-4">',
-          secondParagraphStart,
-        )
-
-        expect(firstParagraphEnd).toBeGreaterThan(-1)
-        expect(secondParagraphTag).toBeGreaterThan(firstParagraphEnd)
         expect(res.text).toContain('Read more')
         expect(res.text.match(/js-copy-news-link/g) ?? []).toHaveLength(8)
       })
@@ -167,6 +158,16 @@ describe('GET /news', () => {
       .expect(res => {
         expect(res.text).toContain('Home Office user researchers join working group')
         expect(res.text).toContain('https://hodigital.blog.gov.uk/2026/07/20/design-once-reuse-everywhere/')
+        expect(res.text).toContain('Getting started with reuse')
+        const firstParagraphEnd = res.text.indexOf('relevant government standards and guidance.')
+        const secondParagraphStart = res.text.indexOf('This is our first guide')
+        const secondParagraphTag = res.text.lastIndexOf(
+          '<p class="govuk-body govuk-!-margin-top-4">',
+          secondParagraphStart,
+        )
+
+        expect(firstParagraphEnd).toBeGreaterThan(-1)
+        expect(secondParagraphTag).toBeGreaterThan(firstParagraphEnd)
       })
   })
 })
