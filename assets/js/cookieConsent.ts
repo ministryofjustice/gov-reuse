@@ -98,12 +98,8 @@ const CookieConsent = function __CookieConsent() {
     form.addEventListener('submit', (e: Event) => {
       e.preventDefault()
 
-      const analyticsChoice = form.querySelector<HTMLInputElement>(
-        'input[name="measuerWebsiteUse"]:checked',
-      )
-      const settingsChoice = form.querySelector<HTMLInputElement>(
-        'input[name="rememberSettings"]:checked',
-      )
+      const analyticsChoice = form.querySelector<HTMLInputElement>('input[name="measuerWebsiteUse"]:checked')
+      const settingsChoice = form.querySelector<HTMLInputElement>('input[name="rememberSettings"]:checked')
 
       const updated: CookieOptions = {
         analytics: analyticsChoice?.value === 'yes',
