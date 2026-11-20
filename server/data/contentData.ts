@@ -12,6 +12,14 @@ const contentData = {
           profession: 'Interaction designer, Content designer, Service designer',
         },
         {
+          title: 'DfE Design System',
+          description: 'Patterns, components and styles for designing and building consistent DfE services',
+          url: 'https://design.education.gov.uk/design-system/',
+          department: 'Department for Education',
+          contentType: 'Design systems',
+          profession: 'Interaction designer, Content designer, Service designer, Developer',
+        },
+        {
           title: 'DWP Design System',
           description: 'Standard design elements and best practice for services',
           url: 'https://design-system.dwp.gov.uk/',
@@ -26,6 +34,14 @@ const contentData = {
           department: 'GOV.UK',
           contentType: 'Design systems',
           profession: 'Interaction designer, Content designer, Service designer',
+        },
+        {
+          title: 'GOV.UK Design System community resources and tools',
+          description: 'Community-contributed resources and tools for people using the GOV.UK Design System',
+          url: 'https://design-system.service.gov.uk/community/resources-and-tools/',
+          department: 'GOV.UK',
+          contentType: 'Design systems',
+          profession: 'All professions',
         },
         {
           title: 'GOV.UK Publishing Design Guide',
@@ -113,9 +129,77 @@ const contentData = {
       ],
     },
 
+    'design-histories': {
+      title: 'Design histories',
+      items: [
+        {
+          title: 'DfE design histories',
+          description: 'Design histories documenting design work and decisions for Department for Education services',
+          url: 'https://design-histories.education.gov.uk/',
+          department: 'Department for Education',
+          contentType: 'Design histories',
+          profession: 'Interaction designer, Service designer, User researcher',
+        },
+        {
+          title: 'Ofqual design histories',
+          description: 'A permanent record of user research and design decisions across Ofqual digital services',
+          url: 'https://design-histories.ofqual.gov.uk/',
+          department: 'Ofqual',
+          contentType: 'Design histories',
+          profession: 'Interaction designer, Service designer, User researcher',
+        },
+        {
+          title: 'GOV.UK design history template',
+          description:
+            'An open-source template for creating shareable GOV.UK design histories with screenshots and design decisions',
+          url: 'https://govuk-design-history.x-govuk.org/get-started/',
+          department: 'GOV.UK',
+          contentType: 'Design histories',
+          profession: 'Interaction designer, Service designer, User researcher',
+        },
+        {
+          title: 'NHS App design history',
+          description: 'Design history documenting design and development of the NHS App',
+          url: 'https://design-history.nhsapp.service.nhs.uk/',
+          department: 'NHS',
+          contentType: 'Design histories',
+          profession: 'Interaction designer, Service designer, User researcher',
+        },
+        {
+          title: 'NHS digital prevention services design history',
+          description:
+            'Design history for an NHS alpha exploring how screening information can be provided through digital channels',
+          url: 'https://design-history.prevention-services.nhs.uk/',
+          department: 'NHS',
+          contentType: 'Design histories',
+          profession: 'Interaction designer, Service designer, User researcher',
+        },
+      ],
+    },
+
     manuals: {
       title: 'Manuals',
       items: [
+        {
+          title: 'National School of Government and Public Services',
+          description:
+            'Learning for civil servants and public sector leaders, including digital skills, leadership and operational delivery',
+          url: 'https://nationalschool.gov.uk/',
+          department: 'GOV.UK',
+          contentType: 'Manuals',
+          profession: 'All professions',
+          tags: ['New'],
+        },
+        {
+          title: 'Test, Learn and Grow Playbook',
+          description:
+            'Guidance on using test and learn methods to design or adapt interventions that meet user needs and deliver outcomes',
+          url: 'https://www.gov.uk/guidance/test-learn-and-grow-playbook',
+          department: 'GOV.UK',
+          contentType: 'Manuals',
+          profession: 'All professions',
+          tags: ['New'],
+        },
         {
           title: 'Accessibility in government blog',
           description: 'Guidance, case studies and updates on accessibility across government services',
@@ -124,24 +208,6 @@ const contentData = {
           contentType: 'Manuals',
           profession: 'Developer, Interaction designer, Content designer',
         },
-        {
-          title: 'AI Playbook for the UK Government',
-          description: 'Guidance on implementing AI solutions responsibly',
-          url: 'https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government',
-          department: 'GOV.UK',
-          contentType: 'Manuals',
-          profession: 'All professions',
-        },
-
-        {
-          title: 'AI context for the GOV.UK Prototype Kit',
-          description: 'Context file for generating accessible, GOV.UK-compliant prototype code with AI tools',
-          url: 'https://dev.reuselibrary.service.justice.gov.uk/assets/ai-context.md',
-          department: 'Ministry of Justice',
-          contentType: 'Manuals',
-          profession: 'Interaction designer',
-        },
-
         {
           title: 'Defra Digital Delivery Governance Model',
           description:
@@ -264,14 +330,6 @@ const contentData = {
           profession: 'Developer, Interaction designer, Content designer',
         },
         {
-          title: 'MOJ AI and Data Science Ethics Framework',
-          description: 'Tools and guidance to foster responsible ecosystems for data-driven technologies',
-          url: 'https://www.gov.uk/government/publications/ministry-of-justice-ai-and-data-science-ethics-framework',
-          department: 'GOV.UK',
-          contentType: 'Manuals',
-          profession: 'All professions',
-        },
-        {
           title: 'MOJ service design playbook',
           description: 'Guide to service design practices at MOJ (password: playbook)',
           url: 'https://miro.com/app/board/o9J_lEirG9Q=/',
@@ -375,6 +433,67 @@ const contentData = {
           department: 'Welsh Government',
           contentType: 'Manuals',
           profession: 'All professions',
+        },
+      ],
+    },
+
+    ai: {
+      title: 'AI',
+      items: [
+        {
+          title: 'AI Knowledge Hub',
+          description: 'A collection of guidance and resources about artificial intelligence',
+          url: 'https://ai.gov.uk/knowledge-hub/',
+          department: 'GOV.UK',
+          contentType: 'AI',
+          profession: 'All professions',
+        },
+        {
+          title: 'Artificial intelligence resources for the public sector',
+          description: 'Government guidance, reports and resources on artificial intelligence for the public sector',
+          url: 'https://www.gov.uk/government/collections/artificial-intelligence-resources-for-the-public-sector?mc_cid=b97cd2f51b&mc_eid=17ce865235',
+          department: 'GOV.UK',
+          contentType: 'AI',
+          profession: 'All professions',
+        },
+        {
+          title: 'AI Playbook for the UK Government',
+          description: 'Guidance on implementing AI solutions responsibly',
+          url: 'https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government',
+          department: 'GOV.UK',
+          contentType: 'AI',
+          profession: 'All professions',
+        },
+        {
+          title: 'AI context for the GOV.UK Prototype Kit',
+          description: 'Context file for generating accessible, GOV.UK-compliant prototype code with AI tools',
+          url: 'https://raw.githubusercontent.com/ministryofjustice/prototype-kit-ai-context/main/ai-context.md',
+          department: 'Ministry of Justice',
+          contentType: 'AI',
+          profession: 'Interaction designer',
+        },
+        {
+          title: 'MOJ AI and Data Science Ethics Framework',
+          description: 'Tools and guidance to foster responsible ecosystems for data-driven technologies',
+          url: 'https://www.gov.uk/government/publications/ministry-of-justice-ai-and-data-science-ethics-framework',
+          department: 'GOV.UK',
+          contentType: 'AI',
+          profession: 'All professions',
+        },
+      ],
+    },
+
+    'community-resources': {
+      title: 'Community resources',
+      items: [
+        {
+          title: 'Principles of prototyping',
+          description:
+            'Nine community-developed principles to help teams plan prototypes, test assumptions and reduce delivery risk',
+          url: 'https://designnotes.blog.gov.uk/2026/09/29/what-are-the-principles-of-prototyping/',
+          contentType: 'Community resources',
+          profession: 'Interaction designer, Service designer, User researcher, Product manager',
+          tags: ['New'],
         },
       ],
     },
@@ -497,6 +616,7 @@ const contentData = {
         },
       ],
     },
+
     standards: {
       title: 'Standards',
       items: [
@@ -707,6 +827,7 @@ const contentData = {
       'Attorney General’s Office',
       'Department for Environment, Food & Rural Affairs',
       'Department for Education',
+      'Ofqual',
       'Department for Work and Pensions',
       'GOV.UK',
       `His Majesty's Revenue and Customs`,
@@ -721,9 +842,12 @@ const contentData = {
       'The National Archives',
       'Welsh Government',
     ],
+
     contentTypes: [
       'All types',
+      'AI',
       'Design systems',
+      'Design histories',
       'Manuals',
       'Products',
       'Service patterns',

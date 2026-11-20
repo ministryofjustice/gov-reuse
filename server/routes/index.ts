@@ -9,7 +9,21 @@ import CookiePreferencesController from '../controllers/CookiePreferencesControl
 import SearchScoringService from '../services/searchScoringService'
 import QueryExpansionService from '../services/queryExpansionService'
 import SearchIndexRepository from '../data/searchIndexRepository'
+import { getBlogPosts } from '../data/blogPosts'
 import { asyncHandler } from '../utils/utils'
+
+const escapeXml = (value: string): string =>
+  value.replace(/[<>&'"]/g, character => {
+    const entities: Record<string, string> = {
+      '<': '&lt;',
+      '>': '&gt;',
+      '&': '&amp;',
+      "'": '&apos;',
+      '"': '&quot;',
+    }
+
+    return entities[character]
+  })
 
 export default function routes({ infoService, auditService }: Services): Router {
   const router = Router()
@@ -39,6 +53,41 @@ export default function routes({ infoService, auditService }: Services): Router 
   })
 
   router.get('/news', asyncHandler(newsController.index))
+
+  router.get('/news/rss.xml', (_req, res) => {
+    const baseUrl = 'https://reuselibrary.service.justice.gov.uk'
+    const posts = getBlogPosts()
+
+    const items = posts
+      .map(post => {
+        const postUrl = post.fileName ? `${baseUrl}/news/${post.slug}` : `${baseUrl}/news#${post.slug}`
+        const publishedDate = new Date(`${post.publishedDate}T00:00:00Z`).toUTCString()
+
+        return `
+          <item>
+            <title>${escapeXml(post.title)}</title>
+            <link>${postUrl}</link>
+            <guid isPermaLink="true">${postUrl}</guid>
+            <description>${escapeXml([post.summary, post.summaryContinuation].filter(Boolean).join(' '))}</description>
+            <pubDate>${publishedDate}</pubDate>
+          </item>
+        `
+      })
+      .join('')
+
+    const rss = `<?xml version="1.0" encoding="UTF-8" ?>
+      <rss version="2.0">
+        <channel>
+          <title>GOV Reuse Library - What's new</title>
+          <link>${baseUrl}/news</link>
+          <description>Updates from the GOV Reuse Library.</description>
+          ${items}
+        </channel>
+      </rss>`
+
+    res.type('application/rss+xml').send(rss)
+  })
+
   router.get('/news/:slug', asyncHandler(newsController.post))
   router.get('/search', asyncHandler(searchController.index))
   router.get('/search-suggest', asyncHandler(searchController.suggest))
@@ -48,6 +97,7 @@ export default function routes({ infoService, auditService }: Services): Router 
   router.get('/cookies', asyncHandler(cookiePreferencesController.index))
 
   router.markdown('/about', 'about')
+  router.markdown('/research-on-reuse', 'research-on-reuse')
   router.markdown('/contribute', 'contribute')
   router.markdown('/accessibility-statement', 'accessibility-statement')
   router.markdown('/privacy', 'privacy')
