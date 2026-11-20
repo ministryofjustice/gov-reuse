@@ -1,0 +1,92 @@
+{% extends "../partials/layout.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% set pageTitle = "Cookies on " + applicationName %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Cookies on {{ applicationName }}</h1>
+
+    <p>Cookies are small files saved on your phone, tablet or computer when you visit a website.</p>
+
+    <p>We use cookies to collect and store information about how you use this website, like the pages you visit.
+      You'll normally see a message on the site before we store a cookie on your computer.</p>
+
+    <p>This page has a brief explanation of each type of cookie we use.</p>
+
+    <form method="get" action="?" id="cookie-preferences-form">
+      <h2 class="govuk-heading-l">Cookie settings</h2>
+
+      <p>We use 3 types of cookie. You can choose which cookies you're happy for us to use.</p>
+
+      <h2 class="govuk-heading-l">Cookies that measure website use</h2>
+
+      <p>We use Google Analytics cookies to measure how you use GOV Reuse Library. These cookies collect information about:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>how you got to the site</li>
+        <li>the pages you visit and how long you spend on each page</li>
+        <li>what you click on while you’re visiting this site</li>
+      </ul>
+
+      {{ govukRadios({
+        name: "measuerWebsiteUse",
+        fieldset: {
+          legend: {
+            text: "Do you allow cookies that measure website use?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Use cookies that measure my website use"
+          },
+          {
+            value: "no",
+            text: "Do not use cookies that measure my website use"
+          }
+        ]
+      }) }}
+
+
+      <h2 class="govuk-heading-l">Cookies that remember our settings</h2>
+
+      <p>These cookies do things like remember your preferences, for example whether you’ve used accepted cookies previously.</p>
+
+      {{ govukRadios({
+        name: "rememberSettings",
+        fieldset: {
+          legend: {
+            text: "Do you allow cookies that remember your settings?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Use cookies that remember my settings on the site"
+          },
+          {
+            value: "no",
+            text: "Do not use cookies that remember my settings on the site"
+          }
+        ]
+      }) }}
+
+      <h2 class="govuk-heading-l">Strictly necessary cookies</h2>
+
+      <p>These essential cookies keep your information secure while you use the GOV Reuse Library.</p>
+      <p>They always need to be on.</p>
+
+      {{ govukButton({
+        text: "Save changes"
+      }) }}
+    </form>
+  </div>
+</div>
+{% endblock %}
