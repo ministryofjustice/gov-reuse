@@ -17,7 +17,7 @@ test.describe('Cookie consent', () => {
   test('cookies page allows preferences to be saved', async ({ page, context }) => {
     await page.goto('/cookies')
     await page.getByLabel('Do not use cookies that measure my website use').check()
-    await page.getByLabel('Use cookies that remember my settings on the site').check()
+    await page.getByLabel('Use cookies that remember my settings on the site', { exact: true }).check()
     await page.getByRole('button', { name: 'Save changes' }).click()
 
     const cookies = await context.cookies()
