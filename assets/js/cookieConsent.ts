@@ -87,7 +87,7 @@ const CookieConsent = function __CookieConsent() {
     // Pre-select radios to reflect current saved preferences
     const options = getOptions()
     const analyticsRadio = form.querySelector<HTMLInputElement>(
-      `input[name="measuerWebsiteUse"][value="${options.analytics ? 'yes' : 'no'}"]`,
+      `input[name="measureWebsiteUse"][value="${options.analytics ? 'yes' : 'no'}"]`,
     )
     const settingsRadio = form.querySelector<HTMLInputElement>(
       `input[name="rememberSettings"][value="${options.settings ? 'yes' : 'no'}"]`,
@@ -98,7 +98,7 @@ const CookieConsent = function __CookieConsent() {
     form.addEventListener('submit', (e: Event) => {
       e.preventDefault()
 
-      const analyticsChoice = form.querySelector<HTMLInputElement>('input[name="measuerWebsiteUse"]:checked')
+      const analyticsChoice = form.querySelector<HTMLInputElement>('input[name="measureWebsiteUse"]:checked')
       const settingsChoice = form.querySelector<HTMLInputElement>('input[name="rememberSettings"]:checked')
 
       const updated: CookieOptions = {
