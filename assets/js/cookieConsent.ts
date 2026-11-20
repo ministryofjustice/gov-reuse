@@ -81,7 +81,7 @@ const CookieConsent = function __CookieConsent() {
 
   /** Bind radio buttons and save button on the cookie settings page */
   this.initSettingsPage = function __initSettingsPage(): void {
-    const form = document.querySelector<HTMLFormElement>('form')
+    const form = document.querySelector<HTMLFormElement>('#cookie-preferences-form')
     if (!form) return
 
     // Pre-select radios to reflect current saved preferences
