@@ -101,3 +101,17 @@ describe('GET /news/:slug', () => {
     return request(app).get('/news/does-not-exist').expect(404)
   })
 })
+
+describe('GET /cookies', () => {
+  it('should render the cookies page', () => {
+    return request(app)
+      .get('/cookies')
+      .expect('Content-Type', /html/)
+      .expect(200)
+      .expect(res => {
+        expect(res.text).toContain('Cookies on GOV Reuse Library')
+        expect(res.text).toContain('Cookie settings')
+        expect(res.text).toContain('Save changes')
+      })
+  })
+})
