@@ -467,7 +467,7 @@ const contentData = {
         {
           title: 'AI context for the GOV.UK Prototype Kit',
           description: 'Context file for generating accessible, GOV.UK-compliant prototype code with AI tools',
-          url: 'https://reuselibrary.service.justice.gov.uk/assets/ai-context.md',
+          url: 'https://raw.githubusercontent.com/ministryofjustice/prototype-kit-ai-context/main/ai-context.md',
           department: 'Ministry of Justice',
           contentType: 'AI',
           profession: 'Interaction designer',
