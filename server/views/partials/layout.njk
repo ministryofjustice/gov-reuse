@@ -76,8 +76,29 @@ or on GitHub: https://github.com/alphagov/govuk-frontend/blob/main/packages/govu
   <script nonce="{{ cspNonce }}">
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
 
+    // Default: deny all non-essential storage
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied'
+    });
+
+    // Read saved consent cookie and grant analytics if previously accepted
+    (function() {
+      try {
+        var match = document.cookie.match(/(^|; )cookie_consent=([^;]*)/);
+        if (match) {
+          var options = JSON.parse(decodeURIComponent(match[2]));
+          if (options && options.analytics === true) {
+            gtag('consent', 'update', { 'analytics_storage': 'granted' });
+          }
+        }
+      } catch (e) { /* cookie not set or invalid */ }
+    })();
+
+    gtag('js', new Date());
     gtag('config', 'G-F098L9R2ZX');
   </script>
 {% endblock %}
