@@ -3,7 +3,7 @@ export default {
     '^.+\\.tsx?$': ['ts-jest'],
   },
   collectCoverageFrom: ['server/**/*.{ts,js,jsx,mjs}'],
-  testMatch: ['<rootDir>/(server|job)/**/?(*.)(cy|test).{ts,js,jsx,mjs}'],
+  testMatch: ['<rootDir>/(server|job|assets)/**/?(*.)(cy|test).{ts,js,jsx,mjs}'],
   testEnvironment: 'node',
   reporters: [
     'default',

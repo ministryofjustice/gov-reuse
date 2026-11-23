@@ -27,6 +27,9 @@ const CookieConsent = function __CookieConsent() {
   function getOptions(): CookieOptions {
     const raw = getCookie(cookieName)
     if (!raw) return { ...defaultOptions }
+    // Note: 'accepted' and 'rejected' are legacy values; we migrate them for compatability.
+    if (raw === 'accepted') return { analytics: true, settings: true }
+    if (raw === 'rejected') return { analytics: false, settings: false }
     try {
       const parsed = JSON.parse(raw) as Partial<CookieOptions>
       return { ...defaultOptions, ...parsed }
