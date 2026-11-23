@@ -89,7 +89,7 @@ or on GitHub: https://github.com/alphagov/govuk-frontend/blob/main/packages/govu
     (function() {
       try {
         // Legacy cookies use a string of 'accepted' or 'rejected'
-        const legacy = document.cookie.match(/(^|; )cookie_consent=(accepted|rejected)/);
+        const legacy = document.cookie.match(/(^|; )cookie_consent=(accepted|rejected)(?=;|$)/);
         if (legacy) {
           const value = legacy[2] === 'accepted' ? 'granted' : 'denied';
           gtag('consent', 'update', { 'analytics_storage': value });
