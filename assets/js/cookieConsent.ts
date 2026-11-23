@@ -11,6 +11,7 @@ const defaultOptions: CookieOptions = {
 const CookieConsent = function __CookieConsent() {
   const cookieName = 'cookie_consent'
   const cookieMaxAgeDays = 365
+  const cookieFormSelector = '#cookie-preferences-form'
 
   function getCookie(name: string): string | null {
     const prefix = `${name}=`
@@ -40,6 +41,7 @@ const CookieConsent = function __CookieConsent() {
 
   function saveOptions(options: CookieOptions): void {
     setCookie(cookieName, JSON.stringify(options), cookieMaxAgeDays)
+    updateSettingsPage(options)
   }
 
   /** Update Google Analytics consent mode to reflect current preferences */
@@ -57,6 +59,19 @@ const CookieConsent = function __CookieConsent() {
     if (banner) {
       banner.setAttribute('hidden', 'hidden')
     }
+  }
+
+  function updateSettingsPage(options: CookieOptions): void {
+    const form = document.querySelector<HTMLFormElement>(cookieFormSelector)
+    if (!form) return
+    const choices = {
+      measureWebsiteUse: options.analytics,
+      rememberSettings: options.settings,
+    }
+    Object.entries(choices).forEach(([name, allowed]) => {
+      const radio = form?.querySelector<HTMLInputElement>(`input[name="${name}"][value="${allowed ? 'yes' : 'no'}"]`)
+      if (radio) radio.checked = true
+    })
   }
 
   /** Apply GA consent mode based on saved cookie on page load */
@@ -84,7 +99,7 @@ const CookieConsent = function __CookieConsent() {
 
   /** Bind radio buttons and save button on the cookie settings page */
   this.initSettingsPage = function __initSettingsPage(): void {
-    const form = document.querySelector<HTMLFormElement>('#cookie-preferences-form')
+    const form = document.querySelector<HTMLFormElement>(cookieFormSelector)
     if (!form) return
 
     // Pre-select radios to reflect current saved preferences
