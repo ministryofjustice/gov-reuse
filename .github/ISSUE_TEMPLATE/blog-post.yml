@@ -1,0 +1,65 @@
+name: Submit a blog post or news update
+description: Share a draft for the GOV Reuse Library team to review.
+title: "[Blog submission]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for contributing. Complete the fields below to share your draft with the GOV Reuse Library team.
+        The team will review your submission; it will not be published automatically.
+
+        **This issue is public.** Do not include personal, sensitive or restricted information.
+        If your draft cannot be shared publicly, email reuse-library@justice.gov.uk instead.
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      description: What is the title of your blog post or news update?
+    validations:
+      required: true
+  - type: input
+    id: author
+    attributes:
+      label: Author
+      description: Who should be credited? Include their organisation if appropriate.
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Briefly describe what the post is about and why it is relevant to the library.
+    validations:
+      required: true
+  - type: textarea
+    id: draft
+    attributes:
+      label: Draft
+      description: Paste your draft here. You can use plain text; no special formatting is needed.
+    validations:
+      required: true
+  - type: input
+    id: links
+    attributes:
+      label: Related links
+      description: Add any public links you would like to include.
+  - type: textarea
+    id: images
+    attributes:
+      label: Images
+      description: |
+        If you have an image, attach it here and describe what it shows for people who cannot see it.
+        Only share images you have permission to publish.
+  - type: input
+    id: preferred-date
+    attributes:
+      label: Preferred publication date
+      description: If applicable, tell us when you would like the post to be published.
+      placeholder: For example, 15 March 2027
+  - type: checkboxes
+    id: permission
+    attributes:
+      label: Permission to publish
+      options:
+        - label: I have permission to share this draft and any images for publication.
+          required: true

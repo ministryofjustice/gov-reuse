@@ -9,6 +9,21 @@ Please raise any questions or queries there. Contributions welcome!
 
 Our security policy is located [at GitHub](https://github.com/ministryofjustice/gov-reuse/security/policy).
 
+## Contribute content
+
+You can suggest a blog post, news update or resource for the library.
+
+1. Sign in to GitHub.
+2. Go to the [new issue page](https://github.com/ministryofjustice/gov-reuse/issues/new/choose).
+3. Select **Submit a blog post or news update** or **Suggest a library resource**.
+4. Complete the form and submit it.
+
+Your submission is public. Do not include personal, sensitive or restricted information.
+The team will review your submission before it is published.
+
+To use a different form or contact the team by email, go to the
+[contribute page](https://reuselibrary.service.justice.gov.uk/contribute).
+
 ## Dependencies
 
 ### REDIS
