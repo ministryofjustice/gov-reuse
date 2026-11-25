@@ -1,0 +1,75 @@
+name: Suggest a library resource
+description: Suggest a resource for the GOV Reuse Library.
+title: "[Library resource]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a resource. The library focuses on publicly available resources from UK government
+        organisations, public bodies and local government. The team will review your suggestion; it will not be
+        published automatically.
+
+        **This issue is public.** Do not include personal, sensitive or restricted information.
+        If you cannot share the details publicly, email reuse-library@justice.gov.uk instead.
+  - type: input
+    id: resource-title
+    attributes:
+      label: Resource name
+      description: What is the resource called?
+    validations:
+      required: true
+  - type: input
+    id: resource-url
+    attributes:
+      label: Resource link
+      description: Provide a link to the publicly available resource.
+      placeholder: https://
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What does the resource help people do?
+    validations:
+      required: true
+  - type: input
+    id: organisation
+    attributes:
+      label: Organisation
+      description: Which government organisation or public body publishes or maintains it?
+    validations:
+      required: true
+  - type: dropdown
+    id: resource-type
+    attributes:
+      label: Type of resource
+      description: Choose the closest match, or choose "Not sure".
+      options:
+        - Artificial intelligence
+        - Design system
+        - Design history
+        - Manual or guidance
+        - Product
+        - Service pattern
+        - Standard
+        - Style guide
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: audience
+    attributes:
+      label: Intended audience
+      description: Which professions or teams would find this useful?
+      placeholder: For example, content designers and developers
+  - type: input
+    id: tags
+    attributes:
+      label: Keywords
+      description: Add any words that might help people find this resource.
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Anything else?
+      description: Tell us anything else that would help the team review your suggestion.
