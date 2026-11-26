@@ -11,7 +11,11 @@ declare module 'express-serve-static-core' {
   interface IRouter {
     redirect(from: string, destination: string, statusCode?: number): this
     render(path: string, view: string, options?: object): this
-    markdown(routePath: string, markdownFile: string): this
+    markdown(
+      routePath: string,
+      markdownFile: string,
+      options?: { sideNavigation?: { label: string; items: { text: string; href: string }[] } },
+    ): this
   }
 }
 

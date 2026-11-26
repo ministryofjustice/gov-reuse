@@ -169,6 +169,25 @@ describe('GET /news', () => {
   })
 })
 
+describe('About pages', () => {
+  it.each([
+    ['/about', 'About the GOV Reuse Library'],
+    ['/about/vision-and-mission', 'Our vision is that people who design government services'],
+    ['/about/strategy-and-roadmap', 'https://github.com/orgs/ministryofjustice/projects/204'],
+    ['/about/values', 'transparent and open to feedback and ideas'],
+  ])('should render %s with the about side navigation', (path, expectedContent) => {
+    return request(app)
+      .get(path)
+      .expect('Content-Type', /html/)
+      .expect(200)
+      .expect(res => {
+        expect(res.text).toContain(expectedContent)
+        expect(res.text).toContain('moj-side-navigation')
+        expect(res.text).toContain(`<a href="${path}" aria-current="location">`)
+      })
+  })
+})
+
 describe('GET /news/:slug', () => {
   it('should return 404 for unknown post slugs', () => {
     return request(app).get('/news/does-not-exist').expect(404)
