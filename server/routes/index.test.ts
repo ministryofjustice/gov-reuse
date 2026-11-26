@@ -135,6 +135,28 @@ describe('GET /news', () => {
         expect(res.text).not.toContain('Test, Learn and Grow Playbook')
         expect(res.text).not.toContain('NHS digital prevention services design history')
         expect(res.text).toContain('What&rsquo;s new')
+        expect(res.text).toContain('A Playbook for Agentic AI in Local Government added')
+        expect(res.text).toContain('Defra AI Digital Toolkit added')
+        expect(res.text).toContain('Making the Case for Digital added')
+        expect(res.text).toContain('Local Government Reorganisation Digital and Cyber Playbook added')
+        expect(res.text).toContain('Future Councils Playbook added')
+        expect(res.text).toContain('Co-design Toolkit for Early Years Services added')
+        expect(res.text).toContain('Defra Interactive Map added')
+        expect(res.text).toContain('GOV.UK Brand Guidelines added')
+        expect(res.text).not.toContain('GOV Reuse Library turns one at SD in Gov')
+        expect(res.text.indexOf('A Playbook for Agentic AI in Local Government added')).toBeLessThan(
+          res.text.indexOf('Defra AI Digital Toolkit added'),
+        )
+        expect(res.text.match(/js-copy-news-link/g) ?? []).toHaveLength(8)
+      })
+  })
+
+  it('should show older news updates on the next page', () => {
+    return request(app)
+      .get('/news?page=2')
+      .expect('Content-Type', /html/)
+      .expect(200)
+      .expect(res => {
         expect(res.text).toContain(
           'Building a culture of reuse: researching the behaviours, needs and barriers across government',
         )
@@ -150,9 +172,9 @@ describe('GET /news', () => {
       })
   })
 
-  it('should show older news updates on the next page', () => {
+  it('should show the oldest news updates on the third page', () => {
     return request(app)
-      .get('/news?page=2')
+      .get('/news?page=3')
       .expect('Content-Type', /html/)
       .expect(200)
       .expect(res => {
@@ -196,14 +218,21 @@ describe('GET /news?post=:slug', () => {
     return request(app)
       .get('/news?post=getting-started-with-reuse')
       .expect(302)
-      .expect('Location', '/news?page=2#getting-started-with-reuse')
+      .expect('Location', '/news?page=3#getting-started-with-reuse')
+  })
+
+  it('should redirect to page 2 for an update that has moved off page 1', () => {
+    return request(app)
+      .get('/news?post=building-a-culture-of-reuse-research')
+      .expect(302)
+      .expect('Location', '/news?page=2#building-a-culture-of-reuse-research')
   })
 
   it('should redirect to page 1 for an update on the first page', () => {
     return request(app)
-      .get('/news?post=building-a-culture-of-reuse-research')
+      .get('/news?post=govuk-brand-guidelines-added')
       .expect(302)
-      .expect('Location', '/news#building-a-culture-of-reuse-research')
+      .expect('Location', '/news#govuk-brand-guidelines-added')
   })
 
   it('should render page 1 for an unknown slug', () => {
@@ -227,6 +256,8 @@ describe('GET /news/rss.xml', () => {
         expect(res.text).not.toContain('<title>New learning resources and design histories added</title>')
         expect(res.text).toContain('<title>GOV.UK Design System community resources and tools added</title>')
         expect(res.text).toContain('<title>AI Knowledge Hub added</title>')
+        expect(res.text).toContain('<title>Defra Interactive Map added</title>')
+        expect(res.text).toContain('https://reuselibrary.service.justice.gov.uk/news#govuk-brand-guidelines-added')
         expect(res.text).toContain('<title>Artificial intelligence resources for the public sector added</title>')
         expect(res.text).toContain(
           'https://reuselibrary.service.justice.gov.uk/news#govuk-design-system-community-resources-added',

@@ -548,21 +548,6 @@ const contentData = {
       ],
     },
 
-    'community-resources': {
-      title: 'Community resources',
-      items: [
-        {
-          title: 'Principles of prototyping',
-          description:
-            'Nine community-developed principles to help teams plan prototypes, test assumptions and reduce delivery risk',
-          url: 'https://designnotes.blog.gov.uk/2026/09/29/what-are-the-principles-of-prototyping/',
-          contentType: 'Community resources',
-          profession: 'Interaction designer, Service designer, User researcher, Product manager',
-          tags: ['New'],
-        },
-      ],
-    },
-
     products: {
       title: 'Products',
       items: [

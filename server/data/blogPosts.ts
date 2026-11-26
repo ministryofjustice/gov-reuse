@@ -17,6 +17,86 @@ export type BlogPost = {
 
 const blogPosts: BlogPost[] = [
   {
+    slug: 'playbook-for-agentic-ai-in-local-government-added',
+    title: 'A Playbook for Agentic AI in Local Government added',
+    summary:
+      'We’ve added A Playbook for Agentic AI in Local Government to the GOV Reuse Library. It gives guidance on assessing risks and adopting agentic AI responsibly in local government.',
+    linkText: 'Explore A Playbook for Agentic AI in Local Government',
+    linkUrl: 'https://www.local.gov.uk/publications/playbook-agentic-ai-local-government',
+    publishedDate: '2026-11-26',
+    publishedDateDisplay: '26 November 2026',
+  },
+  {
+    slug: 'defra-ai-digital-toolkit-added',
+    title: 'Defra AI Digital Toolkit added',
+    summary:
+      'We’ve added the Defra AI Digital Toolkit to the GOV Reuse Library. It brings together guidance, tools and reusable AI patterns to help teams use artificial intelligence safely and responsibly.',
+    linkText: 'Explore the Defra AI Digital Toolkit',
+    linkUrl: 'https://digital.defra.gov.uk/ai-toolkit',
+    publishedDate: '2026-11-26',
+    publishedDateDisplay: '26 November 2026',
+  },
+  {
+    slug: 'making-the-case-for-digital-added',
+    title: 'Making the Case for Digital added',
+    summary:
+      'We’ve added Making the Case for Digital to the GOV Reuse Library. Use it for guidance, practical prompts and council examples when developing business cases for digital investment.',
+    linkText: 'Explore Making the Case for Digital',
+    linkUrl: 'https://www.local.gov.uk/publications/making-case-digital-guide-local-authorities',
+    publishedDate: '2026-11-26',
+    publishedDateDisplay: '26 November 2026',
+  },
+  {
+    slug: 'local-government-reorganisation-digital-and-cyber-playbook-added',
+    title: 'Local Government Reorganisation Digital and Cyber Playbook added',
+    summary:
+      'We’ve added the Local Government Reorganisation Digital and Cyber Playbook to the GOV Reuse Library. It includes guidance, templates and case studies for managing digital, data and cyber activities during local government reorganisation.',
+    linkText: 'Explore the Local Government Reorganisation Digital and Cyber Playbook',
+    linkUrl: 'https://www.localdigital.gov.uk/playbook/',
+    publishedDate: '2026-11-26',
+    publishedDateDisplay: '26 November 2026',
+  },
+  {
+    slug: 'future-councils-playbook-added',
+    title: 'Future Councils Playbook added',
+    summary:
+      'We’ve added the Future Councils Playbook to the GOV Reuse Library. It provides downloadable tools to help councils understand problems, identify root causes and assess their impact.',
+    linkText: 'Explore the Future Councils Playbook',
+    linkUrl: 'https://www.localdigital.gov.uk/future-councils/playbook/',
+    publishedDate: '2026-11-26',
+    publishedDateDisplay: '26 November 2026',
+  },
+  {
+    slug: 'co-design-toolkit-for-early-years-services-added',
+    title: 'Co-design Toolkit for Early Years Services added',
+    summary:
+      'We’ve added the Co-design Toolkit for Early Years Services to the GOV Reuse Library. It offers activity cards, tools and guidance for co-designing public services with communities.',
+    linkText: 'Explore the Co-design Toolkit for Early Years Services',
+    linkUrl: 'https://openpolicy.blog.gov.uk/2026/01/06/launching-a-new-co-design-toolkit-for-early-years-services/',
+    publishedDate: '2026-11-26',
+    publishedDateDisplay: '26 November 2026',
+  },
+  {
+    slug: 'defra-interactive-map-added',
+    title: 'Defra Interactive Map added',
+    summary:
+      'We’ve added the Defra Interactive Map to the GOV Reuse Library. It’s an accessible, open-source interactive map component for government services, with examples and developer guidance.',
+    linkText: 'Explore the Defra Interactive Map',
+    linkUrl: 'https://defra.github.io/interactive-map/',
+    publishedDate: '2026-11-26',
+    publishedDateDisplay: '26 November 2026',
+  },
+  {
+    slug: 'govuk-brand-guidelines-added',
+    title: 'GOV.UK Brand Guidelines added',
+    summary:
+      'We’ve added the GOV.UK Brand Guidelines to the GOV Reuse Library. They set out how to use GOV.UK logos, colour, typography and illustrations across different channels.',
+    linkText: 'Explore the GOV.UK Brand Guidelines',
+    linkUrl: 'https://brand.design-system.service.gov.uk/',
+    publishedDate: '2026-11-26',
+    publishedDateDisplay: '26 November 2026',
+  },
+  {
     slug: 'building-a-culture-of-reuse-research',
     title: 'Building a culture of reuse: researching the behaviours, needs and barriers across government',
     summary:
