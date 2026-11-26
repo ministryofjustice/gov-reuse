@@ -132,8 +132,6 @@ export default function routes({ infoService, auditService }: Services): Router 
 
   router.markdown('/research-on-reuse', 'research-on-reuse')
 
-  router.markdown('/research-on-reuse', 'research-on-reuse')
-
   router.markdown('/contribute', 'contribute')
 
   router.markdown('/accessibility-statement', 'accessibility-statement')
