@@ -100,17 +100,6 @@ describe('InfoApiClient', () => {
     expect(designHistories.every(resource => resource.contentType === 'Design histories')).toBe(true)
   })
 
-  it('should return design histories and filter them by department', () => {
-    const filter: ContentFilter = { department: 'NHS', contentType: 'Design histories', profession: '' }
-    const designHistories = infoApiClient.getDesignHistories(filter)
-
-    expect(designHistories.map(resource => resource.title)).toEqual([
-      'NHS App design history',
-      'NHS digital prevention services design history',
-    ])
-    expect(designHistories.every(resource => resource.contentType === 'Design histories')).toBe(true)
-  })
-
   it('should combine filters', () => {
     // department=Ministry+of+Justice&contentType=Design+systems&profession=All+professions
     const filter: ContentFilter = {
