@@ -59,15 +59,24 @@ export default function expressRouterHelpers(router: Router): Router {
    * and renders it within the GOV.UK Nunjucks layout.
    * @param routePath - The route path to serve the rendered Markdown on
    * @param markdownFile - Path to the Markdown file (relative to project root)
+   * @param options - Optional side navigation to show alongside the content
    * @returns The router instance for chaining
    * @example
    *   router.markdown('/changelog', 'content/changelog.md')
    */
-  extendedRouter.markdown = function markdownRoute(routePath: string, markdownFile: string): Router {
+  extendedRouter.markdown = function markdownRoute(
+    routePath: string,
+    markdownFile: string,
+    options?: { sideNavigation?: { label: string; items: { text: string; href: string }[] } },
+  ): Router {
     const file = markdownFile.endsWith('.md') ? markdownFile : `${markdownFile}.md`
+    const sideNavigation = options?.sideNavigation && {
+      label: options.sideNavigation.label,
+      items: options.sideNavigation.items.map(item => ({ ...item, active: item.href === routePath })),
+    }
     this.get(routePath, (req: Request, res: Response) => {
       const markdownContent = parseMarkdownFile(path.join(VIEWS_DIR, file))
-      res.render('pages/markdown', { markdownContent })
+      res.render('pages/markdown', { markdownContent, sideNavigation })
     })
     return this
   }

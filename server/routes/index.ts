@@ -112,7 +112,25 @@ export default function routes({ infoService, auditService }: Services): Router 
 
   router.get('/design-system-component-search', asyncHandler(searchController.designSystemComponentSearch))
 
-  router.markdown('/about', 'about')
+  const aboutNavigation = {
+    label: 'About',
+    items: [
+      { text: 'About the library', href: '/about' },
+      { text: 'Vision and mission', href: '/about/vision-and-mission' },
+      { text: 'Strategy and roadmap', href: '/about/strategy-and-roadmap' },
+      { text: 'Our values', href: '/about/values' },
+    ],
+  }
+
+  router.markdown('/about', 'about', { sideNavigation: aboutNavigation })
+
+  router.markdown('/about/vision-and-mission', 'about/vision-and-mission', { sideNavigation: aboutNavigation })
+
+  router.markdown('/about/strategy-and-roadmap', 'about/strategy-and-roadmap', { sideNavigation: aboutNavigation })
+
+  router.markdown('/about/values', 'about/values', { sideNavigation: aboutNavigation })
+
+  router.markdown('/research-on-reuse', 'research-on-reuse')
 
   router.markdown('/research-on-reuse', 'research-on-reuse')
 

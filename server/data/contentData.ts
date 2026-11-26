@@ -188,7 +188,6 @@ const contentData = {
           department: 'GOV.UK',
           contentType: 'Manuals',
           profession: 'All professions',
-          tags: ['New'],
         },
         {
           title: 'Test, Learn and Grow Playbook',
@@ -198,7 +197,6 @@ const contentData = {
           department: 'GOV.UK',
           contentType: 'Manuals',
           profession: 'All professions',
-          tags: ['New'],
         },
         {
           title: 'Accessibility in government blog',
@@ -226,7 +224,6 @@ const contentData = {
           department: 'Department for Environment, Food & Rural Affairs',
           contentType: 'Manuals',
           profession: 'All professions',
-          tags: ['New'],
         },
 
         {
@@ -251,7 +248,7 @@ const contentData = {
           title: 'Cyber risk management',
           description: 'Understand and manage cyber security risks for your organisation',
           url: 'https://www.ncsc.gov.uk/collection/risk-management',
-          department: 'GOV.UK',
+          department: 'National Cyber Security Centre',
           contentType: 'Manuals',
           profession: 'All professions',
         },
@@ -422,7 +419,7 @@ const contentData = {
           title: 'UK GDPR guidance and resources',
           description: 'Guidance and tools to help organisations comply with UK GDPR',
           url: 'https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/',
-          department: 'GOV.UK',
+          department: 'Information Commissioner’s Office',
           contentType: 'Manuals',
           profession: 'All professions',
         },
@@ -433,6 +430,41 @@ const contentData = {
           department: 'Welsh Government',
           contentType: 'Manuals',
           profession: 'All professions',
+        },
+        {
+          title: 'Making the Case for Digital',
+          description:
+            'Guidance, practical prompts and council examples for developing business cases for digital investment',
+          url: 'https://www.local.gov.uk/publications/making-case-digital-guide-local-authorities',
+          department: 'Local Government',
+          contentType: 'Manuals',
+          profession: 'Delivery manager, Product manager',
+        },
+        {
+          title: 'Local Government Reorganisation Digital and Cyber Playbook',
+          description:
+            'Guidance, templates and case studies for managing digital, data and cyber activities during local government reorganisation',
+          url: 'https://www.localdigital.gov.uk/playbook/',
+          department: 'Local Government',
+          contentType: 'Manuals',
+          profession: 'Delivery manager, Product manager, Architect',
+        },
+        {
+          title: 'Future Councils Playbook',
+          description:
+            'Downloadable tools to help councils understand problems, identify root causes and assess their impact',
+          url: 'https://www.localdigital.gov.uk/future-councils/playbook/',
+          department: 'Local Government',
+          contentType: 'Manuals',
+          profession: 'Service designer, Delivery manager, Product manager',
+        },
+        {
+          title: 'Co-design Toolkit for Early Years Services',
+          description: 'Activity cards, tools and guidance for co-designing public services with communities',
+          url: 'https://openpolicy.blog.gov.uk/2026/01/06/launching-a-new-co-design-toolkit-for-early-years-services/',
+          department: 'GOV.UK',
+          contentType: 'Manuals',
+          profession: 'Service designer, User researcher',
         },
       ],
     },
@@ -476,7 +508,25 @@ const contentData = {
           title: 'MOJ AI and Data Science Ethics Framework',
           description: 'Tools and guidance to foster responsible ecosystems for data-driven technologies',
           url: 'https://www.gov.uk/government/publications/ministry-of-justice-ai-and-data-science-ethics-framework',
-          department: 'GOV.UK',
+          department: 'Ministry of Justice',
+          contentType: 'AI',
+          profession: 'All professions',
+        },
+        {
+          title: 'A Playbook for Agentic AI in Local Government',
+          description: 'Guidance on assessing risks and adopting agentic AI responsibly in local government',
+          url: 'https://www.local.gov.uk/publications/playbook-agentic-ai-local-government',
+          department: 'Local Government',
+          contentType: 'AI',
+          profession: 'All professions',
+          tags: ['New'],
+        },
+        {
+          title: 'Defra AI Digital Toolkit',
+          description:
+            'Guidance, tools and reusable AI patterns to help teams use artificial intelligence safely and responsibly',
+          url: 'https://digital.defra.gov.uk/ai-toolkit',
+          department: 'Department for Environment, Food & Rural Affairs',
           contentType: 'AI',
           profession: 'All professions',
         },
@@ -491,9 +541,9 @@ const contentData = {
           description:
             'Nine community-developed principles to help teams plan prototypes, test assumptions and reduce delivery risk',
           url: 'https://designnotes.blog.gov.uk/2026/09/29/what-are-the-principles-of-prototyping/',
+          department: 'GOV.UK',
           contentType: 'Community resources',
           profession: 'Interaction designer, Service designer, User researcher, Product manager',
-          tags: ['New'],
         },
       ],
     },
@@ -501,6 +551,15 @@ const contentData = {
     products: {
       title: 'Products',
       items: [
+        {
+          title: 'Defra Interactive Map',
+          description:
+            'An accessible, open-source interactive map component for government services, with examples and developer guidance',
+          url: 'https://defra.github.io/interactive-map/',
+          department: 'Department for Environment, Food & Rural Affairs',
+          contentType: 'Products',
+          profession: 'Developer, Interaction designer',
+        },
         {
           title: 'GOV.UK Forms',
           description: 'Create online forms for GOV.UK',
@@ -729,6 +788,14 @@ const contentData = {
           profession: 'Content designer',
         },
         {
+          title: 'GOV.UK Brand Guidelines',
+          description: 'Guidance on using GOV.UK logos, colour, typography and illustrations across different channels',
+          url: 'https://brand.design-system.service.gov.uk/',
+          department: 'GOV.UK',
+          contentType: 'Style guides',
+          profession: 'Interaction designer, Content designer, Service designer',
+        },
+        {
           title: 'GOV.UK content style guide',
           description: 'A to Z guidance on writing for GOV.UK, including grammar, spelling and tone',
           url: 'https://www.gov.uk/guidance/style-guide/a-to-z',
@@ -833,9 +900,11 @@ const contentData = {
       `His Majesty's Revenue and Customs`,
       'Home Office',
       'HM Land Registry',
+      'Information Commissioner’s Office',
       'Local Government',
       'Ministry of Defence',
       'Ministry of Justice',
+      'National Cyber Security Centre',
       'NHS',
       'Office for National Statistics',
       'Scottish Government',
