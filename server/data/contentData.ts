@@ -499,7 +499,7 @@ const contentData = {
         {
           title: 'AI context for the GOV.UK Prototype Kit',
           description: 'Context file for generating accessible, GOV.UK-compliant prototype code with AI tools',
-          url: 'https://reuselibrary.service.justice.gov.uk/assets/ai-context.md',
+          url: 'https://raw.githubusercontent.com/ministryofjustice/prototype-kit-ai-context/main/ai-context.md',
           department: 'Ministry of Justice',
           contentType: 'AI',
           profession: 'Interaction designer',
@@ -544,6 +544,21 @@ const contentData = {
           department: 'GOV.UK',
           contentType: 'Community resources',
           profession: 'Interaction designer, Service designer, User researcher, Product manager',
+        },
+      ],
+    },
+
+    'community-resources': {
+      title: 'Community resources',
+      items: [
+        {
+          title: 'Principles of prototyping',
+          description:
+            'Nine community-developed principles to help teams plan prototypes, test assumptions and reduce delivery risk',
+          url: 'https://designnotes.blog.gov.uk/2026/09/29/what-are-the-principles-of-prototyping/',
+          contentType: 'Community resources',
+          profession: 'Interaction designer, Service designer, User researcher, Product manager',
+          tags: ['New'],
         },
       ],
     },
